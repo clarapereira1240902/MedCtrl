@@ -1,0 +1,67 @@
+/* Seletor Universal - Remove margens e preenchimentos padrão */ 
+*{
+    margin: 0;                      /* Remove margens padrão */
+    padding: 0;                     /* Remove preenchimento padrão */ 
+    box-sizing: border-box;         /* Inclui a borda e o preenchimento no cálculo do tamanho */
+    font-family:  'Inter', Arial, Helvetica, sans-serif;   /* Define a fonte padrão */ 
+}
+
+/* Estilo da barra de navegação principal */
+.bng-navbar{
+    background-color: #ffffff;    /* Cor de fundo escura */
+    display: flex;                  /* Coloca os elementos em linha */
+    align-items: center;            /* Centraliza os itens verticalmente */ 
+    justify-content: space-between; /* Espaço entre os blocos */
+    padding: 10px 20px;             /* Espaçamento interno da barra */ 
+    position: sticky;               /* Fixa a barra no topo ao fazer scroll */ 
+    top: 0;                         /* A barra fica colada ao topo */
+}
+
+/* Estilo para os <div> internos da barra de navegação */ 
+.bng-navbar div { 
+    display: flex;                /* Coloca os elementos lado a lado */ 
+    align-items: center;          /* Alinha-os verticalmente ao centro */ 
+} 
+
+/* Estilo do logótipo na barra de navegação */ 
+.bng-navbar img { 
+    height: 75px;                 /* Define a altura do logótipo */ 
+    margin-right: 10px;           /* Espaço entre o logótipo e o texto */ 
+} 
+
+/* Estilo do texto com o nome do site */ 
+.bng-navbar h3 { 
+    font-size: 2.0em;             /* Aumenta o tamanho da letra */ 
+    letter-spacing: -0.5px;       /* Diminui o espaço entre as letras */
+    background: linear-gradient(90deg, #006390, #00a7f3);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.scroll-bar {
+  position: absolute;
+  bottom: 0;           /*fica no limite inferior */
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #60a5fa, #1e3a8a);
+}
+
+/* Estilos para os links centrais da navegação */ 
+.container-navegacao { 
+    text-align: center;         /* Centraliza os links */ 
+    padding: 20px;              /* Adiciona espaçamento interno */ 
+} 
+
+.container-navegacao a { 
+    font-size: 1.5em;           /* Aumenta o tamanho da fonte dos links */ 
+    margin: 0px 50px;           /* Espaçamento horizontal entre os links */ 
+    text-decoration: none;      /* Remove o sublinhado */ 
+    color: #0c0909ec;          /* Define a cor dos links */ 
+}
+
+.container-navegacao a:hover { 
+    color: #006390; 
+    border-bottom: 2px solid #006390;            
+}
