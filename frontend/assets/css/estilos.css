@@ -73,3 +73,74 @@
     background: #006390;
     transition: width 0.2s ease;
 }
+
+
+/* Secção do Problema*/
+.container-texto-generico {
+    padding: 80px 90px 0px 80px;
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background: #e0f9ff;
+    position: relative;
+    overflow: hidden;
+}
+
+.objetivo-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.objetivo-texto {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.objetivo-texto h1 {
+    font-size: 36px;
+    color: #0d1d21;
+    margin-bottom: 20px;
+}
+
+.objetivo-texto p {
+    color: #000000;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+.problemas-box {
+    margin-top: 30px;
+    background: #006390;
+    padding: 15px 20px 2px 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: fit-content;
+}
+
+.problemas-box p {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.problemas-box i {
+    margin-right: 10px;
+}
+
+.objetivo-imagem {
+    width: 40%;
+    text-align: right;
+}
+
+.objetivo-imagem img {
+    max-width: 100%;
+    display: block;
+    
+}
