@@ -34,7 +34,7 @@
 
         <!-- Links centrais --> 
         <div class="container-navegacao">
-            <a href="#objetivo">Objetivo</a>
+            <a href="#problema">Problema</a>
             <a href="#solucao">Solução</a>
             <a href="#vantagens">Vantagens</a>
             <a href="#sistema">Sistema</a> <!--Seria uma desmonstração com prints ou vídeos (opcional)-->
@@ -50,15 +50,39 @@
     <!-- Secção Objetivo" --> 
     <section class="container-texto-generico" id="objetivo"> 
         <div class="objetivo-content"> 
-            <h1>Problema Atual</h1> 
-            <p>Muitas instituições de saúde ainda geram o inventário de equipamentos médicos de forma dispersa, 
-                recorrendo a folhas de Excel, registos em papel e sistemas não integrados. Isto dificulta a atualização 
-                da informação, a reastreabilidade dos equipamentos e o acesso rápido a dados essenciais como documentação 
-                téncnica, garantias ou fornecedores. Torna-se, assim, fundamental a existência de uma solução que permita 
-                organizar, controlar e acompanhar todo o ciclo de vida dos equipamentos médicos de forma eficiente.
-            </p> 
+            <div class="objetivo-texto">
+                <h1>Problema Atual</h1>
+                <p>
+                    Inventário de equipamentos médicos de forma dispersa, recorrendo a folhas de Excel, registos em papel e sistemas não integrados.
+                </p>
+                <p>
+                    Dificuladade na atualização da informação, a rastreabilidade dos equipamentos e o acesso rápido a dados essenciais.
+                </p>
+                <p>
+                   É necessária uma solução que permita organizar, controlar e acompanhar todo o ciclo dos equipamentos médicos.
+                </p>
+            <div class="problemas-box">
+                <p><i class="fa-solid fa-database">&nbsp;</i>Dados dispersos</p>
+                <p><i class="fa-solid fa-location-crosshairs">&nbsp;</i>Dificuldade em localizar equipamentos</p>
+                <p><i class="fa-solid fa-clock-rotate-left">&nbsp;</i>Falta de histórico</p>
+            </div>
         </div> 
+
+        <div class="objetivo-imagem">
+            <img src="assets/img/problema.avif" alt="Problema">
+        </div>
     </section>
-    
+
+
+<script>
+window.addEventListener("scroll", () => {
+    let scrollTop = document.documentElement.scrollTop;
+    let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    let scrolled = (scrollTop / height) * 100;
+
+    document.querySelector(".scroll-bar").style.width = scrolled + "%";
+});
+</script>
+
 </body>
 </html>
