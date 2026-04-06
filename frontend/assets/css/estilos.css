@@ -75,6 +75,7 @@
 }
 
 
+
 /* Secção do Problema*/
 .container-texto-generico {
     padding: 80px 90px 0px 80px;
@@ -82,9 +83,12 @@
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
-    background: #e0f9ff;
     position: relative;
     overflow: hidden;
+}
+
+.seccao-objetivo {
+    background: #e0f9ff;
 }
 
 .objetivo-content {
@@ -143,4 +147,120 @@
     max-width: 100%;
     display: block;
     
+}
+
+
+
+/* Secção Solução */
+.seccao-solucao {
+    padding: 80px 60px;
+    background: #ffffff;
+    text-align: center;
+}
+
+/* Título */
+.seccao-solucao h2 {
+    font-size: 32px;
+    color: #122a31;
+    margin-bottom: 10px;
+}
+
+.subtitulo {
+    color: #000000;
+    margin-bottom: 50px;
+    font-size: 20px;
+}
+
+/* Cartões */
+.solucao-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    color: #e0e0e0;
+}
+
+.cartao-solucao {
+    background: #006390;
+    padding: 25px;
+    border-radius: 20px;
+    width: 260px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.cartao-solucao:hover {
+    transform: translateY(-8px);
+}
+
+.cartao-solucao h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.cartao-solucao p {
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.cartao-solucao i {
+    padding: 10px;
+}
+
+
+
+/* Secção Vantagens */
+.seccao-vantagens {
+    padding: 80px 60px;
+    background: #e0f9ff;
+    text-align: center;
+}
+
+/* Título */
+.secao-vantagens h2 {
+    font-size: 32px;
+    color: #122a31;
+    margin-bottom: 10px;
+}
+
+.subtitulo {
+    color: #777;
+    margin-bottom: 50px;
+    font-size: 20px;
+}
+
+/*Cartões*/
+.vantagens-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+.caixa-vantagens {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 320px;
+    box-shadow: 0 10px 25px #00000068;
+}
+
+.caixa-vantagens h3 {
+    color: #006390;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.caixa-vantagens p {
+    color: #000000;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.caixa-vantagens p.areas {
+    text-align: center;
+}
+
+.caixa-vantagens i{
+    padding: 5px;
 }
