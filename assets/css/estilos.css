@@ -106,7 +106,7 @@
 }
 
 .seccao-objetivo {
-    background:url("../img/objetivo.jpeg");
+    background:url("../img/secção_objetivo.jpeg");
     background-size: cover;     /* ocupa toda a secção */
     background-position: right center;
     background-repeat: no-repeat;
@@ -159,6 +159,7 @@
 .button-saber-mais:hover {
     font-weight: 600;
 }
+
 
 
 /* Secção Solução */
@@ -215,6 +216,7 @@
 .cartao-solucao i {
     font-size: 15px;
     margin-bottom: 10px;
+    margin-right: 5px;
 }
 
 
@@ -273,4 +275,70 @@
 
 .caixa-vantagens i{
     padding: 5px;
+}
+
+
+
+/* Secção Contacto*/
+#contacto {
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#contacto h2 {
+    font-size: 32px;
+    color: #0d1d21;
+    margin-bottom: 10px;
+}
+
+#contacto p {
+    color: #555;
+    font-size: 20px;
+    margin-bottom: 40px;
+    max-width: 600px;
+}
+
+#contacto form {
+    width: 100%;
+    max-width: 500px;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+}
+
+#contacto label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0d1d21;
+}
+
+#contacto input, #contacto textarea { 
+    padding: 6px;                /* Espaço interno (dentro do campo) */ 
+    margin-bottom: 10px;          /* Espaço abaixo de cada campo */ 
+    border: 1px solid #dddddd;       /* Borda cinzenta clara */ 
+    border-radius: 5px;           /* Bordas arredondadas */ 
+}
+
+#contacto button { 
+    margin-top: 10px;
+    padding: 7px;
+    border: none;
+    border-radius: 10px;
+    background: #00a7f3;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+#contacto form button:hover {
+   font-weight: 600;
 }
