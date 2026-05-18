@@ -97,32 +97,34 @@
 
 
 
-/* Secção do Problema*/
+/* Secção do Objetivo*/
 .container-texto-generico {
-    padding: 80px 90px 0px 80px;
+    padding-top: 80px;
     width: 100%;
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
     position: relative;
     overflow: hidden;
 }
 
 .seccao-objetivo {
-    background: #e0f9ff;
+    background:url("../img/objetivo.jpeg");
+    background-size: cover;     /* ocupa toda a secção */
+    background-position: right center;
+    background-repeat: no-repeat;
+    min-height: 700px;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    padding: 80px 0px;
 }
 
 .objetivo-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 40px;
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
 .objetivo-texto {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
+    width: 70%;
 }
 
 .objetivo-texto h1 {
@@ -133,49 +135,35 @@
 
 .objetivo-texto p {
     color: #000000;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
     line-height: 1.6;
-    font-size: 16px;
+    font-size: 17px;
 }
 
-.problemas-box {
-    margin-top: 30px;
-    background: #006390;
-    padding: 15px 20px 2px 20px;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    width: fit-content;
-}
+.button-saber-mais {
+    display: inline-block;
 
-.problemas-box p {
-    color: #ffffff;
+    margin-top: 40px;
+    padding: 10px 25px;
+
+    background-color: #00a7f3;
+    color: white;
+
+    text-decoration: none;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 16px;
+
+    border-radius: 40px;
 }
 
-.problemas-box i {
-    margin-right: 10px;
+.button-saber-mais:hover {
+    font-weight: 600;
 }
-
-.objetivo-imagem {
-    width: 40%;
-    text-align: right;
-}
-
-.objetivo-imagem img {
-    max-width: 100%;
-    display: block;
-    
-}
-
 
 
 /* Secção Solução */
 .seccao-solucao {
-    padding: 80px 60px;
-    background: #ffffff;
+    padding: 80px 20px;
     text-align: center;
 }
 
@@ -207,7 +195,7 @@
     border-radius: 20px;
     width: 260px;
     text-align: center;
-    transition: 0.3s;
+    transition: transform 0.3s ease;
 }
 
 .cartao-solucao:hover {
@@ -225,7 +213,8 @@
 }
 
 .cartao-solucao i {
-    padding: 10px;
+    font-size: 15px;
+    margin-bottom: 10px;
 }
 
 
