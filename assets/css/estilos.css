@@ -7,7 +7,7 @@
 
 
 .bng-navbar {
-     position: fixed;
+    position: fixed;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
@@ -22,6 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: nowrap;   /* impede que os blocos saltem */
 
     border: 1px solid #e0e0e0;
     box-shadow: 0 8px 20px rgba(0,0,0,0.05);
@@ -49,6 +50,7 @@
 .container-navegacao {
     display: flex;
     gap: 25px;
+    white-space: nowrap; /* impede quebra dos links */
 }
 
 .container-navegacao a {
@@ -60,6 +62,25 @@
 
 .container-navegacao a:hover {
     color:#00a7f3;
+    font-weight: 600;
+}
+
+.nav-cliente {
+    flex-shrink: 0;  /* impede o botão de encolher */
+}
+
+.nav-cliente a { 
+    color:#006390;             /* Cor do texto */ 
+    text-decoration: none;      /* Remove sublinhado */ 
+    font-size: 16px;           /* Tamanho da fonte */ 
+    font-weight: 500;
+    padding: 4px 15px;
+    border: 1.5px solid #00a7f3;
+    border-radius: 50px;
+    white-space: nowrap;
+}
+
+.nav-cliente a:hover {
     font-weight: 600;
 }
 
