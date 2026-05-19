@@ -380,3 +380,16 @@
     color: #555;
     font-size: 14px;
 }
+
+
+
+/* Estilo Login */
+.btn-primary {
+    background-color: #006390;
+
+}
+
+.btn-primary:hover {
+    font-weight: 600;
+    background-color: #006390;
+}

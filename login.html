@@ -19,7 +19,60 @@
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;700&display=swap" rel="stylesheet"> 
 </head>
 
-<body>
-    
+<body class="bg-light">
+    <div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="row justify-content-center w-100">
+            <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10">
+
+                <!-- Cartão login -->
+                <div class="card shadow border-0 rounded-4 p-4">
+
+                    <!-- Logo + Nome -->
+                    <div class="text-center mb-4">
+                        <img src="assets/img/logo.png" width="70" class="mb-3">
+                        <h2 class="fw-bold medctrl-title">
+                            MedCtrl
+                        </h2>
+                        <p class="text-muted mb-0">
+                            Gestão Inteligente de Equipamentos Médicos
+                        </p>
+                    </div>
+
+                    <!-- Formulário -->
+                    <form action="private/dashboard.html" method="post">
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label"> Email </label>
+                            <input type="email" class="form-control" id="email" placeholder="Introduza o seu email" required>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-4">
+                            <label for="password" class="form-label"> Palavra-passe</label>
+                            <input type="password" class="form-control" id="password" placeholder="Introduza a sua palavra-passe" required>
+                        </div>
+
+                        <!-- Botão -->
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary rounded-pill py-2">Entrar
+                                <i class="fa-solid fa-right-to-bracket ms-2"></i>
+                            </button>
+                        </div>
+
+                        <!-- Mensagem erro -->
+                        <div class="alert alert-danger text-center p-2">
+                            Email ou palavra-passe inválidos.
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap -->
+    <script src="assets/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>
