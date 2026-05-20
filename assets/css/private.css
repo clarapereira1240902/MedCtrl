@@ -68,7 +68,10 @@ body{
 }
 
 
-/* CONTEÚDO */
+
+/* =========================
+   CONTEÚDO- MENU PRINCIPAL
+========================= */
 main h2{
     font-weight:700;
     color:#122a31;
@@ -100,3 +103,58 @@ main h2{
     opacity:0.3;
 }
 
+
+
+/* =========================
+   CONTEÚDO- LISTAGEM
+========================= */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.page-header h2 {
+    font-weight: 700;
+    color: #122a31;
+}
+
+.btn-primary-custom {
+    background: #006390;
+    color: white;
+    border-radius: 8px;
+}
+
+.btn-primary-custom:hover {
+    background: #00a7f3;
+    color: white;
+}
+
+.btn-view,.btn-edit,.btn-delete {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.table-medctrl {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table-medctrl thead {
+    background: #006390;
+    color: white;
+}
+
+.table-medctrl tbody tr:hover {
+    background: #e0f9ff;
+}
+
+.badge-success {
+    background: #28a745;
+}
+
+.badge-danger {
+    background: #dc3545;
+}

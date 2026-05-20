@@ -79,23 +79,57 @@
             </aside>
 
             <!-- Conteúdo Principal: Listagem de Equipamentos -->
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h2 class="mb-0">
-                    <i class="fa-solid fa-laptop-medical me-2"></i>
-                    <strong>Listagem de Equipamentos</strong>
-                </h2>
-                <a href="novo.html" class="btn btn-success">
-                    <i class="fa-solid fa-plus me-2"></i> Novo equipamento
-                </a>
-            </div>
+            <main class="col-md-9 col-lg-10 p-4">
 
-            <hr>
+                <div class="page-header">
+                    <h2>
+                        <i class="fa-solid fa-laptop-medical me-2"></i>Listagem de Equipamentos
+                    </h2>
+                    <a href="novo-equipamento.html" class="btn btn-primary-custom">
+                        <i class="fa-solid fa-plus me-2"></i> Novo equipamento
+                    </a>
+                </div>
 
-            <p class="text-muted">Não existem equipamentos registados.</p>
+                <hr>
 
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped align-middle">
-                    <thead class="table-dark">
+                <div class="table-responsive">
+                    <table class="table table-medctrl">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Designação</th>
+                                <th>Categoria</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Nº Série</th>
+                                <th>Estado</th>
+                                <th>Criticidade</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>INV-001</td>
+                                <td>Monitor Multiparamétrico</td>
+                                <td>Monitores</td>
+                                <td>Philips</td>
+                                <td>IntelliVue</td>
+                                <td>SN12345</td>
+
+                                <td><span class="badge badge-success">Operacional</span></td>
+                                <td><span class="badge badge-danger">Alta</span></td>
+
+                                <td class="text-center">
+                                    <a href="detalhes.html" class="btn btn-sm btn-view"><i class="fa-solid fa-eye"></i></a>
+                                    <a href="editar.html" class="btn btn-sm btn-edit"><i class="fa-solid fa-pen"></i></a>
+                                    <a href="apagar.html" class="btn btn-sm btn-delete"><i class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </main>
         
         </div>
     </div>
