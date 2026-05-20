@@ -78,17 +78,109 @@
                 </nav>
             </aside>
 
-            <!-- Conteúdo Principal -->
+            <!-- Conteúdo Principal: Adicionar Equipamentos -->
             <main class="col-md-9 col-lg-10 p-4">
-                <section class="pagina-inicial">
-                    <h2>MedCtrl - Área Privada</h2>
-                    <p>Bem-vindo ao sistema de gestão de equipamentos médicos.</p>
-                    <p> Escolha uma opção no menu lateral para continuar.</p>
+                
+                <div class="page-header">
+                    <h2>
+                        <i class="fa-solid fa-plus me-2"></i>
+                        Novo Equipamento
+                    </h2>
+                </div>
 
-                    <div class="icone-centro">
-                        <i class="fa-solid fa-laptop-medical"></i>
+                <hr>
+
+                <form class="form-medctrl">
+
+                    <div class="row">
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Código de Inventário</label>
+                            <input type="text" class="form-control" placeholder="Ex: INV-001">
+                        </div>
+
+                        <div class="col-md-8 mb-3">
+                            <label class="form-label">Designação</label>
+                            <input type="text" class="form-control" placeholder="Ex: Monitor Multiparamétrico">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Categoria</label>
+                            <input type="text" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Marca</label>
+                            <input type="text" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Modelo</label>
+                            <input type="text" class="form-control">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Número de Série</label>
+                            <input type="text" class="form-control">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Fabricante</label>
+                            <input type="text" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Data de Aquisição</label>
+                            <input type="date" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Ano de Fabrico</label>
+                            <input type="number" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Custo (€)</label>
+                            <input type="number" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Tipo de Entrada</label>
+                            <select class="form-select">
+                                <option>Compra</option>
+                                <option>Doação</option>
+                                <option>Aluguer</option>
+                                <option>Empréstimo</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Estado</label>
+                            <select class="form-select">
+                                <option>Operacional</option>
+                                <option>Em manutenção</option>
+                                <option>Avariado</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Criticidade</label>
+                            <select class="form-select">
+                                <option>Baixa</option>
+                                <option>Média</option>
+                                <option>Alta</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Observações</label>
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+
                     </div>
-                </section>
+
+                </form>
+
             </main>
         
         </div>
