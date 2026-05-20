@@ -1,0 +1,106 @@
+/* =========================
+   CONTEÚDO- MENU PRINCIPAL
+========================= */
+main h2{
+    font-weight:700;
+    color:#122a31;
+}
+
+.pagina-inicial{
+    text-align:center;
+    margin-top:100px;
+}
+
+.pagina-inicial h2{
+    color:#122a31;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+.pagina-inicial p{
+    color:#666;
+    font-size:18px;
+}
+
+.icone-centro{
+    margin-top:40px;
+}
+
+.icone-centro i{
+    font-size:100px;
+    color:#00a7f3;
+    opacity:0.3;
+}
+
+
+
+/* =========================
+   CONTEÚDO- LISTAGEM
+========================= */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.page-header h2 {
+    font-weight: 700;
+    color: #122a31;
+}
+
+.btn-primary-custom {
+    background: #006390;
+    color: white;
+    border-radius: 8px;
+}
+
+.btn-primary-custom:hover {
+    background: #00a7f3;
+    color: white;
+}
+
+.btn-view,.btn-edit,.btn-delete {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.table-medctrl {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table-medctrl thead {
+    background: #006390;
+    color: white;
+}
+
+.table-medctrl tbody tr:hover {
+    background: #e0f9ff;
+}
+
+.badge-success {
+    background: #28a745;
+}
+
+.badge-danger {
+    background: #dc3545;
+}
+
+
+
+/* =========================
+   CONTEÚDO- ADICIONAR
+========================= */
+.form-medctrl {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.form-label {
+    font-weight: 600;
+    color: #122a31;
+}
