@@ -10,7 +10,7 @@
 
     <!-- Bootstrap CSS & custom CSS --> 
     <link rel="stylesheet" href="../../../assets/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="../../../assets/css/estilos.css">
+    <link rel="stylesheet" href="../../../assets/css/private.css">
 
     <!-- Google Fonts --> 
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
@@ -78,18 +78,24 @@
                 </nav>
             </aside>
 
-            <!-- Conteúdo Principal -->
-            <main class="col-md-9 col-lg-10 p-4">
-                <section class="pagina-inicial">
-                    <h2>MedCtrl - Área Privada</h2>
-                    <p>Bem-vindo ao sistema de gestão de equipamentos médicos.</p>
-                    <p> Escolha uma opção no menu lateral para continuar.</p>
+            <!-- Conteúdo Principal: Listagem de Equipamentos -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="mb-0">
+                    <i class="fa-solid fa-laptop-medical me-2"></i>
+                    <strong>Listagem de Equipamentos</strong>
+                </h2>
+                <a href="novo.html" class="btn btn-success">
+                    <i class="fa-solid fa-plus me-2"></i> Novo equipamento
+                </a>
+            </div>
 
-                    <div class="icone-centro">
-                        <i class="fa-solid fa-laptop-medical"></i>
-                    </div>
-                </section>
-            </main>
+            <hr>
+
+            <p class="text-muted">Não existem equipamentos registados.</p>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped align-middle">
+                    <thead class="table-dark">
         
         </div>
     </div>
