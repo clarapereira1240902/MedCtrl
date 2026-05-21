@@ -63,10 +63,10 @@
                     <a href="../equipamentos/lista.html">
                         <i class="fa-solid fa-laptop-medical"></i> &ensp; Equipamentos
                     </a>
-                    <a href="../localizacoes/lista.html">
+                    <a href="lista.html">
                         <i class="fa-solid fa-location-dot"></i> &ensp; Localizações
                     </a>
-                    <a href="lista.html">
+                    <a href="../fornecedores/lista.html">
                         <i class="fa-solid fa-handshake"></i> &ensp; Fornecedores
                     </a>
                     <a href="views/documentacao/documentacao.html">
@@ -80,74 +80,54 @@
 
             <!-- Conteúdo Principal -->
             <main class="col-md-9 col-lg-10 p-4">
+
                 <div class="page-header">
-                    <h2><i class="fa-solid fa-handshake me-2"></i>Detalhes do Fornecedor</h2>
-                    <a href="lista.html" class="btn btn-cancel btn-sm">
-                        <i class="fa-solid fa-arrow-left me-1"></i>Voltar
+                    <h2>
+                        <i class="fa-solid fa-location-dot me-2"></i> Localizações
+                    </h2>
+                    <a href="novo.html" class="btn btn-primary-custom btn-sm">
+                        <i class="fa-solid fa-plus me-1"></i> Nova localização
                     </a>
                 </div>
 
-                <!-- Cartão principal -->
-                <div class="form-medctrl">
+                <!-- Tabela -->
+                <div class="table-responsive">
+                    <table class="table table-medctrl table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>Edifício</th>
+                                <th>Piso</th>
+                                <th>Serviço</th>
+                                <th>Sala</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hospital Central</td>
+                                <td>2º Piso</td>
+                                <td>Cardiologia</td>
+                                <td>Sala 12</td>
+                                <td class="text-center">
+                                    <a href="editar.html" class="btn btn-edit-list btn-sm"><i class="fa-solid fa-pen"></i></a>
+                                    <a href="apagar.html" class="btn btn-delete-list btn-sm"><i class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
 
-                    <!-- Identificação -->
-                    <div class="mb-4">
-                        <h3 class="mb-1">Dräger Portugal</h3>
-                        <span class="badge bg-primary">Fabricante</span>
-                    </div>
-
-                    <hr>
-
-                    <!-- Informação geral -->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p><strong>NIF:</strong> 507123456</p>
-                            <p><strong>Telefone:</strong> 229876543</p>
-                            <p><strong>Email:</strong> geral@drager.pt</p>
-                            <p><strong>Website:</strong> www.drager.pt</p>
-                        </div>
-
-                        <div class="col-md-6">
-                            <p><strong>Morada:</strong> Rua da Saúde, Porto</p>
-                            <p><strong>Pessoa de contacto:</strong> João Costa</p>
-                            <p><strong>Telefone contacto:</strong> 912345678</p>
-                        </div>
-                    </div>
-
-                    <hr>
-                    
-                    <!-- Equipamentos Associados -->
-                    <div class="mt-3">
-                        <h5 class="mb-3">
-                            <i class="fa-solid fa-laptop-medical me-2"></i>Equipamentos associados
-                        </h5>
-
-                        <ul class="list-group">
-                            <li class="list-group-item">Monitor de Sinais Vitais MX450</li>
-                            <li class="list-group-item">Ventilador Pulmonar V500</li>
-                            <li class="list-group-item">ECG Philips TC70</li>
-                        </ul>
-                    </div>
-
-                    <hr>
-
-                    <!-- Observações -->
-                        <div class="mt-3">
-                        <h5>Observações</h5>
-                        <p class="text-muted">
-                            Fornecedor principal de equipamentos críticos hospitalares.  
-                            Suporte técnico 24/7 e contrato de manutenção ativa.
-                        </p>
-
-                    </div>
-
-                    <!-- BOTÕES -->
-                    <div class="d-flex justify-content-end gap-2 mt-4">
-                        <a href="editar.html" class="btn btn-edit btn-sm"><i class="fa-solid fa-pen me-1"></i> Editar </a>
-                        <a href="lista.html" class="btn btn-cancel btn-sm"> Cancelar</a>
-                    </div>
-
+                            <tr>
+                                <td>Hospital Norte</td>
+                                <td>1º Piso</td>
+                                <td>Urgência</td>
+                                <td>Sala 3</td>
+                                <td class="text-center">
+                                    <a href="editar.html" class="btn btn-edit-list btn-sm"><i class="fa-solid fa-pen"></i></a>
+                                    <a href="apagar.html" class="btn btn-delete-list btn-sm"><i class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+
             </main>
         
         </div>
