@@ -80,15 +80,124 @@
 
             <!-- Conteúdo Principal -->
             <main class="col-md-9 col-lg-10 p-4">
-                <section class="pagina-inicial">
-                    <h2>MedCtrl - Área Privada</h2>
-                    <p>Bem-vindo ao sistema de gestão de equipamentos médicos.</p>
-                    <p> Escolha uma opção no menu lateral para continuar.</p>
 
-                    <div class="icone-centro">
-                        <i class="fa-solid fa-laptop-medical"></i>
+                <div class="page-header">
+                    <h2>
+                        <i class="fa-solid fa-pen-to-square me-2"></i> Editar Equipamento
+                    </h2>
+
+                    <a href="lista.html" class="btn btn-cancel btn-sm">
+                        <i class="fa-solid fa-arrow-left me-1"></i> Voltar
+                    </a>
+                </div>
+
+                <form class="form-medctrl">
+
+                    <div class="row">
+
+                        <!-- Coluna esquerda -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Código de Inventário</label>
+                                <input type="text" class="form-control" value="EQUIP-2024-001" readonly>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Designação</label>
+                                <input type="text" class="form-control" value="Monitor de Sinais Vitais">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Categoria</label>
+                                <input type="text" class="form-control" value="Monitorização">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Marca</label>
+                                <input type="text" class="form-control" value="Philips">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Modelo</label>
+                                <input type="text" class="form-control" value="IntelliVue MX450">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Número de Série</label>
+                                <input type="text" class="form-control" value="SN-78451236">
+                            </div>
+                        </div>
+
+                        <!-- Coluna direita -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Fabricante</label>
+                                <input type="text" class="form-control" value="Philips Healthcare">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Data de Aquisição</label>
+                                <input type="date" class="form-control" value="2023-06-15">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Ano de Fabrico</label>
+                                <input type="number" class="form-control" value="2023">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Custo de Aquisição</label>
+                                <input type="text" class="form-control" value="12500">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Tipo de Entrada</label>
+                                <select class="form-control">
+                                    <option selected>Compra</option>
+                                    <option>Doação</option>
+                                    <option>Aluguer</option>
+                                    <option>Empréstimo</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Estado Atual</label>
+                                <select class="form-control">
+                                    <option selected>Operacional</option>
+                                    <option>Em manutenção</option>
+                                    <option>Inativo</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Criticidade</label>
+                                <select class="form-control">
+                                    <option>Baixa</option>
+                                    <option selected>Alta</option>
+                                    <option>Crítica</option>
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
-                </section>
+
+                    <!-- Observações -->
+                    <div class="mt-3">
+                        <label class="form-label">Observações</label>
+                        <textarea class="form-control" rows="3">Equipamento em excelente estado. Última manutenção Janeiro 2026.</textarea>
+                    </div>
+
+                    <!-- Botões -->
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a href="lista.html" class="btn btn-cancel btn-sm">Cancelar</a>
+
+                        <button type="submit" class="btn btn-save btn-sm">
+                            <i class="fa-regular fa-floppy-disk me-1"></i>Guardar alterações
+                        </button>
+                    </div>
+
+                </form>
+
             </main>
         
         </div>
