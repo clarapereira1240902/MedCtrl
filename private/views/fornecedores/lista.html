@@ -66,7 +66,7 @@
                     <a href="views/localizacoes/localizacoes.html">
                         <i class="fa-solid fa-location-dot"></i> &ensp; Localizações
                     </a>
-                    <a href="views/fornecedores/fornecedores.html">
+                    <a href="lista.html">
                         <i class="fa-solid fa-handshake"></i> &ensp; Fornecedores
                     </a>
                     <a href="views/documentacao/documentacao.html">
@@ -83,46 +83,73 @@
 
                 <div class="page-header">
                     <h2>
-                        <i class="fa-solid fa-laptop-medical me-2"></i>Listagem de Equipamentos
+                        <i class="fa-solid fa-handshake me-2"></i> Listagem de Fornecedores
                     </h2>
-                    <a href="novo.html" class="btn btn-primary-custom">
-                        <i class="fa-solid fa-plus me-2"></i> Novo equipamento
+                    <a href="novo.html" class="btn btn-save btn-sm">
+                        <i class="fa-solid fa-plus me-1"></i> Novo fornecedor
                     </a>
                 </div>
 
                 <hr>
 
+                <p class="text-muted">Existem 3 fornecedores registados.</p>
+
                 <div class="table-responsive">
-                    <table class="table table-medctrl">
+                    <table class="table table-hover align-middle table-medctrl">
                         <thead>
                             <tr>
-                                <th>Código</th>
-                                <th>Designação</th>
-                                <th>Categoria</th>
-                                <th>Marca</th>
-                                <th>Modelo</th>
-                                <th>Nº Série</th>
-                                <th>Estado</th>
-                                <th>Criticidade</th>
+                                <th>Empresa</th>
+                                <th>Tipo</th>
+                                <th>Pessoa Contacto</th>
+                                <th>Telefone</th>
+                                <th>Email</th>
+                                <th class="text-center">Equipamentos</th>
                                 <th class="text-center">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>INV-001</td>
-                                <td>Monitor Multiparamétrico</td>
-                                <td>Monitores</td>
-                                <td>Philips</td>
-                                <td>IntelliVue</td>
-                                <td>SN12345</td>
-
-                                <td><span class="badge badge-success">Operacional</span></td>
-                                <td><span class="badge badge-danger">Alta</span></td>
+                                <td><strong>Dräger Portugal</strong></td>
+                                <td><span class="badge bg-primary">Fabricante</span></td>
+                                <td>João Costa</td>
+                                <td>913456789</td>
+                                <td>geral@drager.pt</td>
+                                <td class="text-center">12</td>
 
                                 <td class="text-center">
-                                    <a href="detalhes.html" class="btn btn-sm btn-view-list"><i class="fa-solid fa-eye"></i></a>
-                                    <a href="editar.html" class="btn btn-sm btn-edit-list"><i class="fa-solid fa-pen"></i></a>
-                                    <a href="apagar.html" class="btn btn-sm btn-delete-list"><i class="fa-solid fa-trash"></i></a>
+                                    <a href="detalhes.html" class="btn btn-view-list btn-sm me-1"><i class="fa-solid fa-eye"></i></a>
+                                    <a href="editar.html" class="btn btn-edit-list btn-sm me-1"><i class="fa-solid fa-pen"></i></a>
+                                    <a href="apagar.html" class="btn btn-delete-list btn-sm"><i class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Siemens Healthineers</strong></td>
+                                <td><span class="badge bg-success">Assistência Técnica</span></td>
+                                <td>Ana Silva</td>
+                                <td>934567890</td>
+                                <td>suporte@siemens.pt</td>
+                                <td class="text-center">8</td>
+
+                                <td class="text-center">
+                                    <a href="detalhes.html" class="btn btn-view-list btn-sm me-1"><i class="fa-solid fa-eye"></i></a>
+                                    <a href="editar.html" class="btn btn-edit-list btn-sm me-1"><i class="fa-solid fa-pen"></i></a>
+                                    <a href="apagar.html" class="btn btn-delete-list btn-sm"><i class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>MedSupply</strong></td>
+                                <td><span class="badge bg-warning text-dark">Consumíveis</span></td>
+                                <td>Carlos Ferreira</td>
+                                <td>939876543</td>
+                                <td>contacto@medsupply.pt</td>
+                                <td class="text-center">22</td>
+
+                                <td class="text-center">
+                                    <a href="detalhes.html" class="btn btn-view-list btn-sm me-1"><i class="fa-solid fa-eye"></i></a>
+                                    <a href="editar.html" class="btn btn-edit-list btn-sm me-1"><i class="fa-solid fa-pen"></i></a>
+                                    <a href="apagar.html" class="btn btn-delete-list btn-sm"><i class="fa-solid fa-trash"></i></a>
                                 </td>
                             </tr>
                         </tbody>
