@@ -65,6 +65,10 @@ main h2{
     border-radius: 6px;
 }
 
+.btn-view-list:hover,.btn-edit-list:hover,.btn-delete-list:hover{
+    background:#00a7f3;
+}
+
 .table-medctrl {
     background: white;
     border-radius: 12px;
