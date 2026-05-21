@@ -60,7 +60,7 @@ main h2{
     color: white;
 }
 
-.btn-view,.btn-edit,.btn-delete {
+.btn-view-list,.btn-edit-list,.btn-delete-list {
     border: 1px solid #ddd;
     border-radius: 6px;
 }
@@ -178,5 +178,72 @@ main h2{
 
 .btn-edit:hover{
     background:#006390;
+    color:white;
+}
+
+
+
+/* =======================
+   CONTEÚDO- APAGAR EQUIP
+======================= */
+.delete-wrapper{
+    display:flex;
+    justify-content:center;
+    margin-top:60px;
+}
+
+.delete-card{
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    text-align:center;
+    max-width:600px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+
+.delete-icon{
+    font-size:50px;
+    color:#f0ad4e;
+    margin-bottom:15px;
+}
+
+.delete-card h2{
+    font-weight:700;
+    color:#122a31;
+    margin-bottom:10px;
+}
+
+.delete-warning{
+    color:#666;
+    margin-bottom:20px;
+    font-size:16px;
+}
+
+.delete-item{
+    background:#f5f7fa;
+    padding:15px;
+    border-radius:8px;
+    margin-top:15px;
+}
+
+.delete-item h4{
+    margin-bottom:5px;
+    color:#122a31;
+}
+
+.delete-item p{
+    margin:0;
+    color:#666;
+    font-size:14px;
+}
+
+.btn-delete{
+    background:#dc3545;
+    color:white;
+    border-radius:8px;
+}
+
+.btn-delete:hover{
+    background:#b52a37;
     color:white;
 }

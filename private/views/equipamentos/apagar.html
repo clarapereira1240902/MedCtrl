@@ -80,15 +80,39 @@
 
             <!-- Conteúdo Principal -->
             <main class="col-md-9 col-lg-10 p-4">
-                <section class="pagina-inicial">
-                    <h2>MedCtrl - Área Privada</h2>
-                    <p>Bem-vindo ao sistema de gestão de equipamentos médicos.</p>
-                    <p> Escolha uma opção no menu lateral para continuar.</p>
+                <div class="delete-wrapper">
+                    <div class="delete-card">
+                        
+                        <div class="delete-icon">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
 
-                    <div class="icone-centro">
-                        <i class="fa-solid fa-laptop-medical"></i>
+                        <!-- Texto de alerta -->
+                        <h2>Eliminar Equipamento</h2>
+                        <p class="delete-warning">Tens a certeza que pretendes eliminar este equipamento?</p>
+
+                        <!-- Informação do equipamento -->
+                        <div class="delete-item">
+                            <h4>Monitor de Sinais Vitais</h4>
+                            <p>Código: EQUIP-2024-001</p>
+                            <p>Marca: Philips</p>
+                        </div>
+
+                        <!-- Botões -->
+                        <div class="d-flex justify-content-center gap-3 mt-4">
+                            <a href="lista.html" class="btn btn-cancel btn-sm px-4">
+                                <i class="fa-solid fa-xmark me-1"></i>
+                                Não
+                            </a>
+
+                            <a href="#" class="btn btn-delete btn-sm px-4">
+                                <i class="fa-solid fa-trash me-1"></i>
+                                Sim, eliminar
+                            </a>
+                        </div>
+
                     </div>
-                </section>
+                </div>  
             </main>
         
         </div>
