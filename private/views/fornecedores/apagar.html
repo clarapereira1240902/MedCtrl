@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedCtrl</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="../../../assets/img/logo.png" type="image/png">
+
+    <!-- Bootstrap CSS & custom CSS --> 
+    <link rel="stylesheet" href="../../../assets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../assets/css/private.css">
+    <link rel="stylesheet" href="../../../assets/css/components.css">
+
+    <!-- Google Fonts --> 
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,300;0,700;1,400&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome --> 
+    <link rel="stylesheet" href="../../../assets/fontawesome/all.min.css"> 
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <header class="container-fluid navbar-medctrl">
+        <div class="row align-items-center">
+            <div class="col-6 d-flex align-items-center">
+                <!-- Logo e Nome -->
+                <img src="../../../assets/img/logo.png" height="40">
+                <h3 class="ms-3 mb-0">MedCtrl</h3>
+            </div>
+
+            <div class="col-6 text-end">
+                <div class="dropdown">
+                    <button class="btn btn-user dropdown-toggle" data-bs-toggle="dropdown"> 
+                        <i class="fa-regular fa-user me-2"></i>Utilizador
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="#"><i class="fa-solid fa-key me-2"></i>Alterar password</a>
+                        </li>
+                        <li><hr></li>
+                        <li>
+                            <a class="dropdown-item" href="../../../login.html"><i class="fa-solid fa-right-from-bracket me-2"></i>Terminar sessão</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- SIDEBAR -->
+            <aside class="col-md-3 col-lg-2 sidebar">
+                <nav>
+                    <a href="views/dashboard/dashboard.html">
+                        <i class="fa-solid fa-chart-line"></i> &ensp; Dashboard
+                    </a>
+                    <a href="lista.html">
+                        <i class="fa-solid fa-laptop-medical"></i> &ensp; Equipamentos
+                    </a>
+                    <a href="views/localizacoes/localizacoes.html">
+                        <i class="fa-solid fa-location-dot"></i> &ensp; Localizações
+                    </a>
+                    <a href="../fornecedores/lista.html">
+                        <i class="fa-solid fa-handshake"></i> &ensp; Fornecedores
+                    </a>
+                    <a href="views/documentacao/documentacao.html">
+                        <i class="fa-solid fa-file-medical"></i> &ensp; Documentação
+                    </a>
+                    <a href="views/garantias/garantias.html">
+                        <i class="fa-solid fa-shield-halved"></i> &ensp; Garantias
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Conteúdo Principal -->
+            <main class="col-md-9 col-lg-10 p-4">
+                <div class="d-flex justify-content-center mt-5">
+                    <div class="card shadow rounded text-center p-4" style="max-width:650px; width:100%;">
+
+                        <!-- Ícone -->
+                        <div class="text-warning display-4 mb-3">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+    
+                        <!-- Texto de alerta -->
+                        <h3 class="mb-2">Eliminar Fornecedor</h3>
+                        <p class="text-muted mb-3">Tens a certeza que pretendes eliminar este fornecedor?</p>
+
+                        <!-- Informação do fornecedor -->
+                        <div class="bg-light p-3 rounded mb-3">
+                            <h4 class="mb-1">Dräger Portugal</h4>
+                            <span class="badge bg-primary mb-2">Fabricante</span>
+                            <p class="mb-1"><i class="fa-solid fa-at me-1"></i>geral@drager.pt</p>
+                            <p class="mb-0"><i class="fa-solid fa-phone me-1"></i>229876543</p>
+                        </div>
+
+                        <!-- ALERTA IMPORTANTE -->
+                        <div class="alert alert-danger">
+                            <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                            Este fornecedor está associado a <strong>3 equipamentos</strong>.
+                            A eliminação pode afetar esses registos.
+                        </div>
+
+                        <!-- Botões -->
+                        <div class="d-flex justify-content-center gap-3">
+                            <a href="lista.html" class="btn btn-outline-secondary btn-sm px-4">
+                                <i class="fa-solid fa-xmark me-1"></i>Cancelar
+                            </a>
+
+                            <a href="#" class="btn btn-danger btn-sm px-4">
+                                <i class="fa-solid fa-trash me-1"></i>Eliminar
+                            </a>
+                        </div>
+
+                    </div>
+                </div>  
+            </main>
+        
+        </div>
+    </div>
+
+    
+<!-- Bootstrap JS and custom JS --> 
+<script src="../../../assets/bootstrap/bootstrap.bundle.min.js"></script> 
+
+</body>
+</html>
