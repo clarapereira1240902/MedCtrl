@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedCtrl</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="../../../assets/img/logo.png" type="image/png">
+
+    <!-- Bootstrap CSS & custom CSS --> 
+    <link rel="stylesheet" href="../../../assets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../assets/css/private.css">
+    <link rel="stylesheet" href="../../../assets/css/components.css">
+
+    <!-- Google Fonts --> 
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,300;0,700;1,400&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome --> 
+    <link rel="stylesheet" href="../../../assets/fontawesome/all.min.css"> 
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <header class="container-fluid navbar-medctrl">
+        <div class="row align-items-center">
+            <div class="col-6 d-flex align-items-center">
+                <!-- Logo e Nome -->
+                <img src="../../../assets/img/logo.png" height="40">
+                <h3 class="ms-3 mb-0">MedCtrl</h3>
+            </div>
+
+            <div class="col-6 text-end">
+                <div class="dropdown">
+                    <button class="btn btn-user dropdown-toggle" data-bs-toggle="dropdown"> 
+                        <i class="fa-regular fa-user me-2"></i>Utilizador
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="#"><i class="fa-solid fa-key me-2"></i>Alterar password</a>
+                        </li>
+                        <li><hr></li>
+                        <li>
+                            <a class="dropdown-item" href="../../../login.html"><i class="fa-solid fa-right-from-bracket me-2"></i>Terminar sessão</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- SIDEBAR -->
+            <aside class="col-md-3 col-lg-2 sidebar">
+                <nav>
+                    <a href="views/dashboard/dashboard.html">
+                        <i class="fa-solid fa-chart-line"></i> &ensp; Dashboard
+                    </a>
+                    <a href="../equipamentos/lista.html">
+                        <i class="fa-solid fa-laptop-medical"></i> &ensp; Equipamentos
+                    </a>
+                    <a href="views/localizacoes/localizacoes.html">
+                        <i class="fa-solid fa-location-dot"></i> &ensp; Localizações
+                    </a>
+                    <a href="views/fornecedores/fornecedores.html">
+                        <i class="fa-solid fa-handshake"></i> &ensp; Fornecedores
+                    </a>
+                    <a href="views/documentacao/documentacao.html">
+                        <i class="fa-solid fa-file-medical"></i> &ensp; Documentação
+                    </a>
+                    <a href="views/garantias/garantias.html">
+                        <i class="fa-solid fa-shield-halved"></i> &ensp; Garantias
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Conteúdo Principal -->
+            <main class="col-md-9 col-lg-10 p-4">
+
+                <div class="page-header">
+                    <h2>
+                        <i class="fa-solid fa-laptop-medical me-2"></i>Listagem de Equipamentos
+                    </h2>
+                    <a href="novo.html" class="btn btn-primary-custom">
+                        <i class="fa-solid fa-plus me-2"></i> Novo equipamento
+                    </a>
+                </div>
+
+                <hr>
+
+                <div class="table-responsive">
+                    <table class="table table-medctrl">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Designação</th>
+                                <th>Categoria</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Nº Série</th>
+                                <th>Estado</th>
+                                <th>Criticidade</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>INV-001</td>
+                                <td>Monitor Multiparamétrico</td>
+                                <td>Monitores</td>
+                                <td>Philips</td>
+                                <td>IntelliVue</td>
+                                <td>SN12345</td>
+
+                                <td><span class="badge badge-success">Operacional</span></td>
+                                <td><span class="badge badge-danger">Alta</span></td>
+
+                                <td class="text-center">
+                                    <a href="detalhes.html" class="btn btn-sm btn-view-list"><i class="fa-solid fa-eye"></i></a>
+                                    <a href="editar.html" class="btn btn-sm btn-edit-list"><i class="fa-solid fa-pen"></i></a>
+                                    <a href="apagar.html" class="btn btn-sm btn-delete-list"><i class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </main>
+        
+        </div>
+    </div>
+
+    
+<!-- Bootstrap JS and custom JS --> 
+<script src="../../../assets/bootstrap/bootstrap.bundle.min.js"></script> 
+
+</body>
+</html>
