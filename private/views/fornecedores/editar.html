@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedCtrl</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="../../../assets/img/logo.png" type="image/png">
+
+    <!-- Bootstrap CSS & custom CSS --> 
+    <link rel="stylesheet" href="../../../assets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../assets/css/private.css">
+    <link rel="stylesheet" href="../../../assets/css/components.css">
+
+    <!-- Google Fonts --> 
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,300;0,700;1,400&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome --> 
+    <link rel="stylesheet" href="../../../assets/fontawesome/all.min.css"> 
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <header class="container-fluid navbar-medctrl">
+        <div class="row align-items-center">
+            <div class="col-6 d-flex align-items-center">
+                <!-- Logo e Nome -->
+                <img src="../../../assets/img/logo.png" height="40">
+                <h3 class="ms-3 mb-0">MedCtrl</h3>
+            </div>
+
+            <div class="col-6 text-end">
+                <div class="dropdown">
+                    <button class="btn btn-user dropdown-toggle" data-bs-toggle="dropdown"> 
+                        <i class="fa-regular fa-user me-2"></i>Utilizador
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="#"><i class="fa-solid fa-key me-2"></i>Alterar password</a>
+                        </li>
+                        <li><hr></li>
+                        <li>
+                            <a class="dropdown-item" href="../../../login.html"><i class="fa-solid fa-right-from-bracket me-2"></i>Terminar sessão</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- SIDEBAR -->
+            <aside class="col-md-3 col-lg-2 sidebar">
+                <nav>
+                    <a href="views/dashboard/dashboard.html">
+                        <i class="fa-solid fa-chart-line"></i> &ensp; Dashboard
+                    </a>
+                    <a href="../equipamentos/lista.html">
+                        <i class="fa-solid fa-laptop-medical"></i> &ensp; Equipamentos
+                    </a>
+                    <a href="views/localizacoes/localizacoes.html">
+                        <i class="fa-solid fa-location-dot"></i> &ensp; Localizações
+                    </a>
+                    <a href="lista.html">
+                        <i class="fa-solid fa-handshake"></i> &ensp; Fornecedores
+                    </a>
+                    <a href="views/documentacao/documentacao.html">
+                        <i class="fa-solid fa-file-medical"></i> &ensp; Documentação
+                    </a>
+                    <a href="views/garantias/garantias.html">
+                        <i class="fa-solid fa-shield-halved"></i> &ensp; Garantias
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Conteúdo Principal -->
+            <main class="col-md-9 col-lg-10 p-4">
+
+                <div class="page-header">
+                    <h2>
+                        <i class="fa-solid fa-pen-to-square me-2"></i> Editar Fornecedor
+                    </h2>
+
+                    <a href="lista.html" class="btn btn-cancel btn-sm">
+                        <i class="fa-solid fa-arrow-left me-1"></i> Voltar
+                    </a>
+                </div>
+
+                <form class="form-medctrl">
+
+                    <div class="row">
+
+                        <!-- Coluna esquerda -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Nome da Empresa</label>
+                                <input type="text" class="form-control" value="Dräger Portugal">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">NIF</label>
+                                <input type="text" class="form-control" value="507123456">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Telefone</label>
+                                <input type="text" class="form-control" value="229876543">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" value="geral@drager.pt">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Morada</label>
+                                <input type="text" class="form-control" value="Rua da Saúde, Porto">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Website</label>
+                                <input type="url" class="form-control" value="www.drager.pt">
+                            </div>
+                        </div>
+
+                        <!-- Coluna direita -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Pessoa de Contacto</label>
+                                <input type="text" class="form-control" value="João Costa">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Telefone da Pessoa de Contacto</label>
+                                <input type="text" class="form-control" value="912345678">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Tipo de Fornecedor</label>
+                                <select class="form-select">
+                                    <option selected>Fabricante</option>
+                                    <option>Distribuidor / Fornecedor Comercial</option>
+                                    <option>Assistência Técnica</option>
+                                    <option>Fornecedor de Consumíveis</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Equipamentos Associados</label>
+                                <select class="form-select">
+                                    <option selected>Monitor de Sinais Vitais MX450</option>
+                                    <option>Ventilador Pulmonar V500</option>
+                                    <option>ECG Philips TC70</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Observações</label>
+                                <textarea class="form-control" rows="5">Fornecedor principal de equipamentos de monitorização hospitalar.</textarea>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Botões -->
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a href="lista.html" class="btn btn-cancel btn-sm">Cancelar</a>
+
+                        <button type="submit" class="btn btn-save btn-sm">
+                            <i class="fa-regular fa-floppy-disk me-1"></i>Guardar alterações
+                        </button>
+                    </div>
+
+                </form>
+
+            </main>
+        
+        </div>
+    </div>
+
+    
+<!-- Bootstrap JS and custom JS --> 
+<script src="../../../assets/bootstrap/bootstrap.bundle.min.js"></script> 
+
+</body>
+</html>
