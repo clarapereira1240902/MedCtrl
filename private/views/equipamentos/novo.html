@@ -93,6 +93,12 @@
                 <form class="form-medctrl">
 
                     <div class="row">
+                        
+                        <!--Informações gerais do equipamento-->
+                        <div class="col-12 mb-3">
+                            <h4><i class="fa-solid fa-circle-info me-2"></i>Informação Geral</h4>
+                            <hr>
+                        </div>
 
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Código de Inventário</label>
@@ -176,6 +182,106 @@
                             <label class="form-label">Observações</label>
                             <textarea class="form-control" rows="3"></textarea>
                         </div>
+                        
+                        <!--Localização do equipamento-->
+                        <div class="col-12 mt-4">
+                            <h4><i class="fa-solid fa-location-dot me-2"></i>Localização</h4>
+                            <hr>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Localização</label>
+                            <select class="form-select">
+                                <option selected>Selecionar localização</option>
+
+                                <option>
+                                    Hospital Central - Piso 2 - Cardiologia - Sala 12
+                                </option>
+
+                                <option>
+                                    Hospital Norte - Piso 1 - Urgência - Sala 3
+                                </option>
+
+                                <option>
+                                    Hospital Sul - Piso 0 - Radiologia - Sala RX02
+                                </option>
+                            </select>
+                        </div>
+
+
+                        <!--Fornecedor do equipamento-->
+                        <div class="col-12 mt-4">
+                            <h4><i class="fa-solid fa-handshake me-2"></i>Fornecedor</h4>
+                            <hr>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Fornecedor principal</label>
+                            <select class="form-select">
+                                <option selected>Selecionar fornecedor</option>
+                                <option>Dräger Portugal</option>
+                                <option>Siemens Healthineers</option>
+                                <option>Philips Healthcare</option>
+                            </select>
+                        </div>
+
+
+                        <!--Garantias do equipamento-->
+                        <div class="col-12 mt-4">
+                            <h4><i class="fa-solid fa-shield-halved me-2"></i>Garantia e Manutenção</h4>
+                            <hr>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Data início garantia</label>
+                            <input type="date"class="form-control">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Data fim garantia</label>
+                            <input type="date"class="form-control">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Contrato de manutenção</label>
+                            <select class="form-select">
+                                <option selected>Escolher</option>
+                                <option>Sim</option>
+                                <option>Não</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Tipo contrato</label>
+                            <select class="form-select">
+                                <option selected>Escolher</option>
+                                <option>Preventivo</option>
+                                <option>Corretivo</option>
+                                <option>Preventivo + Corretivo</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Periodicidade</label>
+                            <select class="form-select">
+                                <option selected>Escolher</option>
+                                <option>Mensal</option>
+                                <option>Trimestral</option>
+                                <option>Semestral</option>
+                                <option>Anual</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Entidade responsável</label>
+                            <input type="text" class="form-control">
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Observações da garantia</label>
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+
 
                         <!-- Botões -->
                         <div class="d-flex justify-content-end gap-2 mb-4"> 
