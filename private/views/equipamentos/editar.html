@@ -92,8 +92,13 @@
                 </div>
 
                 <form class="form-medctrl">
-
                     <div class="row">
+
+                        <!-- Informação geral do equipamento -->
+                        <div class="col-12 mb-3">
+                            <h4><i class="fa-solid fa-circle-info me-2"></i>Informação Geral</h4>
+                            <hr>
+                        </div>
 
                         <!-- Coluna esquerda -->
                         <div class="col-md-6">
@@ -180,6 +185,111 @@
                         </div>
 
                     </div>
+
+
+                    <!-- Localização do equipamento -->
+                    <div class="mb-4">
+                        <h5 class="mb-3">
+                            <i class="fa-solid fa-location-dot me-2"></i>Localização
+                        </h5>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Edifício</label>
+                                <input type="text" class="form-control">
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Piso</label>
+                                <input type="text" class="form-control">
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Departamento</label>
+                                <input type="text" class="form-control">
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Sala</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Fornecedor do equipamento -->
+                    <div class="mb-4">
+                        <h5 class="mb-3"><i class="fa-solid fa-handshake me-2"></i>Fornecedor</h5>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Empresa</label>
+                                <input type="text" class="form-control">
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Tipo de Fornecedor</label>
+                                <select class="form-select">
+                                    <option>Fabricante</option>
+                                    <option>Distribuidor</option>
+                                    <option>Assistência Técnica</option>
+                                    <option>Consumíveis</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Contacto</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Garantia do equipamento  -->
+                    <div class="mb-4">
+                        <h5 class="mb-3">
+                            <i class="fa-solid fa-shield-halved me-2"></i>
+                            Garantias e Contratos
+                        </h5>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Início Garantia</label>
+                                <input type="date" class="form-control">
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Fim Garantia</label>
+                                <input type="date" class="form-control">
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Contrato de Manutenção</label>
+                                <select class="form-select">
+                                    <option>Sim</option>
+                                    <option>Não</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Tipo de Contrato</label>
+                                <select class="form-select">
+                                    <option>Preventivo</option>
+                                    <option>Corretivo</option>
+                                    <option>Full Service</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Entidade Responsável</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
 
                     <!-- Observações -->
                     <div class="mt-3">
