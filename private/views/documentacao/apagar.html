@@ -60,7 +60,7 @@
                     <a href="views/dashboard/dashboard.html">
                         <i class="fa-solid fa-chart-line"></i> &ensp; Dashboard
                     </a>
-                    <a href="../equipamentos/lista.html">
+                    <a href="lista.html">
                         <i class="fa-solid fa-laptop-medical"></i> &ensp; Equipamentos
                     </a>
                     <a href="../localizacoes/lista.html">
@@ -69,7 +69,7 @@
                     <a href="../fornecedores/lista.html">
                         <i class="fa-solid fa-handshake"></i> &ensp; Fornecedores
                     </a>
-                    <a href="lista.html">
+                    <a href="../documentacao/lista.html">
                         <i class="fa-solid fa-file-medical"></i> &ensp; Documentação
                     </a>
                     <a href="views/garantias/garantias.html">
@@ -80,48 +80,60 @@
 
             <!-- Conteúdo Principal -->
             <main class="col-md-9 col-lg-10 p-4">
+                <div class="d-flex justify-content-center mt-5">
+                    <div class="card shadow rounded text-center p-4" style="max-width:650px; width:100%;">
 
-                <div class="page-header">
-                    <h2>
-                        <i class="fa-solid fa-file-medical me-2"></i>Documentação
-                    </h2>
-                    <a href="novo.html" class="btn btn-primary-custom btn-sm">
-                        <i class="fa-solid fa-plus me-1"></i> Novo Documento
-                    </a>
+                        <!-- Ícone -->
+                        <div class="text-warning display-4 mb-3">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+
+                        <!-- Texto de alerta -->
+                        <h3 class="mb-2">Eliminar Documento</h3>
+                        <p class="text-muted mb-3">
+                            Tens a certeza que pretendes eliminar este documento?
+                        </p>
+
+                        <!-- Informação do documento -->
+                        <div class="bg-light p-3 rounded mb-3">
+                            <h4 class="mb-2">Manual Monitor Philips MX450</h4>
+                            <span class="badge bg-primary mb-2">Manual Técnico</span>
+                            <p class="mb-1">
+                                <i class="fa-solid fa-laptop-medical me-1"></i>
+                                INV-001 | Monitor Multiparamétrico
+                            </p>
+                            <p class="mb-1">
+                                <i class="fa-solid fa-handshake me-1"></i>
+                                Philips Healthcare
+                            </p>
+                            <p class="mb-0">
+                                <i class="fa-solid fa-calendar-days me-1"></i>
+                                Validade: 2028-01-01
+                            </p>
+
+                        </div>
+
+                        <!-- ALERTA -->
+                        <div class="alert alert-danger">
+                            <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                            Este documento encontra-se associado a um equipamento.
+                            Após a eliminação deixará de estar disponível para consulta.
+                        </div>
+
+                        <!-- Botões -->
+                        <div class="d-flex justify-content-center gap-3">
+                            <a href="lista.html" class="btn btn-outline-secondary btn-sm px-4">
+                                <i class="fa-solid fa-xmark me-1"></i>Cancelar
+                            </a>
+
+                            <a href="#"
+                            class="btn btn-danger btn-sm px-4">
+                                <i class="fa-solid fa-trash me-1"></i>Eliminar
+                            </a>
+                        </div>
+
+                    </div>
                 </div>
-
-                <hr>
-
-                <div class="table-responsive">
-                    <table class="table table-medctrl align-middle">
-                        <thead>
-                            <tr>
-                                <th>Documento</th>
-                                <th>Tipo</th>
-                                <th>Equipamento</th>
-                                <th>Fornecedor</th>
-                                <th>Validade</th>
-                                <th class="text-center">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Manual Philips MX450</td>
-                                <td>Manual Técnico</td>
-                                <td>Monitor Vital</td>
-                                <td>Philips</td>
-                                <td>2028-01-01</td>
-
-                                <td class="text-center">
-                                    <a href="detalhes.html" class="btn btn-sm btn-view-list"><i class="fa-solid fa-eye"></i></a>
-                                    <a href="editar.html" class="btn btn-sm btn-edit-list"><i class="fa-solid fa-pen"></i></a>
-                                    <a href="apagar.html" class="btn btn-sm btn-delete-list"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
             </main>
         
         </div>

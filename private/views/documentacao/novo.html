@@ -60,7 +60,7 @@
                     <a href="views/dashboard/dashboard.html">
                         <i class="fa-solid fa-chart-line"></i> &ensp; Dashboard
                     </a>
-                    <a href="../equipamentos/lista.html">
+                    <a href="lista.html">
                         <i class="fa-solid fa-laptop-medical"></i> &ensp; Equipamentos
                     </a>
                     <a href="../localizacoes/lista.html">
@@ -69,7 +69,7 @@
                     <a href="../fornecedores/lista.html">
                         <i class="fa-solid fa-handshake"></i> &ensp; Fornecedores
                     </a>
-                    <a href="lista.html">
+                    <a href="../documentacao/lista.html">
                         <i class="fa-solid fa-file-medical"></i> &ensp; Documentação
                     </a>
                     <a href="views/garantias/garantias.html">
@@ -80,47 +80,84 @@
 
             <!-- Conteúdo Principal -->
             <main class="col-md-9 col-lg-10 p-4">
-
+                
                 <div class="page-header">
                     <h2>
-                        <i class="fa-solid fa-file-medical me-2"></i>Documentação
+                        <i class="fa-solid fa-plus me-2"></i>
+                        Novo Documento
                     </h2>
-                    <a href="novo.html" class="btn btn-primary-custom btn-sm">
-                        <i class="fa-solid fa-plus me-1"></i> Novo Documento
-                    </a>
                 </div>
 
                 <hr>
 
-                <div class="table-responsive">
-                    <table class="table table-medctrl align-middle">
-                        <thead>
-                            <tr>
-                                <th>Documento</th>
-                                <th>Tipo</th>
-                                <th>Equipamento</th>
-                                <th>Fornecedor</th>
-                                <th>Validade</th>
-                                <th class="text-center">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Manual Philips MX450</td>
-                                <td>Manual Técnico</td>
-                                <td>Monitor Vital</td>
-                                <td>Philips</td>
-                                <td>2028-01-01</td>
+                <form class="form-medctrl">
 
-                                <td class="text-center">
-                                    <a href="detalhes.html" class="btn btn-sm btn-view-list"><i class="fa-solid fa-eye"></i></a>
-                                    <a href="editar.html" class="btn btn-sm btn-edit-list"><i class="fa-solid fa-pen"></i></a>
-                                    <a href="apagar.html" class="btn btn-sm btn-delete-list"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <div class="row">
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nome do Documento</label>
+                            <input type="text" class="form-control">
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label">Tipo</label>
+                            <select class="form-select">
+                                <option>Manual</option>
+                                <option>Certificado</option>
+                                <option>Relatório</option>
+                                <option>Garantia</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label">Data</label>
+                            <input type="date" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Validade</label>
+                            <input type="date" class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Equipamento</label>
+                            <select class="form-select">
+                                <option selected disabled>Selecionar equipamento</option>
+                                <option>INV-001 | Monitor Multiparamétrico</option>
+                                <option>INV-002 | Ventilador Pulmonar</option>
+                                <option>INV-003 | Bomba de Infusão</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Fornecedor</label>
+                            <select class="form-select">
+                                <option selected>Nenhum</option>
+                                <option>Dräger</option>
+                                <option>Philips Healthcare</option>
+                                <option>GE Healthcare</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Ficheiro / Link</label>
+                            <input type="text" class="form-control" placeholder="Ex: /docs/manual.pdf ou URL">
+                        </div>
+
+
+                        <!-- Botões -->
+                        <div class="d-flex justify-content-end gap-2 mb-4"> 
+                            <a href="lista.html" class="btn btn-cancel btn-sm"> 
+                                <i class="fa-solid fa-xmark me-1"></i> Cancelar 
+                            </a> 
+                            <button type="submit" class="btn btn-save btn-sm"> 
+                                <i class="fa-regular fa-floppy-disk me-1"></i> Guardar 
+                            </button> 
+                        </div>
+
+                    </div>
+
+                </form>
 
             </main>
         
