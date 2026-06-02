@@ -251,3 +251,40 @@ main h2{
     background:#b52a37;
     color:white;
 }
+
+
+
+/* =========================
+   DOCUMENTAÇÃO ASSOCIADA
+========================= */
+
+.documento-card{
+    background:#f8f9fa;
+    border-radius:12px;
+    padding:16px 20px;
+    color:#122a31;
+    border:1px solid transparent;
+    transition:all .25s ease;
+}
+
+.documento-card:hover{
+    background:#e0f9ff;
+    border-color:#00a7f3;
+    transform:translateY(-3px);
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.documento-card h5{
+    color:#122a31;
+    font-weight:600;
+    font-size: 1.0rem;
+}
+
+.documento-card .text-muted{
+    font-size: 0.90rem;
+}
+
+.documento-icon{
+    font-size:28px;
+    color:#006390;
+}
