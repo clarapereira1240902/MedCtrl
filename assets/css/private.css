@@ -26,13 +26,13 @@ body{
 
 /* BOTÃO UTILIZADOR */
 .btn-user{
-    background:#006390;
+    background:#00a7f3;
     color:white;
     border:none;
 }
 
 .btn-user:hover{
-    background:#00a7f3;
+    background:#006390;
     color:white;
 }
 
@@ -45,7 +45,8 @@ body{
 }
 
 .sidebar a{
-    display:block;
+    display:flex;
+    align-items:center;
     text-decoration:none;
     color:white;
     padding:10px;
@@ -56,6 +57,14 @@ body{
 
 .sidebar a:hover{
     background:#00a7f3;
+    transform:translateX(4px);
+}
+
+.sidebar a.active{
+    background:#ffffff;
+    color:#006390;
+    font-weight:700;
+    box-shadow:0 4px 12px rgba(0,0,0,0.12);
 }
 
 .sidebar i{
