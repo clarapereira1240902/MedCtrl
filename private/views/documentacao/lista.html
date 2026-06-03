@@ -89,6 +89,58 @@
 
                 <hr>
 
+                <!-- Pesquisa de documentação -->
+                <div class="search-card mb-4">
+                    <h5>
+                        <i class="fa-solid fa-magnifying-glass me-2"></i>Pesquisa
+                    </h5>
+                    <div class="search-row">
+                        <input type="text" class="form-control search-input" placeholder="Documento, equipamento ou fornecedor">
+                        <button class="btn btn-save search-btn" type="button">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary search-btn" type="button" data-bs-toggle="collapse" data-bs-target="#filtrosDocumentacao">
+                            <i class="fa-solid fa-sliders"></i>
+                        </button>
+                    </div>
+
+                    <div class="collapse mt-3" id="filtrosDocumentacao">
+                        <div class="row g-3 pt-3 border-top">
+                            <div class="col-md-6">
+                                <label class="form-label">Tipo de Documento</label>
+                                <select class="form-select">
+                                    <option selected>Todos</option>
+                                    <option>Manual Técnico</option>
+                                    <option>Certificado</option>
+                                    <option>Contrato</option>
+                                    <option>Ficha Técnica</option>
+                                    <option>Relatório</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Validade</label>
+                                <select class="form-select">
+                                    <option selected>Todas</option>
+                                    <option>Válido</option>
+                                    <option>A expirar</option>
+                                    <option>Expirado</option>
+                                </select>
+                            </div>
+
+                            <div class="d-flex justify-content-end gap-2 mt-3">
+                                <button type="reset" class="btn btn-cancel btn-sm">
+                                    <i class="fa-solid fa-rotate-left me-1"></i>Limpar
+                                </button>
+                                <button type="button" class="btn btn-save btn-sm">
+                                    <i class="fa-solid fa-filter me-1"></i>Aplicar filtros
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Tabela de listagem-->
                 <div class="table-responsive">
                     <table class="table table-medctrl align-middle">
                         <thead>
