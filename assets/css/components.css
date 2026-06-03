@@ -416,3 +416,56 @@ main h2{
     height:330px;
     position:relative;
 }
+
+
+
+/* =========================
+   PESQUISA EQUIPAMENTOS
+========================= */
+
+.search-card{
+    background:#fff;
+    border-radius:14px;
+    padding:16px 20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.04);
+}
+
+.search-card h5{
+    font-size:1.2rem;
+    font-weight:600;
+    color:#122a31;
+    margin-bottom:12px;
+}
+
+.search-row{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.search-input{
+    flex:1;
+    height:42px;
+    border-radius:10px;
+}
+
+.search-btn{
+    width:42px;
+    height:42px;
+    padding:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+}
+
+.search-card .form-control,
+.search-card .form-select{
+    border-radius:10px;
+}
+
+.search-card .form-select{
+    border-radius:10px;
+}
