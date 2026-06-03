@@ -57,10 +57,10 @@
             <!-- SIDEBAR -->
             <aside class="col-md-3 col-lg-2 sidebar">
                 <nav>
-                    <a href="views/dashboard/dashboard.html">
+                    <a href="dashboard.html" class="active">
                         <i class="fa-solid fa-chart-line"></i> &ensp; Dashboard
                     </a>
-                    <a href="lista.html">
+                    <a href="../equipamentos/lista.html">
                         <i class="fa-solid fa-laptop-medical"></i> &ensp; Equipamentos
                     </a>
                     <a href="../localizacoes/lista.html">
@@ -69,15 +69,244 @@
                     <a href="../fornecedores/lista.html">
                         <i class="fa-solid fa-handshake"></i> &ensp; Fornecedores
                     </a>
-                    <a href="lista.html" class="active">
+                    <a href="../documentacao/lista.html">
                         <i class="fa-solid fa-file-medical"></i> &ensp; Documentação
                     </a>
                 </nav>
             </aside>
 
-            <!-- Conteúdo Principal -->
-             <div class="page-header">
-                <h2>
-                    <i class="fa-solid fa-chart-line me-2"></i>Dashboard
-                </h2>
-            </div>
+            <!-- CONTEÚDO PRINCIPAL -->
+            <main class="col-md-9 col-lg-10 p-4">
+                <div class="page-header">
+                    <h2>
+                        <i class="fa-solid fa-chart-line me-2"></i>Dashboard
+                    </h2>
+                </div>
+
+                <hr>
+
+                <!-- Indicadores principais -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <div class="dashboard-card">
+                            <div>
+                                <span>Total de Equipamentos</span>
+                                <h3>128</h3>
+                            </div>
+                            <i class="fa-solid fa-laptop-medical"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card success">
+                            <div>
+                                <span>Ativos</span>
+                                <h3>96</h3>
+                            </div>
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card warning">
+                            <div>
+                                <span>Em Manutenção</span>
+                                <h3>18</h3>
+                            </div>
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card danger">
+                            <div>
+                                <span>Inativos</span>
+                                <h3>14</h3>
+                            </div>
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Indicadores críticos -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <div class="dashboard-mini-card">
+                            <span>Garantia expirada</span><strong>9</strong>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-mini-card">
+                            <span>Sem documentação</span><strong>11</strong>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-mini-card">
+                            <span>Criticidade alta</span><strong>22</strong>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-mini-card">
+                            <span>Garantia termina em 30 dias</span><strong>6</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card-medctrl">
+                            <h4 class="mb-3">
+                                <i class="fa-solid fa-bell me-2"></i>Alertas e Ações Rápidas
+                            </h4>
+
+                            <div class="accordion" id="accordionDashboard">
+
+                                 <!-- Garantias expiradas -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGarantias">
+                                            <i class="fa-solid fa-triangle-exclamation me-2 text-danger"></i>Garantias expiradas
+                                        </button>
+                                    </h2>
+
+                                    <div id="collapseGarantias" class="accordion-collapse collapse show" data-bs-parent="#accordionDashboard">
+                                        <div class="accordion-body">
+                                            Existem <strong>9 equipamentos</strong> com garantia expirada.
+                                            <br><br>
+                                            <a href="../equipamentos/lista.html" class="btn btn-save btn-sm">
+                                                Ver equipamentos
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sem documentação -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDocumentacao">
+                                            <i class="fa-solid fa-file-circle-xmark me-2 text-warning"></i>
+                                            Equipamentos sem documentação associada
+                                        </button>
+                                    </h2>
+
+                                    <div id="collapseDocumentacao" class="accordion-collapse collapse" data-bs-parent="#accordionDashboard">
+                                        <div class="accordion-body">
+                                            Existem <strong>11 equipamentos</strong> sem documentação técnica associada.
+                                            <br><br>
+                                            <a href="../documentacao/lista.html" class="btn btn-save btn-sm">
+                                                Ver documentação
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sem localização -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLocalizacao">
+                                            <i class="fa-solid fa-location-dot me-2 text-primary"></i>
+                                            Equipamentos sem localização atribuída
+                                        </button>
+                                    </h2>
+
+                                    <div id="collapseLocalizacao" class="accordion-collapse collapse" data-bs-parent="#accordionDashboard">
+                                        <div class="accordion-body">
+                                            Existem <strong>3 equipamentos</strong> sem localização definida no sistema.
+                                            <br><br>
+                                            <a href="../localizacoes/lista.html" class="btn btn-save btn-sm">Ver localizações
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+
+                    <!-- Equipamentos por serviço -->
+                    <div class="col-lg-6">
+                        <div class="card-medctrl">
+                            <h4 class="mb-3">
+                                <i class="fa-solid fa-building-user me-2"></i>Equipamentos por Serviço
+                            </h4>
+                            <table class="table table-sm align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Serviço</th>
+                                        <th class="text-end">Nº Equipamentos</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Cardiologia</td>
+                                        <td class="text-end">32</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Urgência</td>
+                                        <td class="text-end">28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>UCI</td>
+                                        <td class="text-end">21</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Radiologia</td>
+                                        <td class="text-end">17</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Distribuição por categoria -->
+                    <div class="col-lg-6">
+                        <div class="card-medctrl">
+                            <h4 class="mb-3">
+                                <i class="fa-solid fa-chart-simple me-2"></i>
+                                Distribuição por Categoria
+                            </h4>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <span>Monitorização</span><strong>40%</strong>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width:40%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <span>Suporte de vida</span><strong>25%</strong>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-danger" style="width:25%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <span>Terapia</span><strong>20%</strong>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" style="width:20%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Diagnóstico</span><strong>15%</strong>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-warning" style="width:15%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+<!-- Bootstrap JS and custom JS --> 
+<script src="../../../assets/bootstrap/bootstrap.bundle.min.js"></script> 
+
+</body>
+</html>
+
