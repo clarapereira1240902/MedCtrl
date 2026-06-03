@@ -394,3 +394,25 @@ main h2{
     box-shadow:none;
     border-color:#00a7f3;
 }
+
+
+
+/* =========================
+   DASHBOARD CHARTS
+========================= */
+.dashboard-chart-card{
+    height:430px;
+}
+
+.dashboard-chart-title{
+    font-size:1.4rem;
+    font-weight:600;
+    color:#122a31;
+    margin-bottom:15px;
+    white-space:nowrap;
+}
+
+.chart-container{
+    height:330px;
+    position:relative;
+}

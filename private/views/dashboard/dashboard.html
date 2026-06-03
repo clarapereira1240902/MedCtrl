@@ -226,23 +226,27 @@
                 <div class="row g-4 mb-4">
                     <!-- Criticidade -->
                     <div class="col-lg-6">
-                        <div class="card-medctrl">
-                            <h4 class="mb-3">
+                        <div class="card-medctrl dashboard-chart-card">
+                            <h5 class="dashboard-chart-title">
                                 <i class="fa-solid fa-triangle-exclamation me-2"></i>
                                 Distribuição por Criticidade
-                            </h4>
-                            <canvas id="graficoCriticidade"></canvas>
+                            </h5>
+                            <div class="chart-container">
+                                <canvas id="graficoCriticidade"></canvas>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Suporte de Vida -->
                     <div class="col-lg-6">
-                        <div class="card-medctrl">
-                            <h4 class="mb-3">
+                        <div class="card-medctrl dashboard-chart-card">
+                            <h5 class="dashboard-chart-title">
                                 <i class="fa-solid fa-heart-pulse me-2"></i>
-                                Equipamentos de Suporte de Vida por Serviço
-                            </h4>
-                            <canvas id="graficoSuporteVida"></canvas>
+                                Suporte de Vida por Serviço
+                            </h5>
+                            <div class="chart-container">
+                                <canvas id="graficoSuporteVida"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -333,6 +337,8 @@
 
 <!-- Bootstrap JS and custom JS --> 
 <script src="../../../assets/bootstrap/bootstrap.bundle.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../../../assets/js/1240902.js"></script>
 
 </body>
 </html>
