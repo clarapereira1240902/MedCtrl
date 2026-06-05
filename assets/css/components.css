@@ -469,3 +469,66 @@ main h2{
 .search-card .form-select{
     border-radius:10px;
 }
+
+
+
+/* =========================
+   RESPONSIVIDADE / COMPONENTES
+========================= */
+
+@media (max-width:991px){
+    .page-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:12px;
+    }
+
+    .dashboard-card,
+    .dashboard-mini-card{
+        min-height:110px;
+    }
+
+    .dashboard-chart-card{
+        height:auto;
+    }
+
+    .chart-container{
+        height:280px;
+    }
+
+    .dashboard-chart-title{
+        white-space:normal;
+        font-size:1.1rem;
+    }
+
+    .card-medctrl{
+        padding:18px;
+    }
+
+    .table-responsive{
+        overflow-x:auto;
+    }
+}
+
+@media (max-width:576px){
+    .dashboard-card,
+    .dashboard-mini-card{
+        padding:14px;
+    }
+
+    .dashboard-card h3{
+        font-size:1.5rem;
+    }
+
+    .dashboard-card i{
+        font-size:24px;
+    }
+
+    .dashboard-mini-card strong{
+        font-size:20px;
+    }
+
+    .accordion-button{
+        font-size:.95rem;
+    }
+}
