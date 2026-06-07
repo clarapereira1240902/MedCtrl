@@ -27,6 +27,9 @@
     <header class="container-fluid navbar-medctrl">
         <div class="row align-items-center">
             <div class="col-6 d-flex align-items-center">
+                <button class="btn btn-user d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuMobile">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
                 <!-- Logo e Nome -->
                 <img src="../../../assets/img/logo.png" height="40">
                 <h3 class="ms-3 mb-0">MedCtrl</h3>
@@ -51,11 +54,45 @@
         </div>
     </header>
 
+    <!-- MENU MOBILE / OFFCANVAS -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="menuMobile">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">
+                <i class="fa-solid fa-laptop-medical me-2"></i>MedCtrl
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+
+        <div class="offcanvas-body offcanvas-medctrl">
+            <nav>
+                <a href="../dashboard/dashboard.html">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+
+                <a href="lista.html" class="active">
+                    <i class="fa-solid fa-laptop-medical"></i> Equipamentos
+                </a>
+
+                <a href="../localizacoes/lista.html">
+                    <i class="fa-solid fa-location-dot"></i> Localizações
+                </a>
+
+                <a href="../fornecedores/lista.html">
+                    <i class="fa-solid fa-handshake"></i> Fornecedores
+                </a>
+
+                <a href="../documentacao/lista.html">
+                    <i class="fa-solid fa-file-medical"></i> Documentação
+                </a>
+            </nav>
+        </div>
+    </div>
+
     <div class="container-fluid">
         <div class="row">
 
             <!-- SIDEBAR -->
-            <aside class="col-md-3 col-lg-2 sidebar">
+            <aside class="col-lg-2 sidebar d-none d-lg-block">
                 <nav>
                     <a href="../dashboard/dashboard.html">
                         <i class="fa-solid fa-chart-line"></i> &ensp; Dashboard
@@ -76,7 +113,7 @@
             </aside>
 
             <!-- Conteúdo Principal -->
-            <main class="col-md-9 col-lg-10 p-4">
+            <main class="col-lg-10 p-4">
                 
                 <div class="page-header">
                     <h2>
@@ -97,57 +134,57 @@
                             <hr>
                         </div>
 
-                        <div class="col-md-4 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Código de Inventário</label>
                             <input type="text" class="form-control" placeholder="Ex: INV-001">
                         </div>
 
-                        <div class="col-md-8 mb-3">
+                        <div class="col-12 col-md-8 mb-3">
                             <label class="form-label">Designação</label>
                             <input type="text" class="form-control" placeholder="Ex: Monitor Multiparamétrico">
                         </div>
 
-                        <div class="col-md-4 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Categoria</label>
                             <input type="text" class="form-control">
                         </div>
 
-                        <div class="col-md-4 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Marca</label>
                             <input type="text" class="form-control">
                         </div>
 
-                        <div class="col-md-4 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Modelo</label>
                             <input type="text" class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Número de Série</label>
                             <input type="text" class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Fabricante</label>
                             <input type="text" class="form-control">
                         </div>
 
-                        <div class="col-md-4 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Data de Aquisição</label>
                             <input type="date" class="form-control">
                         </div>
 
-                        <div class="col-md-4 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Ano de Fabrico</label>
                             <input type="number" class="form-control">
                         </div>
 
-                        <div class="col-md-4 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Custo (€)</label>
                             <input type="number" class="form-control">
                         </div>
 
-                        <div class="col-md-4 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Tipo de Entrada</label>
                             <select class="form-select">
                                 <option>Compra</option>
@@ -157,7 +194,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-4 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Estado</label>
                             <select class="form-select">
                                 <option>Operacional</option>
@@ -166,7 +203,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-4 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Criticidade</label>
                             <select class="form-select">
                                 <option>Baixa</option>
@@ -186,7 +223,7 @@
                             <hr>
                         </div>
 
-                        <div class="col-md-12 mb-3">
+                        <div class="col-12 mb-3">
                             <label class="form-label">Localização</label>
                             <select class="form-select">
                                 <option selected>Selecionar localização</option>
@@ -212,7 +249,7 @@
                             <hr>
                         </div>
 
-                        <div class="col-md-12 mb-3">
+                        <div class="col-12 mb-3">
                             <label class="form-label">Fornecedor principal</label>
                             <select class="form-select">
                                 <option selected>Selecionar fornecedor</option>
@@ -229,17 +266,17 @@
                             <hr>
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Data início garantia</label>
                             <input type="date"class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Data fim garantia</label>
                             <input type="date"class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Contrato de manutenção</label>
                             <select class="form-select">
                                 <option selected>Escolher</option>
@@ -248,7 +285,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Tipo contrato</label>
                             <select class="form-select">
                                 <option selected>Escolher</option>
@@ -258,7 +295,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Periodicidade</label>
                             <select class="form-select">
                                 <option selected>Escolher</option>
@@ -269,7 +306,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Entidade responsável</label>
                             <input type="text" class="form-control">
                         </div>
