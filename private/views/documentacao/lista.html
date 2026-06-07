@@ -27,6 +27,9 @@
     <header class="container-fluid navbar-medctrl">
         <div class="row align-items-center">
             <div class="col-6 d-flex align-items-center">
+                <button class="btn btn-user d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuMobile">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
                 <!-- Logo e Nome -->
                 <img src="../../../assets/img/logo.png" height="40">
                 <h3 class="ms-3 mb-0">MedCtrl</h3>
@@ -51,11 +54,45 @@
         </div>
     </header>
 
+    <!-- MENU MOBILE / OFFCANVAS -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="menuMobile">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">
+                <i class="fa-solid fa-laptop-medical me-2"></i>MedCtrl
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+
+        <div class="offcanvas-body offcanvas-medctrl">
+            <nav>
+                <a href="../dashboard/dashboard.html">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+
+                <a href="../equipamentos/lista.html">
+                    <i class="fa-solid fa-laptop-medical"></i> Equipamentos
+                </a>
+
+                <a href="../localizacoes/lista.html">
+                    <i class="fa-solid fa-location-dot"></i> Localizações
+                </a>
+
+                <a href="../fornecedores/lista.html">
+                    <i class="fa-solid fa-handshake"></i> Fornecedores
+                </a>
+
+                <a href="lista.html" class="active">
+                    <i class="fa-solid fa-file-medical"></i> Documentação
+                </a>
+            </nav>
+        </div>
+    </div>
+
     <div class="container-fluid">
         <div class="row">
 
             <!-- SIDEBAR -->
-            <aside class="col-md-3 col-lg-2 sidebar">
+            <aside class="col-lg-2 sidebar d-none d-lg-block">
                 <nav>
                     <a href="../dashboard/dashboard.html">
                         <i class="fa-solid fa-chart-line"></i> &ensp; Dashboard
@@ -76,7 +113,7 @@
             </aside>
 
             <!-- Conteúdo Principal -->
-            <main class="col-md-9 col-lg-10 p-4">
+            <main class="col-lg-10 p-4">
 
                 <div class="page-header">
                     <h2>
@@ -106,7 +143,7 @@
 
                     <div class="collapse mt-3" id="filtrosDocumentacao">
                         <div class="row g-3 pt-3 border-top">
-                            <div class="col-md-6">
+                            <div class="col-12 col-md-6">
                                 <label class="form-label">Tipo de Documento</label>
                                 <select class="form-select">
                                     <option selected>Todos</option>
@@ -118,7 +155,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-12 col-md-6">
                                 <label class="form-label">Validade</label>
                                 <select class="form-select">
                                     <option selected>Todas</option>
