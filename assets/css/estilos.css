@@ -402,3 +402,41 @@
     background-repeat: no-repeat;
     min-height: 100vh;
 }
+
+.login-error{
+    margin-top:18px;
+    text-align:center;
+    color:#dc3545;
+    font-weight:500;
+    font-size:.95rem;
+}
+
+.login-error i{
+    color:#dc3545;
+}
+
+
+
+/* Responsividade Login */
+@media (max-width:576px){
+    .login-card{
+        width:95%;
+        padding:30px 24px;
+    }
+
+    .login-card h1{
+        font-size:2.4rem;
+    }
+
+    .login-card p{
+        font-size:1rem;
+    }
+
+    .login-card img{
+        max-width:80px;
+    }
+
+    .btn-login, .login-card button{
+        width:100%;
+    }
+}
