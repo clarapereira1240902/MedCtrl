@@ -79,32 +79,45 @@ body{
 /* =========================
    RESPONSIVIDADE / OFFCANVAS
 ========================= */
-
 .offcanvas-medctrl{
     background:#006390;
 }
 
 .offcanvas-medctrl nav a{
-    display:block;
+    display:flex;
+    align-items:center;
     text-decoration:none;
     color:white;
-    padding:12px 14px;
-    margin-bottom:8px;
+    padding:10px;
+    margin-bottom:5px;
     border-radius:10px;
-    transition:.25s;
+    transition:.3s;
 }
 
-.offcanvas-medctrl nav a:hover,
+.offcanvas-medctrl nav a:hover{
+    background:#00a7f3;
+    transform:translateX(4px);
+}
+
 .offcanvas-medctrl nav a.active{
     background:#ffffff;
     color:#006390;
     font-weight:700;
+    box-shadow:0 4px 12px rgba(0,0,0,0.12);
 }
 
 .offcanvas-medctrl i{
-    width:22px;
-    margin-right:8px;
+    margin-right:2px;
+    width:20px;
+    
 }
+
+.offcanvas-title{
+    color:#00a7f3;
+    font-weight:700;
+    font-size:1.7rem;
+}
+
 
 @media (max-width:991px){
     main{
