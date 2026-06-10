@@ -17,7 +17,8 @@
     <!-- Font Awesome (local) --> 
     <link rel="stylesheet" href="../assets/fontawesome/all.min.css">
 
-    <!-- Estilos da página --> 
+    <!--  Bootstrap CSS & custom CSS --> 
+    <link rel="stylesheet" href="../assets/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/estilos.css">
 </head>
 
@@ -39,6 +40,9 @@
             <a href="#vantagens">Vantagens</a>
             <a href="#contacto">Contacto</a> 
         </div>
+        <button class="btn-menu-public" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuPublic">
+            <i class="fa-solid fa-bars"></i>
+        </button>
 
         <!-- Área Cliente -->
          <div class="nav-cliente">
@@ -50,8 +54,23 @@
 
     </nav>
 
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="menuPublic">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">MedCtrl</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
 
-    <!-- Secção Objetivo" --> 
+        <div class="offcanvas-body menu-public-body">
+            <a href="#objetivo">Objetivo</a>
+            <a href="#solucao">Solução</a>
+            <a href="#vantagens">Vantagens</a>
+            <a href="#contacto">Contacto</a>
+            <a href="../login.html" class="menu-public-login">Iniciar Sessão</a>
+        </div>
+    </div>
+
+
+    <!-- Secção Objetivo --> 
     <section class="container-texto-generico seccao-objetivo" id="objetivo"> 
         <div class="objetivo-content"> 
             <div class="objetivo-texto">
@@ -64,6 +83,7 @@
             <div class="botao-contactar">
                 <a href="#contacto" class="button-saber-mais">Saber Mais</a>
             </div> 
+        </div>
     </section>
 
 
@@ -119,7 +139,8 @@
             <!--Caixa dos benefícios-->
             <div class="caixa-vantagens">
                 <h3>Benefícios</h3>
-                <p><i class="fa-solid fa-check"></i>Redução de erros e duplicação de dados</p>
+                <p><i class="fa-solid fa-check"></i>Redução de erros</p>
+                <p><i class="fa-solid fa-check"></i>Informação única e organizada</p>
                 <p><i class="fa-solid fa-check"></i>Acesso rápido à informação</p>
                 <p><i class="fa-solid fa-check"></i>Melhor controlo tecnológico</p>
             </div>
@@ -134,47 +155,69 @@
             </div>
 
         </div>
-
     </section>
 
 
     <!--Secção Contacto-->
     <section id="contacto"> 
-        <h2>Contacto</h2> 
-        <p>Contacte-nos para saber mais sobre a nossa gestão de equipamentos.</p> 
-        <form id="contactForm"> 
-            <label for="nome">Nome:</label> 
-            <input type="text" id="nome" name="nome" required> 
+        <h2>Fale Connosco</h2>
+        <p>
+            Estamos disponíveis para esclarecer dúvidas sobre a plataforma MedCtrl e as suas funcionalidades.
+        </p>
 
-            <label for="email">Email:</label> 
-            <input type="email" id="email" name="email" required> 
+        <div class="contacto-container">
 
-            <label for="mensagem">Mensagem:</label> 
-            <textarea id="mensagem" name="mensagem" rows="4" required></textarea> 
+            <!-- Caixa de Informações -->
+            <div class="contacto-info">
+                <h3>Informações de Contacto</h3>
 
-            <button type="submit">Enviar</button> 
-        </form> 
+                <div class="contacto-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <div>
+                        <span>Rua de Cedofeita, nº 128</span>
+                        <span>4050-173, Porto</span>
+                    </div>
+                </div>
+
+                <div class="contacto-item">
+                    <i class="fa-solid fa-clock"></i>
+                    <div>
+                        <span>2ª a 6ª Feira: 9h — 17h</span>
+                        <span>Sábado e Feriados: 9h — 15h</span>
+                    </div>
+                </div>
+
+                <div class="contacto-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <div>
+                        <span>info@medctrl.pt</span>
+                    </div>
+                </div>
+
+                <div class="contacto-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <div>
+                        <span>+351 912 345 678</span>
+                    </div>
+                </div>
+            </div>
+
+            <form id="contactForm"> 
+                <label for="nome">Nome:</label> 
+                <input type="text" id="nome" name="nome" required> 
+
+                <label for="email">Email:</label> 
+                <input type="email" id="email" name="email" required> 
+
+                <label for="mensagem">Mensagem:</label> 
+                <textarea id="mensagem" name="mensagem" rows="4" required></textarea> 
+
+                <button type="submit">Enviar</button> 
+            </form> 
+
+        </div>
+
     </section>
-
-
-    <!-- Rodapé -->
-    <footer class="footer-container">
-        <div class="footer-section">
-            <strong>LOCALIZAÇÃO</strong>
-            <p>Rua de Cedofeita, nº 128<br> 4050-173, Porto <br> Portugal </p>
-        </div>
-        <div class="footer-section">
-            <strong>HORÁRIO</strong>
-            <p>2ª a 6ª Feira: 9h — 17h</p>
-            <p>Sábado e Feriados: 9h — 15h</p> 
-            <p>Domingo: Encerrado</p>
-        </div>
-        <div class="footer-section"> 
-            <strong>CONTACTOS</strong> 
-            <p>Email: info@medctrl.pt</p> 
-            <p>Telefone: +351 912 345 678</p> 
-        </div> 
-    </footer>
 
 
 <script>
@@ -186,6 +229,7 @@ window.addEventListener("scroll", () => {
     document.querySelector(".scroll-bar").style.width = scrolled + "%";
 });
 </script>
+<script src="../assets/bootstrap/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

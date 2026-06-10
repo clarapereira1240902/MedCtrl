@@ -6,6 +6,7 @@
 }
 
 
+
 .bng-navbar {
     position: fixed;
     top: 20px;
@@ -30,10 +31,10 @@
     z-index: 1000;
 }
 
-.bng-navbar div { 
-    display: flex;                /* Coloca os elementos lado a lado */ 
-    align-items: center;          /* Alinha-os verticalmente ao centro */ 
-    gap: 10px;
+.bng-navbar > div:first-child{
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
 .bng-navbar img {
@@ -78,10 +79,13 @@
     border: 1.5px solid #00a7f3;
     border-radius: 50px;
     white-space: nowrap;
+    transition: .3s;
 }
 
 .nav-cliente a:hover {
     font-weight: 600;
+    background:#00a7f3;
+    color:#fff;
 }
 
 /* Scroll bar inferior */
@@ -97,7 +101,9 @@
 
 
 
-/* Secção do Objetivo*/
+/* =========================
+   SECÇÃO OBJETIVO
+========================= */
 .container-texto-generico {
     padding-top: 80px;
     width: 100%;
@@ -154,29 +160,35 @@
     font-weight: 500;
     font-size: 16px;
     border-radius: 40px;
+    transition:.3s;
 }
 
 .button-saber-mais:hover {
     font-weight: 600;
+    background:#006390;
+    color:#ffffff;
 }
 
 
 
-/* Secção Solução */
+/* =========================
+   SECÇÃO SOLUÇÃO
+========================= */
 .seccao-solucao {
     padding: 80px 20px;
     text-align: center;
+    background: #f5f7fa;
 }
 
 /* Título */
 .seccao-solucao h2 {
-    font-size: 32px;
+    font-size: 36px;
     color: #122a31;
     margin-bottom: 10px;
 }
 
 .subtitulo-solucao {
-    color: #000000;
+    color: #555;
     margin-bottom: 50px;
     font-size: 20px;
 }
@@ -221,170 +233,207 @@
 
 
 
-/* Secção Vantagens */
+/* =========================
+   SECÇÃO VANTAGENS
+========================= */
 .seccao-vantagens {
-    padding: 80px 60px;
-    background: #9ccad2;
+    padding: 90px 60px;
+    background: #f5f7fa;
     text-align: center;
 }
 
 .seccao-vantagens h2 {
-    font-size: 32px;
+    font-size: 36px;
     color: #122a31;
     margin-bottom: 10px;
 }
 
 .subtitulo {
-    color: #ffffff;
-    margin-bottom: 50px;
+    color: #006390;
+    margin-bottom: 55px;
     font-size: 20px;
-    font-weight: 550;
+    font-weight: 700;
 }
 
-/*Cartões*/
 .vantagens-container {
     display: flex;
     justify-content: center;
-    gap: 50px;
+    gap: 40px;
     flex-wrap: wrap;
 }
 
 .caixa-vantagens {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    width: 320px;
-    box-shadow: 0 10px 25px #00000068;
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 24px;
+    width: 340px;
+    box-shadow: 0 14px 30px rgba(0,99,144,.12);
+    border-top: 6px solid #00a7f3;
 }
 
 .caixa-vantagens h3 {
     color: #006390;
-    margin-bottom: 15px;
+    margin-bottom: 22px;
     text-align: center;
+    font-size: 26px;
 }
 
 .caixa-vantagens p {
-    color: #000000;
-    margin-bottom: 10px;
+    color: #122a31;
+    margin-bottom: 14px;
     text-align: left;
+    font-size: 16px;
 }
 
 .caixa-vantagens p.areas {
     text-align: center;
+    background: #eef8fb;
+    padding: 10px;
+    border-radius: 12px;
 }
 
 .caixa-vantagens i{
+    color: #00a7f3;
     padding: 5px;
 }
 
 
 
-/* Secção Contacto*/
+/* =========================
+   SECÇÃO CONTACTO
+========================= */
 #contacto {
-    padding: 80px 60px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 90px 20px;
+    background: #f5f7fa;
     text-align: center;
 }
 
 #contacto h2 {
-    font-size: 32px;
-    color: #0d1d21;
+    font-size: 36px;
+    color: #122a31;
     margin-bottom: 10px;
 }
 
-#contacto p {
+#contacto > p {
     color: #555;
-    font-size: 20px;
-    margin-bottom: 40px;
-    max-width: 600px;
+    font-size: 18px;
+    margin-bottom: 45px;
 }
 
-#contacto form {
+.contacto-container {
     width: 100%;
-    max-width: 500px;
-    padding: 35px;
-    border-radius: 18px;
-    box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 30px;
+    align-items: stretch;
+}
 
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.contacto-info, #contactForm {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 35px;
+    box-shadow: 0 14px 30px rgba(0, 99, 144, 0.12);
     text-align: left;
 }
 
-#contacto label {
-    font-size: 14px;
+.contacto-info {
+    border-left: 6px solid #00a7f3;
+}
+
+.contacto-info h3 {
+    color: #006390;
+    font-size: 26px;
+    margin-bottom: 32px;
     font-weight: 600;
-    color: #0d1d21;
 }
 
-#contacto input, #contacto textarea { 
-    padding: 6px;                /* Espaço interno (dentro do campo) */ 
-    margin-bottom: 10px;          /* Espaço abaixo de cada campo */ 
-    border: 1px solid #dddddd;       /* Borda cinzenta clara */ 
-    border-radius: 5px;           /* Bordas arredondadas */ 
+.contacto-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 26px;
 }
 
-#contacto button { 
-    margin-top: 10px;
-    padding: 7px;
+.contacto-item i {
+    width: 28px;
+    min-width: 28px;
+    color: #00a7f3;
+    font-size: 20px;
+    margin-top: 4px;
+}
+
+.contacto-item div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.contacto-item span {
+    color: #455a64;
+    font-size: 17px;
+    line-height: 1.4;
+}
+
+#contactForm {
+    border-top: 6px solid #006390;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#contactForm label {
+    color: #122a31;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+#contactForm input, #contactForm textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d7e3e8;
+    border-radius: 12px;
+    background: #f8fbfc;
+    outline: none;
+}
+
+#contactForm input:focus, #contactForm textarea:focus {
+    border-color: #00a7f3;
+    box-shadow: 0 0 0 3px rgba(0, 167, 243, 0.15);
+}
+
+#contactForm button {
+    margin-top: 12px;
+    padding: 12px;
     border: none;
-    border-radius: 10px;
-    background: #00a7f3;
-    color: #fff;
+    border-radius: 12px;
+    background: #006390;
+    color: white;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 700;
     cursor: pointer;
 }
 
-#contacto form button:hover {
-   font-weight: 600;
+#contactForm button:hover {
+    background: #00a7f3;
+}
+
+@media (max-width: 768px) {
+    .contacto-container {
+        grid-template-columns: 1fr;
+    }
+
+    .contacto-info, #contactForm {
+        padding: 28px;
+    }
 }
 
 
 
-/* Rodapé */ 
-.footer-container {
-    width: 90%;
-    max-width: 1100px;
-    background: #9ccad2;
-    border: 1px solid #e0e0e0;
-    border-radius: 50px;
-    padding: 20px 30px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 40px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.04);
-    position: relative;
-    margin: 60px auto 30px auto;
-}
-
-.footer-section {
-    flex: 1;
-    min-width: 200px;
-    text-align: center;
-}
-
-.footer-section strong {
-    display: block;
-    margin-bottom: 13px;
-    color: #006390;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.footer-section p {
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 550;
-}
-
-
-
-/* Estilo Login */
+/* =========================
+   ESTILO LOGIN
+========================= */
 .btn-primary {
     background-color: #006390;
 
@@ -417,7 +466,9 @@
 
 
 
-/* Responsividade Login */
+/* =========================
+   RESPONSIVIDADE - LOGIN
+========================= */
 @media (max-width:576px){
     .login-card{
         width:95%;
@@ -438,5 +489,272 @@
 
     .btn-login, .login-card button{
         width:100%;
+    }
+}
+
+
+
+/* =========================
+   RESPONSIVIDADE - ÁREA PUBLIC
+========================= */
+@media (max-width: 991px){
+    .bng-navbar{
+        width:95%;
+        padding:10px 18px;
+        border-radius:30px;
+    }
+
+    .container-navegacao{
+        gap:14px;
+    }
+
+    .container-navegacao a{
+        font-size:14px;
+    }
+
+    .nav-cliente a{
+        font-size:14px;
+        padding:4px 12px;
+    }
+
+    .objetivo-texto{
+        width:85%;
+    }
+
+    .objetivo-texto h1{
+        font-size:42px;
+    }
+
+    .seccao-objetivo{
+        min-height:600px;
+        padding:70px 0;
+        background-position:center;
+    }
+
+    .seccao-vantagens{
+        padding:70px 30px;
+    }
+
+    #contacto{
+        padding:70px 30px;
+    }
+}
+
+
+
+@media (max-width: 576px){
+    .bng-navbar{
+        width:94%;
+        padding:9px 14px;
+    }
+
+    .nav-cliente a{
+        font-size:13px;
+        padding:4px 10px;
+    }
+
+    .bng-navbar h3{
+        font-size:19px;
+    }
+
+    .seccao-objetivo{
+        min-height:520px;
+        padding:60px 18px;
+    }
+
+    .objetivo-texto h1{
+        font-size:29px;
+        line-height:1.25;
+    }
+
+    .objetivo-texto p{
+        font-size:15px;
+        line-height:1.6;
+    }
+
+    .button-saber-mais{
+        margin-top:25px;
+        padding:9px 22px;
+        font-size:15px;
+    }
+
+    .seccao-solucao h2, .seccao-vantagens h2, #contacto h2{
+        font-size:28px;
+    }
+
+    .subtitulo-solucao, .subtitulo{
+        font-size:17px;
+        margin-bottom:35px;
+    }
+
+    .cartao-solucao{
+        padding:22px;
+    }
+
+    .seccao-vantagens{
+        padding:55px 16px;
+    }
+
+    .caixa-vantagens{
+        padding:25px;
+    }
+
+    #contacto{
+        padding:55px 16px;
+    }
+
+    #contactForm{
+        padding:24px;
+    }
+}
+
+
+
+/* =========================
+   MENU PUBLIC / OFFCANVAS
+========================= */
+.btn-menu-public{
+    display:none;
+    background:#006390;
+    color:#ffffff;
+    border:none;
+    border-radius:50%;
+    width:42px;
+    height:42px;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+}
+
+.btn-menu-public:hover{
+    background:#00a7f3;
+    color:#ffffff;
+}
+
+.menu-public-body{
+    background:#006390;
+    padding:25px;
+}
+
+.menu-public-body a{
+    display:block;
+    text-decoration:none;
+    color:#ffffff;
+    font-weight:600;
+    font-size:18px;
+    padding:12px 14px;
+    border-radius:10px;
+    margin-bottom:8px;
+}
+
+.menu-public-body a:hover{
+    background:#ffffff;
+    color:#006390;
+}
+
+.menu-public-login{
+    background:#00a7f3;
+    color:#ffffff !important;
+    text-align:center;
+    margin-top:18px;
+}
+
+.menu-public-login:hover{
+    background:#ffffff;
+    color:#006390 !important;
+}
+
+#menuPublic .offcanvas-title{
+    color:#006390;
+    font-weight:700;
+}
+
+@media (max-width: 768px){
+    .bng-navbar{
+        position:fixed;
+        top:12px;
+        width:92%;
+        padding:10px 16px;
+    }
+
+    .container-navegacao, .nav-cliente{
+        display:none !important;
+    }
+
+    .btn-menu-public{
+        display:flex !important;
+    }
+
+    .bng-navbar img{
+        width:32px;
+    }
+
+    .bng-navbar h3{
+        font-size:20px;
+    }
+
+    .container-texto-generico{
+        padding-top:90px;
+    }
+
+    .seccao-objetivo{
+        min-height:560px;
+        text-align:center;
+        background-position:center;
+    }
+
+    .objetivo-texto{
+        width:100%;
+    }
+
+    .objetivo-texto h1{
+        font-size:34px;
+        text-shadow:none;
+    }
+
+    .objetivo-texto p{
+        font-size:16px;
+    }
+
+    .botao-contactar{
+        text-align:center;
+    }
+
+    .seccao-solucao{
+        padding:60px 20px;
+    }
+
+    .solucao-container{
+        gap:20px;
+    }
+
+    .cartao-solucao{
+        width:100%;
+        max-width:330px;
+    }
+
+    .seccao-vantagens{
+        padding:60px 20px;
+    }
+
+    .vantagens-container{
+        gap:25px;
+    }
+
+    .caixa-vantagens{
+        width:100%;
+        max-width:340px;
+    }
+
+    #contacto{
+        padding:60px 20px;
+    }
+
+    #contacto > p{
+    font-size:17px;
+    }
+
+    #contactForm{
+        padding:28px;
     }
 }
