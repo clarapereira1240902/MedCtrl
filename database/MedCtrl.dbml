@@ -1,0 +1,168 @@
+Table perfis {
+  id int [pk, increment]
+  nome varchar(50) [not null, unique]
+}
+
+Table utilizadores {
+  id int [pk, increment]
+  perfil_id int [not null, ref: > perfis.id]
+  nome varchar(100) [not null]
+  email varchar(150) [not null, unique]
+  password_hash varchar(255) [not null]
+  ativo boolean [not null, default: true]
+  criado_em datetime
+}
+
+Table categorias {
+  id int [pk, increment]
+  nome varchar(100) [not null, unique]
+  descricao text
+}
+
+Table estados_equipamento {
+  id int [pk, increment]
+  nome varchar(50) [not null, unique]
+}
+
+Table criticidades {
+  id int [pk, increment]
+  nome varchar(50) [not null, unique]
+  descricao text
+}
+
+Table tipos_entrada {
+  id int [pk, increment]
+  nome varchar(50) [not null, unique]
+}
+
+Table localizacoes {
+  id int [pk, increment]
+  edificio varchar(100) [not null]
+  piso varchar(50) [not null]
+  servico varchar(100) [not null]
+  sala varchar(100) [not null]
+}
+
+Table equipamentos {
+  id int [pk, increment]
+  localizacao_id int [not null, ref: > localizacoes.id]
+  categoria_id int [not null, ref: > categorias.id]
+  estado_id int [not null, ref: > estados_equipamento.id]
+  criticidade_id int [not null, ref: > criticidades.id]
+  tipo_entrada_id int [not null, ref: > tipos_entrada.id]
+
+  codigo_inventario varchar(50) [not null, unique]
+  designacao varchar(150) [not null]
+  marca varchar(100) [not null]
+  modelo varchar(100) [not null]
+  numero_serie varchar(100) [not null]
+  fabricante varchar(150)
+
+  data_aquisicao date
+  ano_fabrico int
+  custo_aquisicao decimal(10,2)
+  observacoes text
+  ativo boolean [not null, default: true]
+
+  indexes {
+    (marca, modelo, numero_serie) [unique]
+  }
+}
+
+Table tipos_fornecedor {
+  id int [pk, increment]
+  nome varchar(80) [not null, unique]
+}
+
+Table fornecedores {
+  id int [pk, increment]
+  tipo_fornecedor_id int [not null, ref: > tipos_fornecedor.id]
+
+  nome_empresa varchar(150) [not null]
+  nif varchar(20) [not null, unique]
+  telefone varchar(30)
+  email varchar(150)
+  morada varchar(255)
+  website varchar(150)
+  pessoa_contacto varchar(100)
+  telefone_contacto varchar(30)
+  observacoes text
+  ativo boolean [not null, default: true]
+}
+
+Table equipamento_fornecedor {
+  id int [pk, increment]
+  equipamento_id int [not null, ref: > equipamentos.id]
+  fornecedor_id int [not null, ref: > fornecedores.id]
+  tipo_fornecedor_id int [not null, ref: > tipos_fornecedor.id]
+
+  indexes {
+    (equipamento_id, fornecedor_id, tipo_fornecedor_id) [unique]
+  }
+}
+
+Table tipos_documento {
+  id int [pk, increment]
+  nome varchar(80) [not null, unique]
+}
+
+Table documentos {
+  id int [pk, increment]
+  tipo_documento_id int [not null, ref: > tipos_documento.id]
+  equipamento_id int [not null, ref: > equipamentos.id]
+  fornecedor_id int [ref: > fornecedores.id]
+
+  nome varchar(150) [not null]
+  data_documento date
+  data_validade date
+  ficheiro_link varchar(255) [not null]
+  observacoes text
+  ativo boolean [not null, default: true]
+}
+
+Table garantias_contratos {
+  id int [pk, increment]
+  equipamento_id int [not null, ref: > equipamentos.id]
+  fornecedor_id int [ref: > fornecedores.id]
+
+  inicio_garantia date
+  fim_garantia date
+  tem_contrato_manutencao boolean [not null, default: false]
+  tipo_contrato varchar(80)
+  entidade_responsavel varchar(150)
+  periodicidade varchar(80)
+  observacoes text
+}
+
+Table conteudos_publicos {
+  id int [pk, increment]
+  secao varchar(80) [not null]
+  campo varchar(80) [not null]
+  titulo varchar(150)
+  conteudo text [not null]
+  ordem int [default: 0]
+  ativo boolean [not null, default: true]
+
+  indexes {
+    (secao, campo, ordem)
+  }
+}
+
+Table mensagens_contacto {
+  id int [pk, increment]
+  nome varchar(100) [not null]
+  email varchar(150) [not null]
+  mensagem text [not null]
+  data_envio datetime
+  lida boolean [not null, default: false]
+}
+
+Table logs_sistema {
+  id int [pk, increment]
+  utilizador_id int [ref: > utilizadores.id]
+  acao varchar(150) [not null]
+  tabela_afetada varchar(80)
+  registo_id int
+  data_evento datetime
+  detalhes text
+}
