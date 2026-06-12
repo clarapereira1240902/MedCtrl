@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/../../includes/funcoes.php';
+redirect_if_not_logged();
+?>
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -46,7 +51,7 @@
                         </li>
                         <li><hr></li>
                         <li>
-                            <a class="dropdown-item" href="../../../login.html"><i class="fa-solid fa-right-from-bracket me-2"></i>Terminar sessão</a>
+                            <a class="dropdown-item" href="../../logout.php"><i class="fa-solid fa-right-from-bracket me-2"></i>Terminar sessão</a>
                         </li>
                     </ul>
                 </div>
@@ -65,27 +70,27 @@
 
         <div class="offcanvas-body offcanvas-medctrl">
             <nav>
-                <a href="../dashboard/dashboard.html">
+                <a href="../dashboard/dashboard.php">
                     <i class="fa-solid fa-chart-line"></i> &ensp; Dashboard
                 </a>
 
-                <a href="lista.html" class="active">
+                <a href="lista.php" class="active">
                     <i class="fa-solid fa-laptop-medical"></i> &ensp; Equipamentos
                 </a>
 
-                <a href="../localizacoes/lista.html">
+                <a href="../localizacoes/lista.php">
                     <i class="fa-solid fa-location-dot"></i> &ensp; Localizações
                 </a>
 
-                <a href="../fornecedores/lista.html">
+                <a href="../fornecedores/lista.php">
                     <i class="fa-solid fa-handshake"></i> &ensp; Fornecedores
                 </a>
 
-                <a href="../documentacao/lista.html">
+                <a href="../documentacao/lista.php">
                     <i class="fa-solid fa-file-medical"></i> &ensp; Documentação
                 </a>~
 
-                <a href="../conteudos/conteudos.html">
+                <a href="../conteudos/conteudos.php">
                     <i class="fa-solid fa-pen-to-square"></i> &ensp; Conteúdos
                 </a>
             </nav>
@@ -98,22 +103,22 @@
             <!-- SIDEBAR -->
             <aside class="col-lg-2 sidebar d-none d-lg-block">
                 <nav>
-                    <a href="../dashboard/dashboard.html">
+                    <a href="../dashboard/dashboard.php">
                         <i class="fa-solid fa-chart-line"></i> &ensp; Dashboard
                     </a>
-                    <a href="lista.html" class="active">
+                    <a href="lista.php" class="active">
                         <i class="fa-solid fa-laptop-medical"></i> &ensp; Equipamentos
                     </a>
-                    <a href="../localizacoes/lista.html">
+                    <a href="../localizacoes/lista.php">
                         <i class="fa-solid fa-location-dot"></i> &ensp; Localizações
                     </a>
-                    <a href="../fornecedores/lista.html">
+                    <a href="../fornecedores/lista.php">
                         <i class="fa-solid fa-handshake"></i> &ensp; Fornecedores
                     </a>
-                    <a href="../documentacao/lista.html">
+                    <a href="../documentacao/lista.php">
                         <i class="fa-solid fa-file-medical"></i> &ensp; Documentação
                     </a>
-                    <a href="../conteudos/conteudos.html">
+                    <a href="../conteudos/conteudos.php">
                         <i class="fa-solid fa-pen-to-square"></i> &ensp; Conteúdos
                     </a>
                 </nav>
@@ -123,7 +128,7 @@
             <main class="col-lg-10 p-4">
                 <div class="page-header">
                     <h2><i class="fa-solid fa-laptop-medical me-2"></i>Detalhes do Equipamento</h2>
-                    <a href="lista.html" class="btn btn-cancel btn-sm">
+                    <a href="lista.php" class="btn btn-cancel btn-sm">
                         <i class="fa-solid fa-arrow-left me-1"></i>Voltar
                     </a>
                 </div>
@@ -238,7 +243,7 @@
                                 <label>Fabricante</label>
                                 <p>Philips Healthcare</p>
 
-                                <a href="../fornecedores/detalhes.html" class="btn btn-edit btn-sm mt-2">
+                                <a href="../fornecedores/detalhes.php" class="btn btn-edit btn-sm mt-2">
                                     <i class="fa-solid fa-eye me-1"></i>
                                     Ver fornecedor
                                 </a>
@@ -250,7 +255,7 @@
                                 <label>Distribuidor</label>
                                 <p>MedTech Solutions</p>
 
-                                <a href="../fornecedores/detalhes.html" class="btn btn-edit btn-sm mt-2">
+                                <a href="../fornecedores/detalhes.php" class="btn btn-edit btn-sm mt-2">
                                     <i class="fa-solid fa-eye me-1"></i>
                                     Ver fornecedor
                                 </a>
@@ -262,7 +267,7 @@
                                 <label>Assistência Técnica</label>
                                 <p>TechRepair Medical</p>
 
-                                <a href="../fornecedores/detalhes.html" class="btn btn-edit btn-sm mt-2">
+                                <a href="../fornecedores/detalhes.php" class="btn btn-edit btn-sm mt-2">
                                     <i class="fa-solid fa-eye me-1"></i>
                                     Ver fornecedor
                                 </a>
@@ -319,7 +324,7 @@
 
                         <div class="col-12">
 
-                            <a href="../documentacao/detalhes.html" class="documento-card text-decoration-none d-block mb-3">
+                            <a href="../documentacao/detalhes.php" class="documento-card text-decoration-none d-block mb-3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h5 class="mb-1">Manual Monitor Philips MX450</h5>
@@ -331,7 +336,7 @@
                                 </div>
                             </a>
 
-                            <a href="../documentacao/detalhes.html" class="documento-card text-decoration-none d-block mb-3">
+                            <a href="../documentacao/detalhes.php" class="documento-card text-decoration-none d-block mb-3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h5 class="mb-1">Certificado de Calibração</h5>
@@ -344,7 +349,7 @@
                             </a>
 
                             <div class="mt-3">
-                                <a href="../documentacao/novo.html" class="btn btn-save btn-sm">
+                                <a href="../documentacao/novo.php" class="btn btn-save btn-sm">
                                     <i class="fa-solid fa-plus me-1"></i>Associar novo documento
                                 </a>
                             </div>
@@ -363,8 +368,8 @@
 
                         <!-- Botões -->
                         <div class="d-flex justify-content-end gap-2 mt-4">
-                            <a href="editar.html" class="btn btn-edit btn-sm"><i class="fa-solid fa-pen me-1"></i> Editar </a>
-                            <a href="lista.html" class="btn btn-cancel btn-sm"> Cancelar</a>
+                            <a href="editar.php" class="btn btn-edit btn-sm"><i class="fa-solid fa-pen me-1"></i> Editar </a>
+                            <a href="lista.php" class="btn btn-cancel btn-sm"> Cancelar</a>
                         </div>
 
                     </div>

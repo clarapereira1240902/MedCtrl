@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/../../includes/funcoes.php';
+redirect_if_not_logged();
+?>
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -46,7 +51,7 @@
                         </li>
                         <li><hr></li>
                         <li>
-                            <a class="dropdown-item" href="../../../login.html"><i class="fa-solid fa-right-from-bracket me-2"></i>Terminar sessão</a>
+                            <a class="dropdown-item" href="../../logout.php"><i class="fa-solid fa-right-from-bracket me-2"></i>Terminar sessão</a>
                         </li>
                     </ul>
                 </div>
@@ -65,27 +70,27 @@
 
         <div class="offcanvas-body offcanvas-medctrl">
             <nav>
-                <a href="../dashboard/dashboard.html">
+                <a href="../dashboard/dashboard.php">
                     <i class="fa-solid fa-chart-line"></i> &ensp; Dashboard
                 </a>
 
-                <a href="lista.html" class="active">
+                <a href="lista.php" class="active">
                     <i class="fa-solid fa-laptop-medical"></i> &ensp; Equipamentos
                 </a>
 
-                <a href="../localizacoes/lista.html">
+                <a href="../localizacoes/lista.php">
                     <i class="fa-solid fa-location-dot"></i> &ensp; Localizações
                 </a>
 
-                <a href="../fornecedores/lista.html">
+                <a href="../fornecedores/lista.php">
                     <i class="fa-solid fa-handshake"></i> &ensp; Fornecedores
                 </a>
 
-                <a href="../documentacao/lista.html">
+                <a href="../documentacao/lista.php">
                     <i class="fa-solid fa-file-medical"></i> &ensp; Documentação
                 </a>
 
-                <a href="../conteudos/conteudos.html">
+                <a href="../conteudos/conteudos.php">
                     <i class="fa-solid fa-pen-to-square"></i> &ensp; Conteúdos
                 </a>
             </nav>
@@ -98,22 +103,22 @@
             <!-- SIDEBAR -->
             <aside class="col-lg-2 sidebar d-none d-lg-block">
                 <nav>
-                    <a href="../dashboard/dashboard.html">
+                    <a href="../dashboard/dashboard.php">
                         <i class="fa-solid fa-chart-line"></i> &ensp; Dashboard
                     </a>
-                    <a href="lista.html" class="active">
+                    <a href="lista.php" class="active">
                         <i class="fa-solid fa-laptop-medical"></i> &ensp; Equipamentos
                     </a>
-                    <a href="../localizacoes/lista.html">
+                    <a href="../localizacoes/lista.php">
                         <i class="fa-solid fa-location-dot"></i> &ensp; Localizações
                     </a>
-                    <a href="../fornecedores/lista.html">
+                    <a href="../fornecedores/lista.php">
                         <i class="fa-solid fa-handshake"></i> &ensp; Fornecedores
                     </a>
-                    <a href="../documentacao/lista.html">
+                    <a href="../documentacao/lista.php">
                         <i class="fa-solid fa-file-medical"></i> &ensp; Documentação
                     </a>
-                    <a href="../conteudos/conteudos.html">
+                    <a href="../conteudos/conteudos.php">
                         <i class="fa-solid fa-pen-to-square"></i> &ensp; Conteúdos
                     </a>
                 </nav>
@@ -352,7 +357,7 @@
 
                         <!-- Botões -->
                         <div class="d-flex justify-content-end gap-2 mb-4"> 
-                            <a href="lista.html" class="btn btn-cancel btn-sm"> 
+                            <a href="lista.php" class="btn btn-cancel btn-sm"> 
                                 <i class="fa-solid fa-xmark me-1"></i> Cancelar 
                             </a> 
                             <button type="submit" class="btn btn-save btn-sm"> 
