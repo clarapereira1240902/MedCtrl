@@ -39,7 +39,7 @@
                     </div>
 
                     <!-- Formulário -->
-                    <form action="../private/index.php" method="post">
+                    <form action="../private/login_processa.php" method="post">
 
                         <!-- Email -->
                         <div class="mb-3">
