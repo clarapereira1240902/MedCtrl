@@ -39,18 +39,18 @@
                     </div>
 
                     <!-- Formulário -->
-                    <form action="../private/index.html" method="post">
+                    <form action="../private/index.php" method="post">
 
                         <!-- Email -->
                         <div class="mb-3">
                             <label for="email" class="form-label"> Email </label>
-                            <input type="email" class="form-control" id="email" placeholder="Introduza o seu email" required>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Introduza o seu email" required>
                         </div>
 
                         <!-- Password -->
                         <div class="mb-4">
                             <label for="password" class="form-label"> Palavra-passe</label>
-                            <input type="password" class="form-control" id="password" placeholder="Introduza a sua palavra-passe" required>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Introduza a sua palavra-passe" required>
                         </div>
 
                         <!-- Botão -->
@@ -74,6 +74,6 @@
     </div>
 
     <!-- Bootstrap -->
-    <script src="assets/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="../assets/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>
