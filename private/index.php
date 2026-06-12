@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/includes/funcoes.php';
+redirect_if_not_logged();
+?>
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -38,7 +43,8 @@
             <div class="col-6 text-end">
                 <div class="dropdown">
                     <button class="btn btn-user dropdown-toggle" data-bs-toggle="dropdown"> 
-                        <i class="fa-regular fa-user me-2"></i>Utilizador
+                        <i class="fa-regular fa-user me-2"></i>
+                        <?php echo $_SESSION['utilizador']['nome']; ?>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
@@ -46,7 +52,7 @@
                         </li>
                         <li><hr></li>
                         <li>
-                            <a class="dropdown-item" href="../login.html"><i class="fa-solid fa-right-from-bracket me-2"></i>Terminar sessão</a>
+                            <a class="dropdown-item" href="logout.php"><i class="fa-solid fa-right-from-bracket me-2"></i>Terminar sessão</a>
                         </li>
                     </ul>
                 </div>
