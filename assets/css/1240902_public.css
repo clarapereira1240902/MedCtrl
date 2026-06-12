@@ -5,8 +5,6 @@
     font-family: 'Titillium Web', sans-serif;
 }
 
-
-
 .bng-navbar {
     position: fixed;
     top: 20px;
@@ -23,7 +21,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: nowrap;   /* impede que os blocos saltem */
+    flex-wrap: nowrap;
 
     border: 1px solid #e0e0e0;
     box-shadow: 0 8px 20px rgba(0,0,0,0.05);
@@ -31,27 +29,30 @@
     z-index: 1000;
 }
 
-.bng-navbar > div:first-child{
-    display:flex;
-    align-items:center;
-    gap:10px;
+.bng-navbar > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .bng-navbar img {
     width: 35px;
+    display: block;
 }
 
 .bng-navbar h3 {
     font-weight: 700;
     color: #00a7f3;
     font-size: 22px;
+    margin: 0;
+    line-height: 1;
 }
 
 /* Links */
 .container-navegacao {
     display: flex;
     gap: 25px;
-    white-space: nowrap; /* impede quebra dos links */
+    white-space: nowrap;
 }
 
 .container-navegacao a {
@@ -62,18 +63,18 @@
 }
 
 .container-navegacao a:hover {
-    color:#00a7f3;
+    color: #00a7f3;
     font-weight: 600;
 }
 
 .nav-cliente {
-    flex-shrink: 0;  /* impede o botão de encolher */
+    flex-shrink: 0;
 }
 
 .nav-cliente a { 
-    color:#006390;             /* Cor do texto */ 
-    text-decoration: none;      /* Remove sublinhado */ 
-    font-size: 16px;           /* Tamanho da fonte */ 
+    color: #006390;
+    text-decoration: none;
+    font-size: 16px;
     font-weight: 500;
     padding: 4px 15px;
     border: 1.5px solid #00a7f3;
@@ -84,8 +85,8 @@
 
 .nav-cliente a:hover {
     font-weight: 600;
-    background:#00a7f3;
-    color:#fff;
+    background: #00a7f3;
+    color: #fff;
 }
 
 /* Scroll bar inferior */
@@ -99,8 +100,6 @@
     transition: width 0.2s ease;
 }
 
-
-
 /* =========================
    SECÇÃO OBJETIVO
 ========================= */
@@ -112,9 +111,8 @@
 }
 
 .seccao-objetivo {
-    background:
-    url("../img/objetivo.png");
-    background-size: cover;     /* ocupa toda a secção */
+    background: url("../img/objetivo.png");
+    background-size: cover;
     background-position: right center;
     background-repeat: no-repeat;
     min-height: 700px;
@@ -160,16 +158,14 @@
     font-weight: 500;
     font-size: 16px;
     border-radius: 40px;
-    transition:.3s;
+    transition: .3s;
 }
 
 .button-saber-mais:hover {
     font-weight: 600;
-    background:#006390;
-    color:#ffffff;
+    background: #006390;
+    color: #ffffff;
 }
-
-
 
 /* =========================
    SECÇÃO SOLUÇÃO
@@ -180,7 +176,6 @@
     background: #f5f7fa;
 }
 
-/* Título */
 .seccao-solucao h2 {
     font-size: 36px;
     color: #122a31;
@@ -193,7 +188,6 @@
     font-size: 20px;
 }
 
-/* Cartões */
 .solucao-container {
     display: flex;
     justify-content: center;
@@ -230,8 +224,6 @@
     margin-bottom: 10px;
     margin-right: 5px;
 }
-
-
 
 /* =========================
    SECÇÃO VANTAGENS
@@ -292,12 +284,10 @@
     border-radius: 12px;
 }
 
-.caixa-vantagens i{
+.caixa-vantagens i {
     color: #00a7f3;
     padding: 5px;
 }
-
-
 
 /* =========================
    SECÇÃO CONTACTO
@@ -330,7 +320,8 @@
     align-items: stretch;
 }
 
-.contacto-info, #contactForm {
+.contacto-info,
+#contactForm {
     background: #ffffff;
     border-radius: 24px;
     padding: 35px;
@@ -389,7 +380,8 @@
     font-size: 15px;
 }
 
-#contactForm input, #contactForm textarea {
+#contactForm input,
+#contactForm textarea {
     width: 100%;
     padding: 12px 14px;
     border: 1px solid #d7e3e8;
@@ -398,7 +390,8 @@
     outline: none;
 }
 
-#contactForm input:focus, #contactForm textarea:focus {
+#contactForm input:focus,
+#contactForm textarea:focus {
     border-color: #00a7f3;
     box-shadow: 0 0 0 3px rgba(0, 167, 243, 0.15);
 }
@@ -419,24 +412,11 @@
     background: #00a7f3;
 }
 
-@media (max-width: 768px) {
-    .contacto-container {
-        grid-template-columns: 1fr;
-    }
-
-    .contacto-info, #contactForm {
-        padding: 28px;
-    }
-}
-
-
-
 /* =========================
    ESTILO LOGIN
 ========================= */
 .btn-primary {
     background-color: #006390;
-
 }
 
 .btn-primary:hover {
@@ -452,309 +432,283 @@
     min-height: 100vh;
 }
 
-.login-error{
-    margin-top:18px;
-    text-align:center;
-    color:#dc3545;
-    font-weight:500;
-    font-size:.95rem;
+.login-error {
+    margin-top: 18px;
+    text-align: center;
+    color: #dc3545;
+    font-weight: 500;
+    font-size: .95rem;
 }
 
-.login-error i{
-    color:#dc3545;
+.login-error i {
+    color: #dc3545;
 }
-
-
-
-/* =========================
-   RESPONSIVIDADE - LOGIN
-========================= */
-@media (max-width:576px){
-    .login-card{
-        width:95%;
-        padding:30px 24px;
-    }
-
-    .login-card h1{
-        font-size:2.4rem;
-    }
-
-    .login-card p{
-        font-size:1rem;
-    }
-
-    .login-card img{
-        max-width:80px;
-    }
-
-    .btn-login, .login-card button{
-        width:100%;
-    }
-}
-
-
-
-/* =========================
-   RESPONSIVIDADE - ÁREA PUBLIC
-========================= */
-@media (max-width: 991px){
-    .bng-navbar{
-        width:95%;
-        padding:10px 18px;
-        border-radius:30px;
-    }
-
-    .container-navegacao{
-        gap:14px;
-    }
-
-    .container-navegacao a{
-        font-size:14px;
-    }
-
-    .nav-cliente a{
-        font-size:14px;
-        padding:4px 12px;
-    }
-
-    .objetivo-texto{
-        width:85%;
-    }
-
-    .objetivo-texto h1{
-        font-size:42px;
-    }
-
-    .seccao-objetivo{
-        min-height:600px;
-        padding:70px 0;
-        background-position:center;
-    }
-
-    .seccao-vantagens{
-        padding:70px 30px;
-    }
-
-    #contacto{
-        padding:70px 30px;
-    }
-}
-
-
-
-@media (max-width: 576px){
-    .bng-navbar{
-        width:94%;
-        padding:9px 14px;
-    }
-
-    .nav-cliente a{
-        font-size:13px;
-        padding:4px 10px;
-    }
-
-    .bng-navbar h3{
-        font-size:19px;
-    }
-
-    .seccao-objetivo{
-        min-height:520px;
-        padding:60px 18px;
-    }
-
-    .objetivo-texto h1{
-        font-size:29px;
-        line-height:1.25;
-    }
-
-    .objetivo-texto p{
-        font-size:15px;
-        line-height:1.6;
-    }
-
-    .button-saber-mais{
-        margin-top:25px;
-        padding:9px 22px;
-        font-size:15px;
-    }
-
-    .seccao-solucao h2, .seccao-vantagens h2, #contacto h2{
-        font-size:28px;
-    }
-
-    .subtitulo-solucao, .subtitulo{
-        font-size:17px;
-        margin-bottom:35px;
-    }
-
-    .cartao-solucao{
-        padding:22px;
-    }
-
-    .seccao-vantagens{
-        padding:55px 16px;
-    }
-
-    .caixa-vantagens{
-        padding:25px;
-    }
-
-    #contacto{
-        padding:55px 16px;
-    }
-
-    #contactForm{
-        padding:24px;
-    }
-}
-
-
 
 /* =========================
    MENU PUBLIC / OFFCANVAS
 ========================= */
-.btn-menu-public{
-    display:none;
-    background:#006390;
-    color:#ffffff;
-    border:none;
-    border-radius:50%;
-    width:42px;
-    height:42px;
-    align-items:center;
-    justify-content:center;
-    font-size:18px;
+.btn-menu-public {
+    display: none;
+    background: #006390;
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
 }
 
-.btn-menu-public:hover{
-    background:#00a7f3;
-    color:#ffffff;
+.btn-menu-public:hover {
+    background: #00a7f3;
+    color: #ffffff;
 }
 
-.menu-public-body{
-    background:#006390;
-    padding:25px;
+.menu-public-body {
+    background: #006390;
+    padding: 25px;
 }
 
-.menu-public-body a{
-    display:block;
-    text-decoration:none;
-    color:#ffffff;
-    font-weight:600;
-    font-size:18px;
-    padding:12px 14px;
-    border-radius:10px;
-    margin-bottom:8px;
+.menu-public-body a {
+    display: block;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    margin-bottom: 8px;
 }
 
-.menu-public-body a:hover{
-    background:#ffffff;
-    color:#006390;
+.menu-public-body a:hover {
+    background: #ffffff;
+    color: #006390;
 }
 
-.menu-public-login{
-    background:#00a7f3;
-    color:#ffffff !important;
-    text-align:center;
-    margin-top:18px;
+.menu-public-login {
+    background: #00a7f3;
+    color: #ffffff !important;
+    text-align: center;
+    margin-top: 18px;
 }
 
-.menu-public-login:hover{
-    background:#ffffff;
-    color:#006390 !important;
+.menu-public-login:hover {
+    background: #ffffff;
+    color: #006390 !important;
 }
 
-#menuPublic .offcanvas-title{
-    color:#006390;
-    font-weight:700;
+#menuPublic .offcanvas-title {
+    color: #006390;
+    font-weight: 700;
 }
 
-@media (max-width: 768px){
-    .bng-navbar{
-        position:fixed;
-        top:12px;
-        width:92%;
-        padding:10px 16px;
+/* =========================
+   RESPONSIVIDADE
+========================= */
+@media (max-width: 991px) {
+    .bng-navbar {
+        width: 95%;
+        padding: 10px 18px;
+        border-radius: 30px;
     }
 
-    .container-navegacao, .nav-cliente{
-        display:none !important;
+    .container-navegacao {
+        gap: 14px;
     }
 
-    .btn-menu-public{
-        display:flex !important;
+    .container-navegacao a {
+        font-size: 14px;
     }
 
-    .bng-navbar img{
-        width:32px;
+    .nav-cliente a {
+        font-size: 14px;
+        padding: 4px 12px;
     }
 
-    .bng-navbar h3{
-        font-size:20px;
+    .objetivo-texto {
+        width: 85%;
     }
 
-    .container-texto-generico{
-        padding-top:90px;
+    .objetivo-texto h1 {
+        font-size: 42px;
     }
 
-    .seccao-objetivo{
-        min-height:560px;
-        text-align:center;
-        background-position:center;
+    .seccao-objetivo {
+        min-height: 600px;
+        padding: 70px 0;
+        background-position: center;
     }
 
-    .objetivo-texto{
-        width:100%;
+    .seccao-vantagens {
+        padding: 70px 30px;
     }
 
-    .objetivo-texto h1{
-        font-size:34px;
-        text-shadow:none;
+    #contacto {
+        padding: 70px 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .bng-navbar {
+        top: 12px;
+        width: 92%;
+        padding: 10px 16px;
     }
 
-    .objetivo-texto p{
-        font-size:16px;
+    .container-navegacao,
+    .nav-cliente {
+        display: none !important;
     }
 
-    .botao-contactar{
-        text-align:center;
+    .btn-menu-public {
+        display: flex !important;
     }
 
-    .seccao-solucao{
-        padding:60px 20px;
+    .bng-navbar img {
+        width: 32px;
     }
 
-    .solucao-container{
-        gap:20px;
+    .bng-navbar h3 {
+        font-size: 20px;
     }
 
-    .cartao-solucao{
-        width:100%;
-        max-width:330px;
+    .container-texto-generico {
+        padding-top: 90px;
     }
 
-    .seccao-vantagens{
-        padding:60px 20px;
+    .seccao-objetivo {
+        min-height: 560px;
+        text-align: center;
+        background-position: center;
     }
 
-    .vantagens-container{
-        gap:25px;
+    .objetivo-texto {
+        width: 100%;
     }
 
-    .caixa-vantagens{
-        width:100%;
-        max-width:340px;
+    .objetivo-texto h1 {
+        font-size: 34px;
+        text-shadow: none;
     }
 
-    #contacto{
-        padding:60px 20px;
+    .objetivo-texto p {
+        font-size: 16px;
     }
 
-    #contacto > p{
-    font-size:17px;
+    .botao-contactar {
+        text-align: center;
     }
 
-    #contactForm{
-        padding:28px;
+    .seccao-solucao {
+        padding: 60px 20px;
+    }
+
+    .solucao-container {
+        gap: 20px;
+    }
+
+    .cartao-solucao {
+        width: 100%;
+        max-width: 330px;
+    }
+
+    .seccao-vantagens {
+        padding: 60px 20px;
+    }
+
+    .vantagens-container {
+        gap: 25px;
+    }
+
+    .caixa-vantagens {
+        width: 100%;
+        max-width: 340px;
+    }
+
+    #contacto {
+        padding: 60px 20px;
+    }
+
+    #contacto > p {
+        font-size: 17px;
+    }
+
+    .contacto-container {
+        grid-template-columns: 1fr;
+    }
+
+    .contacto-info,
+    #contactForm {
+        padding: 28px;
+    }
+}
+
+@media (max-width: 576px) {
+    .bng-navbar {
+        width: 94%;
+        padding: 9px 14px;
+    }
+
+    .bng-navbar h3 {
+        font-size: 18px;
+    }
+
+    .nav-cliente a {
+        font-size: 13px;
+        padding: 4px 10px;
+    }
+
+    .seccao-objetivo {
+        min-height: 520px;
+        padding: 60px 18px;
+    }
+
+    .objetivo-texto h1 {
+        font-size: 29px;
+        line-height: 1.25;
+    }
+
+    .objetivo-texto p {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .button-saber-mais {
+        margin-top: 25px;
+        padding: 9px 22px;
+        font-size: 15px;
+    }
+
+    .seccao-solucao h2,
+    .seccao-vantagens h2,
+    #contacto h2 {
+        font-size: 28px;
+    }
+
+    .subtitulo-solucao,
+    .subtitulo {
+        font-size: 17px;
+        margin-bottom: 35px;
+    }
+
+    .cartao-solucao {
+        padding: 22px;
+    }
+
+    .seccao-vantagens {
+        padding: 55px 16px;
+    }
+
+    .caixa-vantagens {
+        padding: 25px;
+    }
+
+    #contacto {
+        padding: 55px 16px;
+    }
+
+    #contactForm {
+        padding: 24px;
     }
 }
