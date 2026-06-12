@@ -6,8 +6,8 @@ define('APP_COPYRIGHT', '© 2026 MedCtrl');
 
 define('BASE_URL', '/sibdas/1240902/medctrl');
 
-define('DB_HOST', '127.0.0.1');
-define('DB_PORT', '3306');
+define('DB_HOST', 'vsgate-s1.dei.isep.ipp.pt');
+define('DB_PORT', '10464');
 define('DB_NAME', 'db1240902');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_USER', '1240902');
+define('DB_PASS', 'pereira_902');

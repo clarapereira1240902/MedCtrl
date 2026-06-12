@@ -35,11 +35,13 @@ if (!password_verify($password, $utilizador['password_hash'])) {
     exit;
 }
 
-session_start();
+start_session();
 
-$_SESSION['id_utilizador'] = $utilizador['id'];
-$_SESSION['nome'] = $utilizador['nome'];
-$_SESSION['email'] = $utilizador['email'];
+$_SESSION['utilizador'] = [
+    'id' => $utilizador['id'],
+    'nome' => $utilizador['nome'],
+    'email' => $utilizador['email']
+];
 
 header('Location: index.php');
 exit;
