@@ -1,220 +1,115 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MedCtrl</title>
+<?php
+require_once __DIR__ . '/../../includes/funcoes.php';
+redirect_if_not_logged();
 
-    <!-- favicon -->
-    <link rel="shortcut icon" href="../../../assets/img/logo.png" type="image/png">
+$menu_ativo = 'fornecedores';
 
-    <!-- Bootstrap CSS & custom CSS --> 
-    <link rel="stylesheet" href="../../../assets/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="../../../assets/css/1240902_private.css">
-    <link rel="stylesheet" href="../../../assets/css/1240902_components.css">
+include __DIR__ . '/../../includes/header.php';
+include __DIR__ . '/../../includes/navbar.php';
+?>
 
-    <!-- Google Fonts --> 
-    <link rel="preconnect" href="https://fonts.googleapis.com"> 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,300;0,700;1,400&display=swap" rel="stylesheet"> 
 
-    <!-- Font Awesome --> 
-    <link rel="stylesheet" href="../../../assets/fontawesome/all.min.css"> 
-</head>
+<div class="container-fluid">
+    <div class="row">
 
-<body>
-    <!-- NAVBAR -->
-    <header class="container-fluid navbar-medctrl">
-        <div class="row align-items-center">
-            <div class="col-6 d-flex align-items-center">
-                <button class="btn btn-user d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuMobile">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-                <!-- Logo e Nome -->
-                <img src="../../../assets/img/logo.png" height="40">
-                <h3 class="ms-3 mb-0">MedCtrl</h3>
+        <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
+
+        <!-- Conteúdo Principal -->
+        <main class="col-lg-10 p-4">
+
+            <div class="page-header">
+                <h2>
+                    <i class="fa-solid fa-handshake me-2"></i> Listagem de Fornecedores
+                </h2>
+                <a href="novo.php" class="btn btn-primary-custom btn-sm">
+                    <i class="fa-solid fa-plus me-1"></i> Novo Fornecedor
+                </a>
             </div>
 
-            <div class="col-6 text-end">
-                <div class="dropdown">
-                    <button class="btn btn-user dropdown-toggle" data-bs-toggle="dropdown"> 
-                        <i class="fa-regular fa-user me-2"></i>Utilizador
+            <hr>
+
+            <!-- Pesquisa de fornecedores -->
+            <div class="search-card mb-4">
+                <h5>
+                    <i class="fa-solid fa-magnifying-glass me-2"></i>Pesquisa
+                </h5>
+                <div class="search-row">
+                    <input type="text" class="form-control search-input" placeholder="Nome da empresa, NIF, email ou tipo de fornecedor">
+                    <button class="btn btn-save search-btn" type="button">
+                        <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li>
-                            <a class="dropdown-item" href="#"><i class="fa-solid fa-key me-2"></i>Alterar password</a>
-                        </li>
-                        <li><hr></li>
-                        <li>
-                            <a class="dropdown-item" href="../../../login.html"><i class="fa-solid fa-right-from-bracket me-2"></i>Terminar sessão</a>
-                        </li>
-                    </ul>
                 </div>
             </div>
-        </div>
-    </header>
 
-    <!-- MENU MOBILE / OFFCANVAS -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="menuMobile">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title">
-                <i class="fa-solid fa-laptop-medical me-2"></i>MedCtrl
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-        </div>
+            <p class="text-muted">Existem 3 fornecedores registados.</p>
 
-        <div class="offcanvas-body offcanvas-medctrl">
-            <nav>
-                <a href="../dashboard/dashboard.html">
-                    <i class="fa-solid fa-chart-line"></i> &ensp; Dashboard
-                </a>
+            <!--Tabela de listagem-->
+            <div class="table-responsive">
+                <table class="table table-hover align-middle table-medctrl">
+                    <thead>
+                        <tr>
+                            <th>Empresa</th>
+                            <th>Tipo</th>
+                            <th>Pessoa Contacto</th>
+                            <th>Telefone</th>
+                            <th>Email</th>
+                            <th class="text-center">Equipamentos</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Dräger Portugal</strong></td>
+                            <td><span class="badge bg-primary">Fabricante</span></td>
+                            <td>João Costa</td>
+                            <td>913456789</td>
+                            <td>geral@drager.pt</td>
+                            <td class="text-center">12</td>
 
-                <a href="../equipamentos/lista.html">
-                    <i class="fa-solid fa-laptop-medical"></i> &ensp; Equipamentos
-                </a>
+                            <td class="text-center">
+                                <a href="detalhes.php" class="btn btn-view-list btn-sm me-1"><i class="fa-solid fa-eye"></i></a>
+                                <a href="editar.php" class="btn btn-edit-list btn-sm me-1"><i class="fa-solid fa-pen"></i></a>
+                                <a href="apagar.php" class="btn btn-delete-list btn-sm"><i class="fa-solid fa-trash"></i></a>
+                            </td>
+                        </tr>
 
-                <a href="../localizacoes/lista.html">
-                    <i class="fa-solid fa-location-dot"></i> &ensp; Localizações
-                </a>
+                        <tr>
+                            <td><strong>Siemens Healthineers</strong></td>
+                            <td><span class="badge bg-success">Assistência Técnica</span></td>
+                            <td>Ana Silva</td>
+                            <td>934567890</td>
+                            <td>suporte@siemens.pt</td>
+                            <td class="text-center">8</td>
 
-                <a href="lista.html" class="active">
-                    <i class="fa-solid fa-handshake"></i> &ensp; Fornecedores
-                </a>
+                            <td class="text-center">
+                                <a href="detalhes.php" class="btn btn-view-list btn-sm me-1"><i class="fa-solid fa-eye"></i></a>
+                                <a href="editar.php" class="btn btn-edit-list btn-sm me-1"><i class="fa-solid fa-pen"></i></a>
+                                <a href="apagar.php" class="btn btn-delete-list btn-sm"><i class="fa-solid fa-trash"></i></a>
+                            </td>
+                        </tr>
 
-                <a href="../documentacao/lista.html">
-                    <i class="fa-solid fa-file-medical"></i> &ensp; Documentação
-                </a>
+                        <tr>
+                            <td><strong>MedSupply</strong></td>
+                            <td><span class="badge bg-warning text-dark">Consumíveis</span></td>
+                            <td>Carlos Ferreira</td>
+                            <td>939876543</td>
+                            <td>contacto@medsupply.pt</td>
+                            <td class="text-center">22</td>
 
-                <a href="../conteudos/conteudos.html">
-                    <i class="fa-solid fa-pen-to-square"></i> &ensp; Conteúdos
-                </a>
-            </nav>
-        </div>
+                            <td class="text-center">
+                                <a href="detalhes.php" class="btn btn-view-list btn-sm me-1"><i class="fa-solid fa-eye"></i></a>
+                                <a href="editar.php" class="btn btn-edit-list btn-sm me-1"><i class="fa-solid fa-pen"></i></a>
+                                <a href="apagar.php" class="btn btn-delete-list btn-sm"><i class="fa-solid fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </main>
+    
     </div>
-
-    <div class="container-fluid">
-        <div class="row">
-
-            <!-- SIDEBAR -->
-            <aside class="col-lg-2 sidebar d-none d-lg-block">
-                <nav>
-                    <a href="../dashboard/dashboard.html">
-                        <i class="fa-solid fa-chart-line"></i> &ensp; Dashboard
-                    </a>
-                    <a href="../equipamentos/lista.html">
-                        <i class="fa-solid fa-laptop-medical"></i> &ensp; Equipamentos
-                    </a>
-                    <a href="../localizacoes/lista.html">
-                        <i class="fa-solid fa-location-dot"></i> &ensp; Localizações
-                    </a>
-                    <a href="lista.html" class="active">
-                        <i class="fa-solid fa-handshake"></i> &ensp; Fornecedores
-                    </a>
-                    <a href="../documentacao/lista.html">
-                        <i class="fa-solid fa-file-medical"></i> &ensp; Documentação
-                    </a>
-                    <a href="../conteudos/conteudos.html">
-                        <i class="fa-solid fa-pen-to-square"></i> &ensp; Conteúdos
-                    </a>
-                </nav>
-            </aside>
-
-            <!-- Conteúdo Principal -->
-            <main class="col-lg-10 p-4">
-
-                <div class="page-header">
-                    <h2>
-                        <i class="fa-solid fa-handshake me-2"></i> Listagem de Fornecedores
-                    </h2>
-                    <a href="novo.html" class="btn btn-primary-custom btn-sm">
-                        <i class="fa-solid fa-plus me-1"></i> Novo Fornecedor
-                    </a>
-                </div>
-
-                <hr>
-
-                <!-- Pesquisa de fornecedores -->
-                <div class="search-card mb-4">
-                    <h5>
-                        <i class="fa-solid fa-magnifying-glass me-2"></i>Pesquisa
-                    </h5>
-                    <div class="search-row">
-                        <input type="text" class="form-control search-input" placeholder="Nome da empresa, NIF, email ou tipo de fornecedor">
-                        <button class="btn btn-save search-btn" type="button">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <p class="text-muted">Existem 3 fornecedores registados.</p>
-
-                <!--Tabela de listagem-->
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle table-medctrl">
-                        <thead>
-                            <tr>
-                                <th>Empresa</th>
-                                <th>Tipo</th>
-                                <th>Pessoa Contacto</th>
-                                <th>Telefone</th>
-                                <th>Email</th>
-                                <th class="text-center">Equipamentos</th>
-                                <th class="text-center">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Dräger Portugal</strong></td>
-                                <td><span class="badge bg-primary">Fabricante</span></td>
-                                <td>João Costa</td>
-                                <td>913456789</td>
-                                <td>geral@drager.pt</td>
-                                <td class="text-center">12</td>
-
-                                <td class="text-center">
-                                    <a href="detalhes.html" class="btn btn-view-list btn-sm me-1"><i class="fa-solid fa-eye"></i></a>
-                                    <a href="editar.html" class="btn btn-edit-list btn-sm me-1"><i class="fa-solid fa-pen"></i></a>
-                                    <a href="apagar.html" class="btn btn-delete-list btn-sm"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><strong>Siemens Healthineers</strong></td>
-                                <td><span class="badge bg-success">Assistência Técnica</span></td>
-                                <td>Ana Silva</td>
-                                <td>934567890</td>
-                                <td>suporte@siemens.pt</td>
-                                <td class="text-center">8</td>
-
-                                <td class="text-center">
-                                    <a href="detalhes.html" class="btn btn-view-list btn-sm me-1"><i class="fa-solid fa-eye"></i></a>
-                                    <a href="editar.html" class="btn btn-edit-list btn-sm me-1"><i class="fa-solid fa-pen"></i></a>
-                                    <a href="apagar.html" class="btn btn-delete-list btn-sm"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><strong>MedSupply</strong></td>
-                                <td><span class="badge bg-warning text-dark">Consumíveis</span></td>
-                                <td>Carlos Ferreira</td>
-                                <td>939876543</td>
-                                <td>contacto@medsupply.pt</td>
-                                <td class="text-center">22</td>
-
-                                <td class="text-center">
-                                    <a href="detalhes.html" class="btn btn-view-list btn-sm me-1"><i class="fa-solid fa-eye"></i></a>
-                                    <a href="editar.html" class="btn btn-edit-list btn-sm me-1"><i class="fa-solid fa-pen"></i></a>
-                                    <a href="apagar.html" class="btn btn-delete-list btn-sm"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </main>
-        
-        </div>
-    </div>
+</div>
 
     
 <!-- Bootstrap JS and custom JS --> 
