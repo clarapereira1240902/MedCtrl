@@ -9,7 +9,6 @@ include __DIR__ . '/../../includes/navbar.php';
 ?>
 
 
-
     <div class="container-fluid">
         <div class="row">
 
