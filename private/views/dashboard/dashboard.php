@@ -110,7 +110,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                         <div class="accordion-body">
                                             Existem <strong>9 equipamentos</strong> com garantia expirada.
                                             <br><br>
-                                            <a href="../equipamentos/lista.html" class="btn btn-save btn-sm">
+                                            <a href="../equipamentos/lista.php" class="btn btn-save btn-sm">
                                                 Ver equipamentos
                                             </a>
                                         </div>
@@ -275,9 +275,9 @@ include __DIR__ . '/../../includes/navbar.php';
     </div>
 
 <!-- Bootstrap JS and custom JS --> 
-<script src="../../../assets/bootstrap/bootstrap.bundle.min.js"></script> 
+<script src="<?php echo BASE_URL; ?>/assets/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="../../../assets/js/1240902.js"></script>
+<script src="<?php echo BASE_URL; ?>/assets/js/1240902.js"></script>
 
 </body>
 </html>

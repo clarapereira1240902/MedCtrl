@@ -109,7 +109,7 @@ include __DIR__ . '/../../includes/navbar.php';
 
     
 <!-- Bootstrap JS and custom JS --> 
-<script src="../../../assets/bootstrap/bootstrap.bundle.min.js"></script> 
+<script src="<?php echo BASE_URL; ?>/assets/bootstrap/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
