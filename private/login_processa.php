@@ -4,44 +4,63 @@ require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/ligacao.php';
 require_once __DIR__ . '/includes/funcoes.php';
 
+start_session();
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../public/login.php');
+    header('Location: ' . BASE_URL . '/public/login.php');
     exit;
 }
 
 $email = trim($_POST['email'] ?? '');
 $password = trim($_POST['password'] ?? '');
 
-if (empty($email) || empty($password)) {
-    header('Location: ../public/login.php');
+$validation_errors = [];
+
+if (empty($email)) {
+    $validation_errors[] = 'O email é obrigatório.';
+} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $validation_errors[] = 'O email deve ter um formato válido.';
+}
+
+if (empty($password)) {
+    $validation_errors[] = 'A palavra-passe é obrigatória.';
+}
+
+if (!empty($validation_errors)) {
+    $_SESSION['validation_errors'] = $validation_errors;
+    header('Location: ' . BASE_URL . '/public/login.php');
     exit;
 }
 
-$sql = "SELECT * FROM utilizadores WHERE email = :email LIMIT 1";
+try {
 
-$stmt = $ligacao->prepare($sql);
-$stmt->bindParam(':email', $email);
-$stmt->execute();
+    $sql = "SELECT * FROM utilizadores WHERE email = :email AND ativo = 1 LIMIT 1";
 
-$utilizador = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $ligacao->prepare($sql);
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
 
-if (!$utilizador) {
-    header('Location: ../public/login.php');
+    $utilizador = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$utilizador || !password_verify($password, $utilizador['password_hash'])) {
+        $_SESSION['validation_errors'] = ['Email ou palavra-passe inválidos.'];
+        header('Location: ' . BASE_URL . '/public/login.php');
+        exit;
+    }
+
+    $_SESSION['utilizador'] = [
+        'id' => $utilizador['id'],
+        'nome' => $utilizador['nome'],
+        'email' => $utilizador['email']
+    ];
+
+    header('Location: ' . BASE_URL . '/private/index.php');
     exit;
-}
 
-if (!password_verify($password, $utilizador['password_hash'])) {
-    header('Location: ../public/login.php');
+} catch (PDOException $e) {
+
+    $_SESSION['server_error'] = 'Erro ao validar o utilizador. Tente novamente mais tarde.';
+    header('Location: ' . BASE_URL . '/public/login.php');
     exit;
+
 }
-
-start_session();
-
-$_SESSION['utilizador'] = [
-    'id' => $utilizador['id'],
-    'nome' => $utilizador['nome'],
-    'email' => $utilizador['email']
-];
-
-header('Location: index.php');
-exit;

@@ -1,21 +1,37 @@
+<?php
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../private/includes/funcoes.php';
+
+start_session();
+
+$validation_errors = [];
+$server_error = '';
+
+if (!empty($_SESSION['validation_errors'])) {
+    $validation_errors = $_SESSION['validation_errors'];
+    unset($_SESSION['validation_errors']);
+}
+
+if (!empty($_SESSION['server_error'])) {
+    $server_error = $_SESSION['server_error'];
+    unset($_SESSION['server_error']);
+}
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MedCtrl</title>
+    <title><?php echo APP_NAME; ?></title>
 
-    <!-- Bootstrap CSS & custom CSS --> 
-    <link rel="stylesheet" href="../assets/bootstrap/bootstrap.min.css"> 
-    <link rel="stylesheet" href="../assets/css/1240902_public.css"> 
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/bootstrap/bootstrap.min.css"> 
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/1240902_public.css"> 
 
-    <!-- favicon --> 
-    <link rel="shortcut icon" href="../assets/img/logo.png" type="image/png"> 
+    <link rel="shortcut icon" href="<?php echo BASE_URL; ?>/assets/img/logo.png" type="image/png"> 
 
-    <!-- Font Awesome --> 
-    <link rel="stylesheet" href="../assets/fontawesome/all.min.css"> 
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/fontawesome/all.min.css"> 
 
-    <!-- Google Fonts --> 
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;700&display=swap" rel="stylesheet"> 
 </head>
 
@@ -24,47 +40,72 @@
         <div class="row justify-content-center w-100">
             <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10">
 
-                <!-- Cartão login -->
                 <div class="card shadow border-0 rounded-4 p-4">
 
-                    <!-- Logo + Nome -->
                     <div class="text-center mb-4">
-                        <img src="../assets/img/logo.png" width="70" class="mb-3">
+                        <img src="<?php echo BASE_URL; ?>/assets/img/logo.png" width="70" class="mb-3">
+
                         <h2 class="fw-bold medctrl-title">
-                            MedCtrl
+                            <?php echo APP_NAME; ?>
                         </h2>
+
                         <p class="text-muted mb-0">
                             Gestão Inteligente de Equipamentos Médicos
                         </p>
                     </div>
 
-                    <!-- Formulário -->
-                    <form action="../private/login_processa.php" method="post">
+                    <form action="<?php echo BASE_URL; ?>/private/login_processa.php" method="post">
 
-                        <!-- Email -->
                         <div class="mb-3">
-                            <label for="email" class="form-label"> Email </label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Introduza o seu email" required>
+                            <label for="email" class="form-label">Email</label>
+
+                            <input 
+                                type="email" 
+                                class="form-control" 
+                                id="email" 
+                                name="email" 
+                                placeholder="Introduza o seu email" 
+                                required
+                            >
                         </div>
 
-                        <!-- Password -->
                         <div class="mb-4">
-                            <label for="password" class="form-label"> Palavra-passe</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Introduza a sua palavra-passe" required>
+                            <label for="password" class="form-label">Palavra-passe</label>
+
+                            <input 
+                                type="password" 
+                                class="form-control" 
+                                id="password" 
+                                name="password" 
+                                placeholder="Introduza a sua palavra-passe" 
+                                required
+                            >
                         </div>
 
-                        <!-- Botão -->
                         <div class="d-grid mb-3">
-                            <button type="submit" class="btn btn-primary rounded-pill py-2">Entrar
+                            <button type="submit" class="btn btn-primary rounded-pill py-2">
+                                Entrar
                                 <i class="fa-solid fa-right-to-bracket ms-2"></i>
                             </button>
                         </div>
 
-                        <!-- Mensagem erro -->
-                        <div class="login-error">
-                            <i class="fa-solid fa-circle-exclamation me-2"></i>
-                            Email ou palavra-passe inválidos.
-                        </div>
+                        <?php if (!empty($validation_errors)) : ?>
+                            <div class="login-error">
+                                <i class="fa-solid fa-circle-exclamation me-2"></i>
+
+                                <?php foreach ($validation_errors as $error) : ?>
+                                    <div><?php echo htmlspecialchars($error); ?></div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if (!empty($server_error)) : ?>
+                            <div class="login-error">
+                                <i class="fa-solid fa-circle-exclamation me-2"></i>
+                                <?php echo htmlspecialchars($server_error); ?>
+                            </div>
+                        <?php endif; ?>
+
                     </form>
 
                 </div>
@@ -73,7 +114,6 @@
         </div>
     </div>
 
-    <!-- Bootstrap -->
-    <script src="../assets/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="<?php echo BASE_URL; ?>/assets/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>
