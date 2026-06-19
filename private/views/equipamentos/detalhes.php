@@ -4,6 +4,94 @@ redirect_if_not_logged();
 
 $menu_ativo = 'equipamentos';
 
+require_once __DIR__ . '/../../../config/ligacao.php';
+
+$id = (int) ($_GET['id'] ?? 0);
+
+if ($id <= 0) {
+    header('Location: lista.php');
+    exit;
+}
+
+
+try {
+
+    $sql = "
+        SELECT
+            e.*,
+            c.nome AS categoria,
+            est.nome AS estado,
+            cri.nome AS criticidade,
+            te.nome AS tipo_entrada,
+            l.edificio,
+            l.piso,
+            l.servico,
+            l.sala
+        FROM equipamentos e
+
+        INNER JOIN categorias c
+            ON e.categoria_id = c.id
+
+        INNER JOIN estados_equipamento est
+            ON e.estado_id = est.id
+
+        INNER JOIN criticidades cri
+            ON e.criticidade_id = cri.id
+
+        INNER JOIN tipos_entrada te
+            ON e.tipo_entrada_id = te.id
+
+        INNER JOIN localizacoes l
+            ON e.localizacao_id = l.id
+
+        WHERE e.id = :id
+        LIMIT 1
+    ";
+
+    $stmt = $ligacao->prepare($sql);
+    $stmt->execute(['id' => $id]);
+
+    $equipamento = $stmt->fetch(PDO::FETCH_OBJ);
+
+    if (!$equipamento) {
+        header('Location: lista.php');
+        exit;
+    }
+
+} catch(PDOException $e) {
+
+    die('Erro ao carregar equipamento.');
+
+}
+
+
+function classe_estado($estado)
+{
+    $estado = mb_strtolower(trim($estado), 'UTF-8');
+
+    if ($estado === 'operacional') return 'badge bg-success';
+    if ($estado === 'em manutenção' || $estado === 'em manutencao') return 'badge bg-warning text-dark';
+    if ($estado === 'inativo') return 'badge bg-danger';
+    if ($estado === 'em calibração' || $estado === 'em calibracao') return 'badge bg-info text-dark';
+    if ($estado === 'em quarentena') return 'badge bg-secondary';
+    if ($estado === 'abatido') return 'badge bg-dark';
+
+    return 'badge bg-secondary';
+}
+
+function classe_criticidade($criticidade)
+{
+    $criticidade = mb_strtolower(trim($criticidade), 'UTF-8');
+
+    if ($criticidade === 'baixa') return 'badge bg-success';
+    if ($criticidade === 'média' || $criticidade === 'media') return 'badge bg-warning text-dark';
+    if ($criticidade === 'alta') return 'badge bg-danger';
+    if ($criticidade === 'suporte de vida') return 'badge bg-dark';
+
+    return 'badge bg-secondary';
+}
+
+
 include __DIR__ . '/../../includes/header.php';
 include __DIR__ . '/../../includes/navbar.php';
 ?>
@@ -37,37 +125,37 @@ include __DIR__ . '/../../includes/navbar.php';
                         <div class="col-12 col-md-6">
                             <div class="info-group">
                                 <label>Código de Inventário</label>
-                                <p>EQUIP-2024-001</p>
+                                <p><?php echo htmlspecialchars($equipamento->codigo_inventario); ?></p>
                             </div>
 
                             <div class="info-group">
                                 <label>Designação</label>
-                                <p>Monitor de Sinais Vitais</p>
+                                <p><?php echo htmlspecialchars($equipamento->designacao); ?></p>
                             </div>
 
                             <div class="info-group">
                                 <label>Categoria</label>
-                                <p>Monitorização</p>
+                                <p><?php echo htmlspecialchars($equipamento->categoria); ?></p>
                             </div>
 
                             <div class="info-group">
                                 <label>Marca</label>
-                                <p>Philips</p>
+                                <p><?php echo htmlspecialchars($equipamento->marca); ?></p>
                             </div>
 
                             <div class="info-group">
                                 <label>Modelo</label>
-                                <p>IntelliVue MX450</p>
+                                <p><?php echo htmlspecialchars($equipamento->modelo); ?></p>
                             </div>
 
                             <div class="info-group">
                                 <label>Número de Série</label>
-                                <p>SN-78451236</p>
+                                <p><?php echo htmlspecialchars($equipamento->numero_serie); ?></p>
                             </div>
 
                             <div class="info-group">
                                 <label>Fabricante</label>
-                                <p>Philips Healthcare</p>
+                                <p><?php echo htmlspecialchars($equipamento->fabricante); ?></p>
                             </div>
                         </div>
 
@@ -75,32 +163,44 @@ include __DIR__ . '/../../includes/navbar.php';
                         <div class="col-12 col-md-6">
                             <div class="info-group">
                                 <label>Data de Aquisição</label>
-                                <p>2023-06-15</p>
+                                <p><?php echo htmlspecialchars($equipamento->data_aquisicao); ?></p>
                             </div>
 
                             <div class="info-group">
                                 <label>Ano de Fabrico</label>
-                                <p>2023</p>
+                                <p><?php echo htmlspecialchars($equipamento->ano_fabrico); ?></p>
                             </div>
 
                             <div class="info-group">
                                 <label>Custo de Aquisição</label>
-                                <p>12.500€</p>
+                                <p><?php echo htmlspecialchars($equipamento->custo_aquisicao); ?> €</p>
                             </div>
 
                             <div class="info-group">
                                 <label>Tipo de Entrada</label>
-                                <p><span class="badge badge-success">Compra</span></p>
+                                <p>
+                                    <span class="badge bg-primary">
+                                        <?php echo htmlspecialchars($equipamento->tipo_entrada); ?>
+                                    </span>
+                                </p>
                             </div>
 
                             <div class="info-group">
                                 <label>Estado Atual</label>
-                                <p><span class="badge badge-success">Operacional</span></p>
+                                <p>
+                                    <span class="<?php echo classe_estado($equipamento->estado); ?>">
+                                        <?php echo htmlspecialchars($equipamento->estado); ?>
+                                    </span>
+                                </p>
                             </div>
 
                             <div class="info-group">
                                 <label>Criticidade</label>
-                                <p><span class="badge badge-danger">Alta</span></p>
+                                <p>
+                                    <span class="<?php echo classe_criticidade($equipamento->criticidade); ?>">
+                                        <?php echo htmlspecialchars($equipamento->criticidade); ?>
+                                    </span>
+                                </p>
                             </div>
                         </div>
 
@@ -114,7 +214,16 @@ include __DIR__ . '/../../includes/navbar.php';
                         <div class="col-12">
                             <div class="info-group">
                                 <label>Localização atual</label>
-                                <p>Hospital Central - Piso 2 - Cardiologia - Sala 12</p>
+                                <p>
+    <?php
+    echo htmlspecialchars(
+        $equipamento->edificio . ' - ' .
+        $equipamento->piso . ' - ' .
+        $equipamento->servico . ' - ' .
+        $equipamento->sala
+    );
+    ?>
+</p>
                             </div>
                         </div>
 
@@ -258,7 +367,7 @@ include __DIR__ . '/../../includes/navbar.php';
 
                         <!-- Botões -->
                         <div class="d-flex justify-content-end gap-2 mt-4">
-                            <a href="editar.php" class="btn btn-edit btn-sm"><i class="fa-solid fa-pen me-1"></i> Editar </a>
+                            <a href="editar.php?id=<?php echo $equipamento->id; ?>" class="btn btn-edit btn-sm"><i class="fa-solid fa-pen me-1"></i> Editar </a>
                             <a href="lista.php" class="btn btn-cancel btn-sm"> Cancelar</a>
                         </div>
 
