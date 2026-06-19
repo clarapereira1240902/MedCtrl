@@ -45,6 +45,7 @@ try {
             ON e.localizacao_id = l.id
 
         WHERE e.id = :id
+        AND e.ativo = 1
         LIMIT 1
     ";
 
@@ -360,7 +361,9 @@ include __DIR__ . '/../../includes/navbar.php';
                         <div class="mt-3">
                             <label>Observações</label>
                             <p class="obs-box">
-                                Equipamento em excelente estado. Última manutenção realizada em Janeiro 2026.
+                                <?php echo !empty($equipamento->observacoes) 
+                                    ? htmlspecialchars($equipamento->observacoes) 
+                                    : 'Sem observações registadas.'; ?>
                             </p>
                         </div>
 

@@ -1,7 +1,52 @@
 <?php
 require_once __DIR__ . '/../../includes/funcoes.php';
+require_once __DIR__ . '/../../../config/ligacao.php';
+
 redirect_if_not_logged();
+
 $menu_ativo = 'equipamentos';
+
+$id = (int) ($_GET['id'] ?? 0);
+
+if ($id <= 0) {
+    header('Location: lista.php');
+    exit;
+}
+
+try {
+    $sql = "
+        SELECT
+            e.*,
+            c.nome AS categoria,
+            est.nome AS estado,
+            cri.nome AS criticidade,
+            te.nome AS tipo_entrada,
+            l.edificio,
+            l.piso,
+            l.servico,
+            l.sala
+        FROM equipamentos e
+        INNER JOIN categorias c ON e.categoria_id = c.id
+        INNER JOIN estados_equipamento est ON e.estado_id = est.id
+        INNER JOIN criticidades cri ON e.criticidade_id = cri.id
+        INNER JOIN tipos_entrada te ON e.tipo_entrada_id = te.id
+        INNER JOIN localizacoes l ON e.localizacao_id = l.id
+        WHERE e.id = :id
+        LIMIT 1
+    ";
+
+    $stmt = $ligacao->prepare($sql);
+    $stmt->execute(['id' => $id]);
+    $equipamento = $stmt->fetch(PDO::FETCH_OBJ);
+
+    if (!$equipamento) {
+        header('Location: lista.php');
+        exit;
+    }
+
+} catch (PDOException $e) {
+    die('Erro ao carregar equipamento.');
+}
 
 include __DIR__ . '/../../includes/header.php';
 include __DIR__ . '/../../includes/navbar.php';
@@ -27,7 +72,7 @@ include __DIR__ . '/../../includes/navbar.php';
                     </a>
                 </div>
 
-                <form class="form-medctrl">
+                <form class="form-medctrl" method="post">
                     <div class="row">
 
                         <!-- Informação geral do equipamento -->
@@ -40,37 +85,37 @@ include __DIR__ . '/../../includes/navbar.php';
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Código de Inventário</label>
-                                <input type="text" class="form-control" value="EQUIP-2024-001">
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->codigo_inventario); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Designação</label>
-                                <input type="text" class="form-control" value="Monitor de Sinais Vitais">
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->designacao); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Categoria</label>
-                                <input type="text" class="form-control" value="Monitorização">
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->categoria); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Marca</label>
-                                <input type="text" class="form-control" value="Philips">
+                                <input type="text" class="form-control" value="Philips"value="<?php echo htmlspecialchars($equipamento->marca); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Modelo</label>
-                                <input type="text" class="form-control" value="IntelliVue MX450">
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->modelo); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Número de Série</label>
-                                <input type="text" class="form-control" value="SN-78451236">
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->numero_serie); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Fabricante</label>
-                                <input type="text" class="form-control" value="Philips Healthcare">
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->fabricante); ?>"">
                             </div>
                         </div>
 
@@ -78,17 +123,17 @@ include __DIR__ . '/../../includes/navbar.php';
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Data de Aquisição</label>
-                                <input type="date" class="form-control" value="2023-06-15">
+                                <input type="date" class="form-control" value="<?php echo htmlspecialchars($equipamento->data_aquisicao); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Ano de Fabrico</label>
-                                <input type="number" class="form-control" value="2023">
+                                <input type="number" class="form-control" value="<?php echo htmlspecialchars($equipamento->ano_fabrico); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Custo de Aquisição</label>
-                                <input type="text" class="form-control" value="12500">
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->custo_aquisicao); ?>">
                             </div>
 
                             <div class="mb-3">
@@ -137,22 +182,22 @@ include __DIR__ . '/../../includes/navbar.php';
                         <div class="row">
                             <div class="col-12 col-md-3 mb-3">
                                 <label class="form-label">Edifício</label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->edificio); ?>">
                             </div>
 
                             <div class="col-12 col-md-3 mb-3">
                                 <label class="form-label">Piso</label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->piso); ?>">
                             </div>
 
                             <div class="col-12 col-md-3 mb-3">
                                 <label class="form-label">Departamento</label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->servico); ?>">
                             </div>
 
                             <div class="col-12 col-md-3 mb-3">
                                 <label class="form-label">Sala</label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->sala); ?>">
                             </div>
                         </div>
                     </div>
