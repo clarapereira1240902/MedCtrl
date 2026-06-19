@@ -233,6 +233,9 @@ include __DIR__ . '/../../includes/navbar.php';
                     </p>
 
                 <?php else : ?>
+                    <p class="text-muted">
+                        Existem <?php echo count($equipamentos); ?> equipamentos registados.
+                    </p>
 
                     <!--Tabela de listagem-->
                     <div class="table-responsive">
