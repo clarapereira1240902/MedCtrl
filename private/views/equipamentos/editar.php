@@ -13,6 +13,66 @@ if ($id <= 0) {
     exit;
 }
 
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    try {
+        $sql_update = "
+            UPDATE equipamentos
+            SET
+                categoria_id = :categoria_id,
+                estado_id = :estado_id,
+                criticidade_id = :criticidade_id,
+                tipo_entrada_id = :tipo_entrada_id,
+                codigo_inventario = :codigo_inventario,
+                designacao = :designacao,
+                marca = :marca,
+                modelo = :modelo,
+                numero_serie = :numero_serie,
+                fabricante = :fabricante,
+                data_aquisicao = :data_aquisicao,
+                ano_fabrico = :ano_fabrico,
+                custo_aquisicao = :custo_aquisicao,
+                observacoes = :observacoes
+            WHERE id = :id
+            AND ativo = 1
+        ";
+
+        $stmt_update = $ligacao->prepare($sql_update);
+
+        $stmt_update->execute([
+            'categoria_id' => (int) $_POST['categoria_id'],
+            'estado_id' => (int) $_POST['estado_id'],
+            'criticidade_id' => (int) $_POST['criticidade_id'],
+            'tipo_entrada_id' => (int) $_POST['tipo_entrada_id'],
+            'codigo_inventario' => trim($_POST['codigo_inventario']),
+            'designacao' => trim($_POST['designacao']),
+            'marca' => trim($_POST['marca']),
+            'modelo' => trim($_POST['modelo']),
+            'numero_serie' => trim($_POST['numero_serie']),
+            'fabricante' => trim($_POST['fabricante']),
+            'data_aquisicao' => $_POST['data_aquisicao'] ?: null,
+            'ano_fabrico' => $_POST['ano_fabrico'] ?: null,
+            'custo_aquisicao' => $_POST['custo_aquisicao'] ?: null,
+            'observacoes' => trim($_POST['observacoes']),
+            'id' => $id
+        ]);
+
+        header('Location: detalhes.php?id=' . $id);
+        exit;
+
+    } catch (PDOException $e) {
+        die('Erro ao atualizar equipamento.');
+    }
+}
+
+
+$categorias = $ligacao->query("SELECT id, nome FROM categorias ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
+$estados = $ligacao->query("SELECT id, nome FROM estados_equipamento ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
+$criticidades = $ligacao->query("SELECT id, nome FROM criticidades ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
+$tipos_entrada = $ligacao->query("SELECT id, nome FROM tipos_entrada ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
+
+
 try {
     $sql = "
         SELECT
@@ -32,6 +92,7 @@ try {
         INNER JOIN tipos_entrada te ON e.tipo_entrada_id = te.id
         INNER JOIN localizacoes l ON e.localizacao_id = l.id
         WHERE e.id = :id
+        AND e.ativo = 1
         LIMIT 1
     ";
 
@@ -47,6 +108,8 @@ try {
 } catch (PDOException $e) {
     die('Erro ao carregar equipamento.');
 }
+
+
 
 include __DIR__ . '/../../includes/header.php';
 include __DIR__ . '/../../includes/navbar.php';
@@ -85,37 +148,44 @@ include __DIR__ . '/../../includes/navbar.php';
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Código de Inventário</label>
-                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->codigo_inventario); ?>">
+                                <input type="text" name="codigo_inventario" class="form-control" value="<?php echo htmlspecialchars($equipamento->codigo_inventario); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Designação</label>
-                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->designacao); ?>">
+                                <input type="text" name="designacao" class="form-control" value="<?php echo htmlspecialchars($equipamento->designacao); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Categoria</label>
-                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->categoria); ?>">
+                                <select name="categoria_id" class="form-select">
+                                    <?php foreach ($categorias as $categoria) : ?>
+                                        <option value="<?php echo $categoria->id; ?>"
+                                            <?php echo $categoria->id == $equipamento->categoria_id ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($categoria->nome); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Marca</label>
-                                <input type="text" class="form-control" value="Philips"value="<?php echo htmlspecialchars($equipamento->marca); ?>">
+                                <input type="text" name="marca" class="form-control" value="<?php echo htmlspecialchars($equipamento->marca); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Modelo</label>
-                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->modelo); ?>">
+                                <input type="text" name="modelo" class="form-control" value="<?php echo htmlspecialchars($equipamento->modelo); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Número de Série</label>
-                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->numero_serie); ?>">
+                                <input type="text" name="numero_serie" class="form-control" value="<?php echo htmlspecialchars($equipamento->numero_serie); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Fabricante</label>
-                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->fabricante); ?>"">
+                                <input type="text" name="fabricante" class="form-control" value="<?php echo htmlspecialchars($equipamento->fabricante); ?>">
                             </div>
                         </div>
 
@@ -123,48 +193,49 @@ include __DIR__ . '/../../includes/navbar.php';
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Data de Aquisição</label>
-                                <input type="date" class="form-control" value="<?php echo htmlspecialchars($equipamento->data_aquisicao); ?>">
+                                <input type="date" name="data_aquisicao" class="form-control" value="<?php echo htmlspecialchars($equipamento->data_aquisicao); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Ano de Fabrico</label>
-                                <input type="number" class="form-control" value="<?php echo htmlspecialchars($equipamento->ano_fabrico); ?>">
+                                <input type="number" name="ano_fabrico" class="form-control" value="<?php echo htmlspecialchars($equipamento->ano_fabrico); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Custo de Aquisição</label>
-                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->custo_aquisicao); ?>">
+                                <input type="text" name="custo_aquisicao" class="form-control" value="<?php echo htmlspecialchars($equipamento->custo_aquisicao); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Tipo de Entrada</label>
-                                <select class="form-control">
-                                    <option selected>Compra</option>
-                                    <option>Doação</option>
-                                    <option>Aluguer</option>
-                                    <option>Empréstimo</option>
+                                <select name="tipo_entrada_id" class="form-select">
+                                    <?php foreach ($tipos_entrada as $tipo) : ?>
+                                        <option value="<?php echo $tipo->id; ?>" <?php echo $tipo->id == $equipamento->tipo_entrada_id ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($tipo->nome); ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Estado Atual</label>
-                                <select class="form-control">
-                                    <option selected>Operacional</option>
-                                    <option>Em manutenção</option>
-                                    <option>Inativo</option>
-                                    <option>Em calibração</option>
-                                    <option>Em quarentena</option>
-                                    <option>Abatido</option>
+                                <select name="estado_id" class="form-select">
+                                    <?php foreach ($estados as $estado) : ?>
+                                        <option value="<?php echo $estado->id; ?>" <?php echo $estado->id == $equipamento->estado_id ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($estado->nome); ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Criticidade</label>
-                                <select class="form-control">
-                                    <option>Baixa</option>
-                                    <option selected>Média</option>
-                                    <option>Alta</option>
-                                    <option>Suporte de vida</option>
+                                <select name="criticidade_id" class="form-select">
+                                    <?php foreach ($criticidades as $criticidade) : ?>
+                                        <option value="<?php echo $criticidade->id; ?>" <?php echo $criticidade->id == $equipamento->criticidade_id ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($criticidade->nome); ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -288,7 +359,7 @@ include __DIR__ . '/../../includes/navbar.php';
                     <!-- Observações -->
                     <div class="mt-3">
                         <label class="form-label">Observações</label>
-                        <textarea class="form-control" rows="3">Equipamento em excelente estado. Última manutenção Janeiro 2026.</textarea>
+                        <textarea name="observacoes" class="form-control" rows="3"><?php echo htmlspecialchars($equipamento->observacoes); ?></textarea>
                     </div>
 
                     <!-- Botões -->
