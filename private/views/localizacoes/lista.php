@@ -117,12 +117,10 @@ include __DIR__ . '/../../includes/navbar.php';
                                         <td><?php echo htmlspecialchars($localizacao->sala); ?></td>
 
                                         <td class="text-center">
-                                            <a href="editar.php?id=<?php echo $localizacao->id; ?>"
-                                            class="btn btn-edit-list btn-sm">
+                                            <a href="editar.php?id=<?php echo $localizacao->id; ?>" class="btn btn-edit-list btn-sm">
                                                 <i class="fa-solid fa-pen"></i>
                                             </a>
-                                            <a href="apagar.php?id=<?php echo $localizacao->id; ?>"
-                                            class="btn btn-delete-list btn-sm">
+                                            <a href="apagar.php?id=<?php echo $localizacao->id; ?>" class="btn btn-delete-list btn-sm">
                                                 <i class="fa-solid fa-trash"></i>
                                             </a>
                                         </td>
