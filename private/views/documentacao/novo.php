@@ -160,6 +160,11 @@ include __DIR__ . '/../../includes/navbar.php';
                         >
                     </div>
 
+                    <div class="col-12 mb-3">
+                        <label class="form-label">Observações</label>
+                        <textarea name="observacoes" class="form-control" rows="3"></textarea>
+                    </div>
+
                     <div class="d-flex justify-content-end gap-2 mb-4"> 
                         <a href="lista.php" class="btn btn-cancel btn-sm"> 
                             <i class="fa-solid fa-xmark me-1"></i> Cancelar 
