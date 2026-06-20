@@ -152,7 +152,32 @@ include __DIR__ . '/../../includes/navbar.php';
                                     </td>
 
                                     <td>
-                                        <span class="badge bg-primary">
+                                        <?php
+                                        $classeBadge = 'bg-secondary';
+
+                                        switch ($fornecedor->tipo_fornecedor) {
+
+                                            case 'Fabricante':
+                                                $classeBadge = 'bg-primary';
+                                                break;
+
+                                            case 'Distribuidor':
+                                                $classeBadge = 'bg-success';
+                                                break;
+
+                                            case 'Assistência Técnica':
+                                                $classeBadge = 'bg-danger';
+                                                break;
+
+                                            case 'Consumíveis':
+                                                $classeBadge = 'bg-warning';
+                                                break;
+
+                                            default:
+                                                $classeBadge = 'bg-secondary';
+                                        }
+                                        ?>
+                                        <span class="badge <?php echo $classeBadge; ?>">
                                             <?php echo htmlspecialchars($fornecedor->tipo_fornecedor); ?>
                                         </span>
                                     </td>

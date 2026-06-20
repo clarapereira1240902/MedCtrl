@@ -1,114 +1,175 @@
 <?php
 require_once __DIR__ . '/../../includes/funcoes.php';
+require_once __DIR__ . '/../../../config/ligacao.php';
+
 redirect_if_not_logged();
 
 $menu_ativo = 'fornecedores';
+
+$id = (int) ($_GET['id'] ?? 0);
+
+if ($id <= 0) {
+    header('Location: lista.php');
+    exit;
+}
+
+try {
+    $sql = "
+        SELECT
+            f.*,
+            tf.nome AS tipo_fornecedor
+        FROM fornecedores f
+        INNER JOIN tipos_fornecedor tf
+            ON f.tipo_fornecedor_id = tf.id
+        WHERE f.id = :id
+        AND f.ativo = 1
+        LIMIT 1
+    ";
+
+    $stmt = $ligacao->prepare($sql);
+    $stmt->execute(['id' => $id]);
+
+    $fornecedor = $stmt->fetch(PDO::FETCH_OBJ);
+
+    if (!$fornecedor) {
+        header('Location: lista.php');
+        exit;
+    }
+
+    $sql_equipamentos = "
+        SELECT
+            e.id,
+            e.codigo_inventario,
+            e.designacao,
+            e.marca,
+            e.modelo
+        FROM equipamento_fornecedor ef
+        INNER JOIN equipamentos e
+            ON ef.equipamento_id = e.id
+        WHERE ef.fornecedor_id = :id
+        AND e.ativo = 1
+        ORDER BY e.codigo_inventario ASC
+    ";
+
+    $stmt_equipamentos = $ligacao->prepare($sql_equipamentos);
+    $stmt_equipamentos->execute(['id' => $id]);
+
+    $equipamentos = $stmt_equipamentos->fetchAll(PDO::FETCH_OBJ);
+
+} catch (PDOException $e) {
+    die('Erro ao carregar fornecedor.');
+}
 
 include __DIR__ . '/../../includes/header.php';
 include __DIR__ . '/../../includes/navbar.php';
 ?>
 
+<div class="container-fluid">
+    <div class="row">
 
-    <div class="container-fluid">
-        <div class="row">
+        <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
 
-            <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
+        <main class="col-lg-10 p-4">
+            <div class="page-header">
+                <h2>
+                    <i class="fa-solid fa-handshake me-2"></i>Detalhes do Fornecedor
+                </h2>
 
-            <!-- Conteúdo Principal -->
-            <main class="col-lg-10 p-4">
-                <div class="page-header">
-                    <h2><i class="fa-solid fa-handshake me-2"></i>Detalhes do Fornecedor</h2>
-                    <a href="lista.html" class="btn btn-cancel btn-sm">
-                        <i class="fa-solid fa-arrow-left me-1"></i>Voltar
-                    </a>
+                <a href="lista.php" class="btn btn-cancel btn-sm">
+                    <i class="fa-solid fa-arrow-left me-1"></i>Voltar
+                </a>
+            </div>
+
+            <div class="form-medctrl">
+
+                <div class="mb-4">
+                    <h3 class="mb-1">
+                        <?php echo htmlspecialchars($fornecedor->nome_empresa); ?>
+                    </h3>
+
+                    <span class="badge bg-primary">
+                        <?php echo htmlspecialchars($fornecedor->tipo_fornecedor); ?>
+                    </span>
                 </div>
 
-                <!-- Cartão principal -->
-                <div class="form-medctrl">
+                <hr>
 
-                    <!-- Identificação -->
-                    <div class="mb-4">
-                        <h3 class="mb-1">Dräger Portugal</h3>
-                        <span class="badge bg-primary">Fabricante</span>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <p><strong>NIF:</strong> <?php echo htmlspecialchars($fornecedor->nif); ?></p>
+                        <p><strong>Telefone:</strong> <?php echo htmlspecialchars($fornecedor->telefone ?? '—'); ?></p>
+                        <p><strong>Email:</strong> <?php echo htmlspecialchars($fornecedor->email ?? '—'); ?></p>
+                        <p><strong>Website:</strong> <?php echo htmlspecialchars($fornecedor->website ?? '—'); ?></p>
                     </div>
 
-                    <hr>
-
-                    <!-- Informação geral -->
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <p><strong>NIF:</strong> 507123456</p>
-                            <p><strong>Telefone:</strong> 229876543</p>
-                            <p><strong>Email:</strong> geral@drager.pt</p>
-                            <p><strong>Website:</strong> www.drager.pt</p>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <p><strong>Morada:</strong> Rua da Saúde, Porto</p>
-                            <p><strong>Pessoa de contacto:</strong> João Costa</p>
-                            <p><strong>Telefone contacto:</strong> 912345678</p>
-                        </div>
+                    <div class="col-12 col-md-6">
+                        <p><strong>Morada:</strong> <?php echo htmlspecialchars($fornecedor->morada ?? '—'); ?></p>
+                        <p><strong>Pessoa de contacto:</strong> <?php echo htmlspecialchars($fornecedor->pessoa_contacto ?? '—'); ?></p>
+                        <p><strong>Telefone contacto:</strong> <?php echo htmlspecialchars($fornecedor->telefone_contacto ?? '—'); ?></p>
                     </div>
+                </div>
 
-                    <hr>
-                    
-                    <!-- Equipamentos Associados -->
-                    <div class="mt-3">
-                        <h5 class="mb-3">
-                            <i class="fa-solid fa-laptop-medical me-2"></i>Equipamentos Associados
-                        </h5>
+                <hr>
+                
+                <div class="mt-3">
+                    <h5 class="mb-3">
+                        <i class="fa-solid fa-laptop-medical me-2"></i>Equipamentos Associados
+                    </h5>
 
-                        <div class="documento-card mb-2 d-flex justify-content-between align-items-center">
-                            <span>Monitor de Sinais Vitais MX450</span>
+                    <?php if (count($equipamentos) === 0) : ?>
 
-                            <a href="../equipamentos/detalhes.php" class="btn btn-save btn-sm">
-                                <i class="fa-solid fa-eye me-1"></i>Ver
-                            </a>
-                        </div>
-
-                        <div class="documento-card mb-2 d-flex justify-content-between align-items-center">
-                            <span>Ventilador Pulmonar V500</span>
-
-                            <a href="../equipamentos/detalhes.php" class="btn btn-save btn-sm">
-                                <i class="fa-solid fa-eye me-1"></i>Ver
-                            </a>
-                        </div>
-
-                        <div class="documento-card d-flex justify-content-between align-items-center">
-                            <span>ECG Philips TC70</span>
-
-                            <a href="../equipamentos/detalhes.php" class="btn btn-save btn-sm">
-                                <i class="fa-solid fa-eye me-1"></i>Ver
-                            </a>
-                        </div>
-                    </div>
-
-                    <hr>
-
-                    <!-- Observações -->
-                        <div class="mt-3">
-                        <h5>Observações</h5>
                         <p class="text-muted">
-                            Fornecedor principal de equipamentos críticos hospitalares.  
-                            Suporte técnico 24/7 e contrato de manutenção ativa.
+                            Não existem equipamentos associados a este fornecedor.
                         </p>
 
-                    </div>
+                    <?php else : ?>
 
-                    <!-- BOTÕES -->
-                    <div class="d-flex justify-content-end gap-2 mt-4">
-                        <a href="editar.php" class="btn btn-edit btn-sm"><i class="fa-solid fa-pen me-1"></i> Editar </a>
-                        <a href="lista.php" class="btn btn-cancel btn-sm"> Cancelar</a>
-                    </div>
+                        <?php foreach ($equipamentos as $equipamento) : ?>
+                            <div class="documento-card mb-2 d-flex justify-content-between align-items-center">
+                                <span>
+                                    <?php echo htmlspecialchars($equipamento->codigo_inventario); ?>
+                                    |
+                                    <?php echo htmlspecialchars($equipamento->designacao); ?>
+                                    -
+                                    <?php echo htmlspecialchars($equipamento->marca); ?>
+                                    <?php echo htmlspecialchars($equipamento->modelo); ?>
+                                </span>
 
+                                <a href="../equipamentos/detalhes.php?id=<?php echo $equipamento->id; ?>" class="btn btn-save btn-sm">
+                                    <i class="fa-solid fa-eye me-1"></i>Ver
+                                </a>
+                            </div>
+                        <?php endforeach; ?>
+
+                    <?php endif; ?>
                 </div>
-            </main>
-        
-        </div>
-    </div>
 
-    
-<!-- Bootstrap JS and custom JS --> 
+                <hr>
+
+                <div class="mt-3">
+                    <h5>Observações</h5>
+
+                    <p class="text-muted">
+                        <?php echo !empty($fornecedor->observacoes)
+                            ? htmlspecialchars($fornecedor->observacoes)
+                            : 'Sem observações registadas.'; ?>
+                    </p>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <a href="editar.php?id=<?php echo $fornecedor->id; ?>" class="btn btn-edit btn-sm">
+                        <i class="fa-solid fa-pen me-1"></i> Editar
+                    </a>
+
+                    <a href="lista.php" class="btn btn-cancel btn-sm">Cancelar</a>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+</div>
+
 <script src="<?php echo BASE_URL; ?>/assets/bootstrap/bootstrap.bundle.min.js"></script> 
 
 </body>
