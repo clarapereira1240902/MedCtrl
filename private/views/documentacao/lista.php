@@ -220,7 +220,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                                 break;
 
                                             case 'Garantia':
-                                                $classeBadge = 'bg-default';
+                                                $classeBadge = 'bg-secondary';
                                                 break;
                                         }
                                         ?>
