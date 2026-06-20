@@ -10,7 +10,6 @@ $estados = $ligacao->query("SELECT id, nome FROM estados_equipamento ORDER BY no
 $criticidades = $ligacao->query("SELECT id, nome FROM criticidades ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
 $tipos_entrada = $ligacao->query("SELECT id, nome FROM tipos_entrada ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
 $localizacoes = $ligacao->query("SELECT id, edificio, piso, servico, sala FROM localizacoes ORDER BY edificio, piso, servico, sala")->fetchAll(PDO::FETCH_OBJ);
-$localizacoes = $ligacao->query("SELECT id, edificio, piso, servico, sala FROM localizacoes ORDER BY edificio, piso, servico, sala")->fetchAll(PDO::FETCH_OBJ);
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
