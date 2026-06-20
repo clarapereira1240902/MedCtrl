@@ -1,99 +1,151 @@
 <?php
 require_once __DIR__ . '/../../includes/funcoes.php';
+require_once __DIR__ . '/../../../config/ligacao.php';
+
 redirect_if_not_logged();
 
 $menu_ativo = 'documentacao';
+
+$id = (int) ($_GET['id'] ?? 0);
+
+if ($id <= 0) {
+    header('Location: lista.php');
+    exit;
+}
+
+try {
+    $sql = "
+        SELECT
+            d.*,
+            td.nome AS tipo_documento,
+            e.id AS equipamento_id,
+            e.codigo_inventario,
+            e.designacao AS equipamento,
+            f.nome_empresa AS fornecedor
+        FROM documentos d
+        INNER JOIN tipos_documento td
+            ON d.tipo_documento_id = td.id
+        INNER JOIN equipamentos e
+            ON d.equipamento_id = e.id
+        LEFT JOIN fornecedores f
+            ON d.fornecedor_id = f.id
+        WHERE d.id = :id
+        AND d.ativo = 1
+        LIMIT 1
+    ";
+
+    $stmt = $ligacao->prepare($sql);
+    $stmt->execute(['id' => $id]);
+
+    $documento = $stmt->fetch(PDO::FETCH_OBJ);
+
+    if (!$documento) {
+        header('Location: lista.php');
+        exit;
+    }
+
+} catch (PDOException $e) {
+    die('Erro ao carregar documento.');
+}
+
+$nome_ficheiro = basename($documento->ficheiro_link);
 
 include __DIR__ . '/../../includes/header.php';
 include __DIR__ . '/../../includes/navbar.php';
 ?>
 
+<div class="container-fluid">
+    <div class="row">
 
+        <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
 
-    <div class="container-fluid">
-        <div class="row">
+        <main class="col-lg-10 p-4">
+            <div class="page-header">
+                <h2>
+                    <i class="fa-solid fa-file-medical me-2"></i>Detalhes do Documento
+                </h2>
 
-            <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
+                <a href="lista.php" class="btn btn-cancel btn-sm">
+                    <i class="fa-solid fa-arrow-left me-1"></i>Voltar
+                </a>
+            </div>
 
-            <!-- Conteúdo Principal -->
-            <main class="col-lg-10 p-4">
-                <div class="page-header">
-                    <h2><i class="fa-solid fa-file-medical me-2"></i>Detalhes do Documento</h2>
-                    <a href="lista.html" class="btn btn-cancel btn-sm">
-                        <i class="fa-solid fa-arrow-left me-1"></i>Voltar
-                    </a>
+            <div class="card-medctrl p-4">
+
+                <div class="row">
+
+                    <div class="col-12 col-md-6">
+                        <p><strong>Tipo de Documento:</strong> <?php echo htmlspecialchars($documento->tipo_documento); ?></p>
+                        <p><strong>Nome:</strong> <?php echo htmlspecialchars($documento->nome); ?></p>
+                        <p><strong>Data do Documento:</strong> <?php echo htmlspecialchars($documento->data_documento ?? '—'); ?></p>
+                        <p><strong>Validade:</strong> <?php echo htmlspecialchars($documento->data_validade ?? '—'); ?></p>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <p>
+                            <strong>Equipamento:</strong>
+                            <?php echo htmlspecialchars($documento->codigo_inventario . ' | ' . $documento->equipamento); ?>
+                        </p>
+
+                        <a href="../equipamentos/detalhes.php?id=<?php echo $documento->equipamento_id; ?>" class="btn btn-save btn-sm mb-3">
+                            <i class="fa-solid fa-eye me-1"></i>Ver equipamento
+                        </a>
+
+                        <p><strong>Fornecedor:</strong> <?php echo htmlspecialchars($documento->fornecedor ?? '—'); ?></p>
+                        <p><strong>Localização ficheiro:</strong> <?php echo htmlspecialchars($documento->ficheiro_link); ?></p>
+                    </div>
+
                 </div>
 
-                <!-- Cartão principal -->
-                <div class="card-medctrl p-4">
+                <hr>
 
-                    <div class="row">
+                <div class="mt-3">
+                    <strong>Observações:</strong>
+                    <p>
+                        <?php echo !empty($documento->observacoes)
+                            ? htmlspecialchars($documento->observacoes)
+                            : 'Sem observações registadas.'; ?>
+                    </p>
+                </div>
 
-                        <div class="col-12 col-md-6">
-                            <p><strong>Tipo de Documento:</strong> Manual Técnico</p>
-                            <p><strong>Nome:</strong> Manual Monitor Philips MX450</p>
-                            <p><strong>Data do Documento:</strong> 2024-03-10</p>
-                            <p><strong>Validade:</strong> 2027-03-10</p>
-                        </div>
+                <hr>
 
-                        <div class="col-12 col-md-6">
-                            <p><strong>Equipamento:</strong> INV-001 | Monitor Multiparamétrico</p>
-                            <a href="../equipamentos/detalhes.php" class="btn btn-save btn-sm mb-3">
-                                <i class="fa-solid fa-eye me-1"></i>Ver equipamento
-                            </a>
-                            <p><strong>Fornecedor:</strong> Philips Healthcare</p>
-                            <p><strong>Localização ficheiro:</strong> docs/manuals/mx450.pdf</p>
-                        </div>
+                <div class="mt-4">
+                    <h5 class="mb-3">
+                        <i class="fa-solid fa-file-lines me-2"></i>Ver Documento
+                    </h5>
 
-                    </div>
-
-                    <hr>
-
-                    <div class="mt-3">
-                        <strong>Observações:</strong>
-                        <p>Documento oficial do fabricante com instruções de utilização e manutenção.</p>
-                    </div>
-
-                    <hr>
-
-                    <div class="mt-4">
-
-                        <h5 class="mb-3">
-                            <i class="fa-solid fa-file-lines me-2"></i>Ver Documento
-                        </h5>
-
-                        <div class="border rounded p-3 bg-light">
-                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
-                                <div>
-                                    <strong>manual_monitor_philips_mx450.pdf</strong>
-                                    <br>
-                                    <small class="text-muted">
-                                        Manual Técnico - PDF
-                                    </small>
-                                </div>
-
-                                <a href="docs/manuals/mx450.pdf" target="_blank" class="btn btn-save btn-sm">
-                                    <i class="fa-solid fa-download me-1"></i>Abrir
-                                </a>
+                    <div class="border rounded p-3 bg-light">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
+                            <div>
+                                <strong><?php echo htmlspecialchars($nome_ficheiro); ?></strong>
+                                <br>
+                                <small class="text-muted">
+                                    <?php echo htmlspecialchars($documento->tipo_documento); ?>
+                                </small>
                             </div>
+
+                            <a href="<?php echo htmlspecialchars($documento->ficheiro_link); ?>" target="_blank" class="btn btn-save btn-sm">
+                                <i class="fa-solid fa-download me-1"></i>Abrir
+                            </a>
                         </div>
-                        
                     </div>
-
-                    <!-- BOTÕES -->
-                    <div class="d-flex justify-content-end gap-2 mt-4">
-                        <a href="editar.php" class="btn btn-edit btn-sm"><i class="fa-solid fa-pen me-1"></i> Editar </a>
-                        <a href="lista.php" class="btn btn-cancel btn-sm"> Cancelar</a>
-                    </div>
-
                 </div>
-            </main>
-        
-        </div>
-    </div>
 
-    
-<!-- Bootstrap JS and custom JS --> 
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <a href="editar.php?id=<?php echo $documento->id; ?>" class="btn btn-edit btn-sm">
+                        <i class="fa-solid fa-pen me-1"></i>Editar
+                    </a>
+
+                    <a href="lista.php" class="btn btn-cancel btn-sm">Cancelar</a>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+</div>
+
 <script src="<?php echo BASE_URL; ?>/assets/bootstrap/bootstrap.bundle.min.js"></script>
 
 </body>
