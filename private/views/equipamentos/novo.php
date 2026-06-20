@@ -3,6 +3,90 @@ require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged();
 $menu_ativo = 'equipamentos';
 
+require_once __DIR__ . '/../../../config/ligacao.php';
+
+$categorias = $ligacao->query("SELECT id, nome FROM categorias ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
+$estados = $ligacao->query("SELECT id, nome FROM estados_equipamento ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
+$criticidades = $ligacao->query("SELECT id, nome FROM criticidades ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
+$tipos_entrada = $ligacao->query("SELECT id, nome FROM tipos_entrada ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
+$localizacoes = $ligacao->query("SELECT id, edificio, piso, servico, sala FROM localizacoes ORDER BY edificio, piso, servico, sala")->fetchAll(PDO::FETCH_OBJ);
+$localizacoes = $ligacao->query("SELECT id, edificio, piso, servico, sala FROM localizacoes ORDER BY edificio, piso, servico, sala")->fetchAll(PDO::FETCH_OBJ);
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    try {
+
+        $sql_insert = "
+            INSERT INTO equipamentos (
+                localizacao_id,
+                categoria_id,
+                estado_id,
+                criticidade_id,
+                tipo_entrada_id,
+                codigo_inventario,
+                designacao,
+                marca,
+                modelo,
+                numero_serie,
+                fabricante,
+                data_aquisicao,
+                ano_fabrico,
+                custo_aquisicao,
+                observacoes
+            )
+            VALUES (
+                :localizacao_id,
+                :categoria_id,
+                :estado_id,
+                :criticidade_id,
+                :tipo_entrada_id,
+                :codigo_inventario,
+                :designacao,
+                :marca,
+                :modelo,
+                :numero_serie,
+                :fabricante,
+                :data_aquisicao,
+                :ano_fabrico,
+                :custo_aquisicao,
+                :observacoes
+            )
+        ";
+
+        $stmt = $ligacao->prepare($sql_insert);
+
+        $stmt->execute([
+            'localizacao_id' => (int) $_POST['localizacao_id'],
+            'categoria_id' => (int) $_POST['categoria_id'],
+            'estado_id' => (int) $_POST['estado_id'],
+            'criticidade_id' => (int) $_POST['criticidade_id'],
+            'tipo_entrada_id' => (int) $_POST['tipo_entrada_id'],
+            'codigo_inventario' => trim($_POST['codigo_inventario']),
+            'designacao' => trim($_POST['designacao']),
+            'marca' => trim($_POST['marca']),
+            'modelo' => trim($_POST['modelo']),
+            'numero_serie' => trim($_POST['numero_serie']),
+            'fabricante' => trim($_POST['fabricante']),
+            'data_aquisicao' => $_POST['data_aquisicao'] ?: null,
+            'ano_fabrico' => $_POST['ano_fabrico'] ?: null,
+            'custo_aquisicao' => $_POST['custo_aquisicao'] ?: null,
+            'observacoes' => trim($_POST['observacoes'])
+        ]);
+
+        $novo_id = $ligacao->lastInsertId();
+
+        header('Location: detalhes.php?id=' . $novo_id);
+        exit;
+
+    } catch (PDOException $e) {
+
+        die('Erro ao criar equipamento.');
+
+    }
+}
+
+
 include __DIR__ . '/../../includes/header.php';
 include __DIR__ . '/../../includes/navbar.php';
 ?>
@@ -26,7 +110,7 @@ include __DIR__ . '/../../includes/navbar.php';
 
                 <hr>
 
-                <form class="form-medctrl">
+                <form class="form-medctrl" method="post">
 
                     <div class="row">
                         
@@ -38,89 +122,100 @@ include __DIR__ . '/../../includes/navbar.php';
 
                         <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Código de Inventário</label>
-                            <input type="text" class="form-control" placeholder="Ex: INV-001">
+                            <input type="text" class="form-control" name="codigo_inventario" placeholder="Ex: EQ001">
                         </div>
 
                         <div class="col-12 col-md-8 mb-3">
                             <label class="form-label">Designação</label>
-                            <input type="text" class="form-control" placeholder="Ex: Monitor Multiparamétrico">
+                            <input type="text" name="designacao" class="form-control" placeholder="Ex: Monitor Multiparamétrico">
                         </div>
 
                         <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Categoria</label>
-                            <input type="text" class="form-control">
+                            <select name="categoria_id" class="form-select" required>
+                                <option value="">Selecione uma categoria</option>
+                                <?php foreach ($categorias as $categoria) : ?>
+                                    <option value="<?php echo $categoria->id; ?>">
+                                        <?php echo htmlspecialchars($categoria->nome); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
 
                         <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Marca</label>
-                            <input type="text" class="form-control">
+                            <input type="text" name="marca" class="form-control">
                         </div>
 
                         <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Modelo</label>
-                            <input type="text" class="form-control">
+                            <input type="text" name="modelo" class="form-control">
                         </div>
 
                         <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Número de Série</label>
-                            <input type="text" class="form-control">
+                            <input type="text" name="numero_serie" class="form-control">
                         </div>
 
                         <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Fabricante</label>
-                            <input type="text" class="form-control">
+                            <input type="text" name="fabricante" class="form-control">
                         </div>
 
                         <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Data de Aquisição</label>
-                            <input type="date" class="form-control">
+                            <input type="date" name="data_aquisicao" class="form-control">
                         </div>
 
                         <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Ano de Fabrico</label>
-                            <input type="number" class="form-control">
+                            <input type="number" name="ano_fabrico" class="form-control">
                         </div>
 
                         <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Custo (€)</label>
-                            <input type="number" class="form-control">
+                            <input type="number" name="custo_aquisicao" class="form-control">
                         </div>
 
                         <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Tipo de Entrada</label>
-                            <select class="form-select">
-                                <option>Compra</option>
-                                <option>Doação</option>
-                                <option>Aluguer</option>
-                                <option>Empréstimo</option>
+                            <select name="tipo_entrada_id" class="form-select" required>
+                                <option value="">Selecione um tipo</option>
+                                <?php foreach ($tipos_entrada as $tipo) : ?>
+                                    <option value="<?php echo $tipo->id; ?>">
+                                        <?php echo htmlspecialchars($tipo->nome); ?>
+                                    </option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
 
                         <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Estado</label>
-                            <select class="form-select">
-                                <option>Operacional</option>
-                                <option>Em manutenção</option>
-                                <option>Inativo</option>
-                                <option>Em calibração</option>
-                                <option>Em quarentena</option>
-                                <option>Abatido</option>
+                            <select name="estado_id" class="form-select" required>
+                                <option value="">Selecione um estado</option>
+                                <?php foreach ($estados as $estado) : ?>
+                                    <option value="<?php echo $estado->id; ?>">
+                                        <?php echo htmlspecialchars($estado->nome); ?>
+                                    </option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
 
                         <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Criticidade</label>
-                            <select class="form-select">
-                                <option>Baixa</option>
-                                <option>Média</option>
-                                <option>Alta</option>
-                                <option>Suporte de vida</option>
+                            <select name="criticidade_id" class="form-select" required>
+                                <option value="">Selecione uma criticidade</option>
+                                <?php foreach ($criticidades as $criticidade) : ?>
+                                    <option value="<?php echo $criticidade->id; ?>">
+                                        <?php echo htmlspecialchars($criticidade->nome); ?>
+                                    </option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
 
                         <div class="col-12 mb-3">
                             <label class="form-label">Observações</label>
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea class="form-control" name="observacoes" rows="3"></textarea>
                         </div>
                         
                         <!--Localização do equipamento-->
@@ -131,20 +226,20 @@ include __DIR__ . '/../../includes/navbar.php';
 
                         <div class="col-12 mb-3">
                             <label class="form-label">Localização</label>
-                            <select class="form-select">
-                                <option selected>Selecionar localização</option>
-
-                                <option>
-                                    Hospital Central - Piso 2 - Cardiologia - Sala 12
-                                </option>
-
-                                <option>
-                                    Hospital Norte - Piso 1 - Urgência - Sala 3
-                                </option>
-
-                                <option>
-                                    Hospital Sul - Piso 0 - Radiologia - Sala RX02
-                                </option>
+                            <select name="localizacao_id" class="form-select" required>
+                                <option value="">Selecione uma localização</option>
+                                <?php foreach ($localizacoes as $localizacao) : ?>
+                                    <option value="<?php echo $localizacao->id; ?>">
+                                        <?php
+                                        echo htmlspecialchars(
+                                            $localizacao->edificio . ' | ' .
+                                            $localizacao->piso . ' | ' .
+                                            $localizacao->servico . ' | ' .
+                                            $localizacao->sala
+                                        );
+                                        ?>
+                                    </option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
 
