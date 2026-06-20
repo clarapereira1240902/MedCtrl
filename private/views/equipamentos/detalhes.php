@@ -66,6 +66,62 @@ try {
 }
 
 
+try {
+    $sql_fornecedores = "
+        SELECT
+            f.id,
+            f.nome_empresa,
+            tf.nome AS tipo_fornecedor
+        FROM equipamento_fornecedor ef
+        INNER JOIN fornecedores f
+            ON ef.fornecedor_id = f.id
+        INNER JOIN tipos_fornecedor tf
+            ON ef.tipo_fornecedor_id = tf.id
+        WHERE ef.equipamento_id = :id
+        AND f.ativo = 1
+        ORDER BY tf.nome ASC, f.nome_empresa ASC
+    ";
+
+    $stmt_fornecedores = $ligacao->prepare($sql_fornecedores);
+    $stmt_fornecedores->execute(['id' => $id]);
+    $fornecedores = $stmt_fornecedores->fetchAll(PDO::FETCH_OBJ);
+
+
+    $sql_garantia = "
+        SELECT *
+        FROM garantias_contratos
+        WHERE equipamento_id = :id
+        LIMIT 1
+    ";
+
+    $stmt_garantia = $ligacao->prepare($sql_garantia);
+    $stmt_garantia->execute(['id' => $id]);
+    $garantia = $stmt_garantia->fetch(PDO::FETCH_OBJ);
+
+
+    $sql_documentos = "
+        SELECT
+            d.id,
+            d.nome,
+            d.data_validade,
+            td.nome AS tipo_documento
+        FROM documentos d
+        INNER JOIN tipos_documento td
+            ON d.tipo_documento_id = td.id
+        WHERE d.equipamento_id = :id
+        AND d.ativo = 1
+        ORDER BY d.nome ASC
+    ";
+
+    $stmt_documentos = $ligacao->prepare($sql_documentos);
+    $stmt_documentos->execute(['id' => $id]);
+    $documentos = $stmt_documentos->fetchAll(PDO::FETCH_OBJ);
+
+} catch (PDOException $e) {
+    die('Erro ao carregar dados associados ao equipamento.');
+}
+
+
 function classe_estado($estado)
 {
     $estado = mb_strtolower(trim($estado), 'UTF-8');
@@ -160,7 +216,7 @@ include __DIR__ . '/../../includes/navbar.php';
                             </div>
                         </div>
 
-                        <!-- COLUNA DIREITA -->
+                        <!-- Coluna direita -->
                         <div class="col-12 col-md-6">
                             <div class="info-group">
                                 <label>Data de Aquisição</label>
@@ -238,40 +294,31 @@ include __DIR__ . '/../../includes/navbar.php';
                             <hr>
                         </div>
 
-                        <div class="col-md-4">
-                            <div class="info-group">
-                                <label>Fabricante</label>
-                                <p>Philips Healthcare</p>
+                        <div class="col-12">
+                            <?php if (count($fornecedores) === 0) : ?>
 
-                                <a href="../fornecedores/detalhes.php" class="btn btn-edit btn-sm mt-2">
-                                    <i class="fa-solid fa-eye me-1"></i>
-                                    Ver fornecedor
-                                </a>
-                            </div>
-                        </div>
+                                <p class="text-muted">Não existem fornecedores associados a este equipamento.</p>
 
-                        <div class="col-md-4">
-                            <div class="info-group">
-                                <label>Distribuidor</label>
-                                <p>MedTech Solutions</p>
+                            <?php else : ?>
 
-                                <a href="../fornecedores/detalhes.php" class="btn btn-edit btn-sm mt-2">
-                                    <i class="fa-solid fa-eye me-1"></i>
-                                    Ver fornecedor
-                                </a>
-                            </div>
-                        </div>
+                                <div class="row">
+                                    <?php foreach ($fornecedores as $fornecedor) : ?>
+                                        <div class="col-12 col-md-4 mb-3">
+                                            <div class="info-group">
+                                                <label><?php echo htmlspecialchars($fornecedor->tipo_fornecedor); ?></label>
 
-                        <div class="col-md-4">
-                            <div class="info-group">
-                                <label>Assistência Técnica</label>
-                                <p>TechRepair Medical</p>
+                                                <p><?php echo htmlspecialchars($fornecedor->nome_empresa); ?></p>
 
-                                <a href="../fornecedores/detalhes.php" class="btn btn-edit btn-sm mt-2">
-                                    <i class="fa-solid fa-eye me-1"></i>
-                                    Ver fornecedor
-                                </a>
-                            </div>
+                                                <a href="../fornecedores/detalhes.php?id=<?php echo $fornecedor->id; ?>" class="btn btn-edit btn-sm mt-2">
+                                                    <i class="fa-solid fa-eye me-1"></i>
+                                                    Ver fornecedor
+                                                </a>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+
+                            <?php endif; ?>
                         </div>
 
 
@@ -281,39 +328,49 @@ include __DIR__ . '/../../includes/navbar.php';
                             <hr>
                         </div>
 
-                        <div class="col-12 col-md-6">
-                            <div class="info-group">
-                                <label>Início da garantia</label>
-                                <p>2023-06-15</p>
+                        <?php if (!$garantia) : ?>
+
+                            <div class="col-12">
+                                <p class="text-muted">Não existe garantia ou contrato registado para este equipamento.</p>
                             </div>
 
-                            <div class="info-group">
-                                <label>Fim da garantia</label>
-                                <p>2026-06-15</p>
+                        <?php else : ?>
+
+                            <div class="col-12 col-md-6">
+                                <div class="info-group">
+                                    <label>Início da garantia</label>
+                                    <p><?php echo htmlspecialchars($garantia->inicio_garantia ?? '—'); ?></p>
+                                </div>
+
+                                <div class="info-group">
+                                    <label>Fim da garantia</label>
+                                    <p><?php echo htmlspecialchars($garantia->fim_garantia ?? '—'); ?></p>
+                                </div>
+
+                                <div class="info-group">
+                                    <label>Contrato manutenção</label>
+                                    <p><?php echo $garantia->tem_contrato_manutencao ? 'Sim' : 'Não'; ?></p>
+                                </div>
                             </div>
 
-                            <div class="info-group">
-                                <label>Contrato manutenção</label>
-                                <p>Sim</p>
-                            </div>
-                        </div>
+                            <div class="col-12 col-md-6">
+                                <div class="info-group">
+                                    <label>Tipo de contrato</label>
+                                    <p><?php echo htmlspecialchars($garantia->tipo_contrato ?? '—'); ?></p>
+                                </div>
 
-                        <div class="col-12 col-md-6">
-                            <div class="info-group">
-                                <label>Tipo de contrato</label>
-                                <p>Preventivo + Corretivo</p>
+                                <div class="info-group">
+                                    <label>Periodicidade</label>
+                                    <p><?php echo htmlspecialchars($garantia->periodicidade ?? '—'); ?></p>
+                                </div>
+
+                                <div class="info-group">
+                                    <label>Entidade responsável</label>
+                                    <p><?php echo htmlspecialchars($garantia->entidade_responsavel ?? '—'); ?></p>
+                                </div>
                             </div>
 
-                            <div class="info-group">
-                                <label>Periodicidade</label>
-                                <p>Semestral</p>
-                            </div>
-
-                            <div class="info-group">
-                                <label>Entidade responsável</label>
-                                <p>Philips Portugal</p>
-                            </div>
-                        </div>
+                        <?php endif; ?>
                         
 
                         <!-- Documentação associada ao equipamento -->
@@ -324,36 +381,43 @@ include __DIR__ . '/../../includes/navbar.php';
 
                         <div class="col-12">
 
-                            <a href="../documentacao/detalhes.php" class="documento-card text-decoration-none d-block mb-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h5 class="mb-1">Manual Monitor Philips MX450</h5>
-                                        <span class="text-muted">Manual Técnico | Validade: 2027-03-10</span>
-                                    </div>
-                                    <div class="documento-icon">
-                                        <i class="fa-solid fa-file-pdf"></i>
-                                    </div>
-                                </div>
-                            </a>
+                            <?php if (count($documentos) === 0) : ?>
 
-                            <a href="../documentacao/detalhes.php" class="documento-card text-decoration-none d-block mb-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h5 class="mb-1">Certificado de Calibração</h5>
-                                        <span class="text-muted">Certificado | Validade: 2026-12-20</span>
-                                    </div>
-                                    <div class="documento-icon">
-                                        <i class="fa-solid fa-file-lines"></i>
-                                    </div>
-                                </div>
-                            </a>
+                                <p class="text-muted">Não existem documentos associados a este equipamento.</p>
+
+                            <?php else : ?>
+
+                                <?php foreach ($documentos as $documento) : ?>
+                                    <a href="../documentacao/detalhes.php?id=<?php echo $documento->id; ?>" class="documento-card text-decoration-none d-block mb-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h5 class="mb-1">
+                                                    <?php echo htmlspecialchars($documento->nome); ?>
+                                                </h5>
+
+                                                <span class="text-muted">
+                                                    <?php echo htmlspecialchars($documento->tipo_documento); ?>
+                                                    |
+                                                    Validade:
+                                                    <?php echo htmlspecialchars($documento->data_validade ?? '—'); ?>
+                                                </span>
+                                            </div>
+
+                                            <div class="documento-icon">
+                                                <i class="fa-solid fa-file-lines"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                <?php endforeach; ?>
+
+                            <?php endif; ?>
 
                             <div class="mt-3">
                                 <a href="../documentacao/novo.php" class="btn btn-save btn-sm">
                                     <i class="fa-solid fa-plus me-1"></i>Associar novo documento
                                 </a>
                             </div>
-                        
+
                         </div>
                 
                         
