@@ -12,7 +12,8 @@ try {
     $sql = "
         SELECT id, edificio, piso, servico, sala
         FROM localizacoes
-        WHERE LOWER(CONCAT(edificio, ' ', piso, ' ', servico, ' ', sala)) LIKE LOWER(:pesquisa)
+        WHERE ativo = 1
+        AND LOWER(CONCAT(edificio, ' ', piso, ' ', servico, ' ', sala)) LIKE LOWER(:pesquisa)
         ORDER BY edificio ASC, piso ASC, servico ASC, sala ASC
     ";
 

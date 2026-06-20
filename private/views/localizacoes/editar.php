@@ -49,6 +49,7 @@ try {
         SELECT id, edificio, piso, servico, sala
         FROM localizacoes
         WHERE id = :id
+        AND ativo = 1
         LIMIT 1
     ";
 
