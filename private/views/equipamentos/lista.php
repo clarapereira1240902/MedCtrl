@@ -6,6 +6,15 @@ redirect_if_not_logged();
 
 $menu_ativo = 'equipamentos';
 
+$pesquisa = trim($_GET['pesquisa'] ?? '');
+$categoria_id = $_GET['categoria_id'] ?? '';
+$estado_id = $_GET['estado_id'] ?? '';
+$criticidade_id = $_GET['criticidade_id'] ?? '';
+
+$categorias = $ligacao->query("SELECT id, nome FROM categorias ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
+$estados = $ligacao->query("SELECT id, nome FROM estados_equipamento ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
+$criticidades = $ligacao->query("SELECT id, nome FROM criticidades ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
+
 try {
     $sql = "
         SELECT 
@@ -26,10 +35,26 @@ try {
         INNER JOIN criticidades 
             ON equipamentos.criticidade_id = criticidades.id
         WHERE equipamentos.ativo = 1
+        AND (
+            equipamentos.codigo_inventario LIKE :pesquisa
+            OR equipamentos.designacao LIKE :pesquisa
+            OR equipamentos.marca LIKE :pesquisa
+            OR equipamentos.modelo LIKE :pesquisa
+            OR equipamentos.numero_serie LIKE :pesquisa
+        )
+        AND (:categoria_id = '' OR equipamentos.categoria_id = :categoria_id)
+        AND (:estado_id = '' OR equipamentos.estado_id = :estado_id)
+        AND (:criticidade_id = '' OR equipamentos.criticidade_id = :criticidade_id)
         ORDER BY equipamentos.codigo_inventario ASC
     ";
 
-    $stmt = $ligacao->query($sql);
+    $stmt = $ligacao->prepare($sql);
+    $stmt->execute([
+        'pesquisa' => '%' . $pesquisa . '%',
+        'categoria_id' => $categoria_id,
+        'estado_id' => $estado_id,
+        'criticidade_id' => $criticidade_id
+    ]);
     $equipamentos = $stmt->fetchAll(PDO::FETCH_OBJ);
     $erro = '';
 
@@ -124,110 +149,120 @@ include __DIR__ . '/../../includes/navbar.php';
                         <i class="fa-solid fa-magnifying-glass me-2"></i>Pesquisa
                     </h5>
 
-                    <div class="search-row">
-                        <input type="text" class="form-control search-input" placeholder="Código, designação, marca, modelo ou nº série">
-                        <button class="btn btn-save search-btn" type="button">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                        <button
-                            class="btn btn-outline-secondary search-btn" type="button" data-bs-toggle="collapse" data-bs-target="#filtrosAvancados">
-                            <i class="fa-solid fa-sliders"></i>
-                        </button>
-                    </div>
+                    <form method="get">
+                        <div class="search-row">
+                            <input type="text" name="pesquisa" class="form-control search-input" placeholder="Código, designação, marca, modelo ou nº série" value="<?php echo htmlspecialchars($pesquisa); ?>">
+                            <button class="btn btn-save search-btn" type="submit">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                            <button
+                                class="btn btn-outline-secondary search-btn" type="button" data-bs-toggle="collapse" data-bs-target="#filtrosAvancados">
+                                <i class="fa-solid fa-sliders"></i>
+                            </button>
+                        </div>
 
-                    <div class="collapse mt-3" id="filtrosAvancados">
-                        <div class="row g-3 pt-3 border-top">
-                            <div class="col-12 col-md-6 col-lg-3">
-                                <label class="form-label">Estado</label>
-                                <select class="form-select">
-                                    <option selected>Todos</option>
-                                    <option>Ativo</option>
-                                    <option>Em manutenção</option>
-                                    <option>Inativo</option>
-                                    <option>Em calibração</option>
-                                </select>
-                            </div>
+                        <div class="collapse mt-3" id="filtrosAvancados">
+                            <div class="row g-3 pt-3 border-top">
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label class="form-label">Estado</label>
+                                    <select name="estado_id" class="form-select">
+                                        <option value="">Todos</option>
+                                        <?php foreach ($estados as $estado) : ?>
+                                            <option value="<?php echo $estado->id; ?>"
+                                                <?php echo ($estado_id == $estado->id) ? 'selected' : ''; ?>
+                                            >
+                                                <?php echo htmlspecialchars($estado->nome); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
 
-                            <div class="col-12 col-md-6 col-lg-3">
-                                <label class="form-label">Categoria</label>
-                                <select class="form-select">
-                                    <option selected>Todas</option>
-                                    <option>Monitorização</option>
-                                    <option>Suporte de vida</option>
-                                    <option>Terapia</option>
-                                    <option>Diagnóstico</option>
-                                </select>
-                            </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label class="form-label">Categoria</label>
+                                    <select name="categoria_id" class="form-select">
+                                        <option value="">Todas</option>
+                                        <?php foreach ($categorias as $categoria) : ?>
+                                            <option
+                                                value="<?php echo $categoria->id; ?>"
+                                                <?php echo ($categoria_id == $categoria->id) ? 'selected' : ''; ?>
+                                            >
+                                                <?php echo htmlspecialchars($categoria->nome); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
 
-                            <div class="col-12 col-md-6 col-lg-3">
-                                <label class="form-label">Criticidade</label>
-                                <select class="form-select">
-                                    <option selected>Todas</option>
-                                    <option>Baixa</option>
-                                    <option>Média</option>
-                                    <option>Alta</option>
-                                    <option>Suporte de vida</option>
-                                </select>
-                            </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label class="form-label">Criticidade</label>
+                                    <select name="criticidade_id" class="form-select">
+                                        <option value="">Todas</option>
+                                        <?php foreach ($criticidades as $criticidade) : ?>
+                                            <option
+                                                value="<?php echo $criticidade->id; ?>"
+                                                <?php echo ($criticidade_id == $criticidade->id) ? 'selected' : ''; ?>
+                                            >
+                                                <?php echo htmlspecialchars($criticidade->nome); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
 
-                            <div class="col-12 col-md-6 col-lg-3">
-                                <label class="form-label">Serviço</label>
-                                <select class="form-select">
-                                    <option selected>Todos</option>
-                                    <option>Cardiologia</option>
-                                    <option>Urgência</option>
-                                    <option>UCI</option>
-                                    <option>Radiologia</option>
-                                </select>
-                            </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label class="form-label">Serviço</label>
+                                    <select class="form-select">
+                                        <option selected>Todos</option>
+                                        <option>Cardiologia</option>
+                                        <option>Urgência</option>
+                                        <option>UCI</option>
+                                        <option>Radiologia</option>
+                                    </select>
+                                </div>
 
-                            <div class="col-12 col-md-6">
-                                <label class="form-label">Fornecedor</label>
-                                <select class="form-select">
-                                    <option selected>Todos</option>
-                                    <option>Philips Healthcare</option>
-                                    <option>Dräger</option>
-                                    <option>Siemens</option>
-                                </select>
-                            </div>
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label">Fornecedor</label>
+                                    <select class="form-select">
+                                        <option selected>Todos</option>
+                                        <option>Philips Healthcare</option>
+                                        <option>Dräger</option>
+                                        <option>Siemens</option>
+                                    </select>
+                                </div>
 
-                            <div class="col-12 col-md-6">
-                                <label class="form-label">Ordenar por</label>
-                                <select class="form-select">
-                                    <option selected>Código</option>
-                                    <option>Designação</option>
-                                    <option>Marca</option>
-                                    <option>Estado</option>
-                                    <option>Criticidade</option>
-                                </select>
-                            </div>
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label">Ordenar por</label>
+                                    <select class="form-select">
+                                        <option selected>Código</option>
+                                        <option>Designação</option>
+                                        <option>Marca</option>
+                                        <option>Estado</option>
+                                        <option>Criticidade</option>
+                                    </select>
+                                </div>
 
-                            <div class="d-flex justify-content-end gap-2 mt-3">
+                                <div class="d-flex justify-content-end gap-2 mt-3">
 
-                                <button type="reset" class="btn btn-cancel btn-sm">
-                                    <i class="fa-solid fa-rotate-left me-1"></i>
-                                    Limpar
-                                </button>
+                                    <a href="lista.php" class="btn btn-cancel btn-sm">
+                                        <i class="fa-solid fa-rotate-left me-1"></i>Limpar
+                                    </a>
 
-                                <button type="button" class="btn btn-save btn-sm">
-                                    <i class="fa-solid fa-filter me-1"></i>
-                                    Aplicar filtros
-                                </button>
+                                    <button type="submit" class="btn btn-save btn-sm">
+                                        <i class="fa-solid fa-filter me-1"></i>
+                                        Aplicar filtros
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
 
                 </div>
 
                 
                 <?php if (!empty($erro)) : ?>
-
                     <p class="text-center text-danger">
                         <?php echo htmlspecialchars($erro); ?>
                     </p>
 
                 <?php elseif (count($equipamentos) === 0) : ?>
-
                     <p class="text-muted">
                         Não existem equipamentos registados.
                     </p>
@@ -236,6 +271,7 @@ include __DIR__ . '/../../includes/navbar.php';
                     <p class="text-muted">
                         Existem <?php echo count($equipamentos); ?> equipamentos registados.
                     </p>
+
 
                     <!--Tabela de listagem-->
                     <div class="table-responsive">
