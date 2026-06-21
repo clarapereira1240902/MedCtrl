@@ -303,13 +303,13 @@ include __DIR__ . '/../../includes/navbar.php';
 
                                 <div class="row">
                                     <?php foreach ($fornecedores as $fornecedor) : ?>
-                                        <div class="col-12 col-md-4 mb-3">
+                                        <div class="col-12 col-md-3">
                                             <div class="info-group">
                                                 <label><?php echo htmlspecialchars($fornecedor->tipo_fornecedor); ?></label>
 
                                                 <p><?php echo htmlspecialchars($fornecedor->nome_empresa); ?></p>
 
-                                                <a href="../fornecedores/detalhes.php?id=<?php echo $fornecedor->id; ?>" class="btn btn-edit btn-sm mt-2">
+                                                <a href="../fornecedores/detalhes.php?id=<?php echo $fornecedor->id; ?>" class="btn btn-save btn-sm mt-2">
                                                     <i class="fa-solid fa-eye me-1"></i>
                                                     Ver fornecedor
                                                 </a>
@@ -411,12 +411,6 @@ include __DIR__ . '/../../includes/navbar.php';
                                 <?php endforeach; ?>
 
                             <?php endif; ?>
-
-                            <div class="mt-3">
-                                <a href="../documentacao/novo.php" class="btn btn-save btn-sm">
-                                    <i class="fa-solid fa-plus me-1"></i>Associar novo documento
-                                </a>
-                            </div>
 
                         </div>
                 

@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql_update = "
             UPDATE equipamentos
             SET
+                localizacao_id = :localizacao_id,
                 categoria_id = :categoria_id,
                 estado_id = :estado_id,
                 criticidade_id = :criticidade_id,
@@ -41,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt_update = $ligacao->prepare($sql_update);
 
         $stmt_update->execute([
+            'localizacao_id' => (int) $_POST['localizacao_id'],
             'categoria_id' => (int) $_POST['categoria_id'],
             'estado_id' => (int) $_POST['estado_id'],
             'criticidade_id' => (int) $_POST['criticidade_id'],
@@ -58,6 +60,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'id' => $id
         ]);
 
+        $ligacao->prepare("
+            DELETE FROM equipamento_fornecedor
+            WHERE equipamento_id = :id
+        ")->execute(['id' => $id]);
+
+        if (!empty($_POST['fornecedores'])) {
+            $stmt_insert_fornecedor = $ligacao->prepare("
+                INSERT INTO equipamento_fornecedor (
+                    equipamento_id,
+                    fornecedor_id,
+                    tipo_fornecedor_id
+                ) VALUES (
+                    :equipamento_id,
+                    :fornecedor_id,
+                    :tipo_fornecedor_id
+                )
+            ");
+
+            foreach ($_POST['fornecedores'] as $tipo_fornecedor_id => $fornecedor_id) {
+                if (!empty($fornecedor_id)) {
+                    $stmt_insert_fornecedor->execute([
+                        'equipamento_id' => $id,
+                        'fornecedor_id' => (int) $fornecedor_id,
+                        'tipo_fornecedor_id' => (int) $tipo_fornecedor_id
+                    ]);
+                }
+            }
+        }
+
         header('Location: detalhes.php?id=' . $id);
         exit;
 
@@ -71,6 +102,25 @@ $categorias = $ligacao->query("SELECT id, nome FROM categorias ORDER BY nome")->
 $estados = $ligacao->query("SELECT id, nome FROM estados_equipamento ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
 $criticidades = $ligacao->query("SELECT id, nome FROM criticidades ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
 $tipos_entrada = $ligacao->query("SELECT id, nome FROM tipos_entrada ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
+$localizacoes = $ligacao->query("
+    SELECT id, edificio, piso, servico, sala
+    FROM localizacoes
+    WHERE ativo = 1
+    ORDER BY edificio, piso, servico, sala
+")->fetchAll(PDO::FETCH_OBJ);
+
+$tipos_fornecedor = $ligacao->query("
+    SELECT id, nome
+    FROM tipos_fornecedor
+    ORDER BY nome
+")->fetchAll(PDO::FETCH_OBJ);
+
+$fornecedores = $ligacao->query("
+    SELECT id, nome_empresa, tipo_fornecedor_id
+    FROM fornecedores
+    WHERE ativo = 1
+    ORDER BY nome_empresa
+")->fetchAll(PDO::FETCH_OBJ);
 
 
 try {
@@ -105,10 +155,52 @@ try {
         exit;
     }
 
+    $stmt_fornecedores = $ligacao->prepare("
+        SELECT fornecedor_id, tipo_fornecedor_id
+        FROM equipamento_fornecedor
+        WHERE equipamento_id = :id
+    ");
+
+    $stmt_fornecedores->execute(['id' => $id]);
+
+    $fornecedores_associados = [];
+
+    foreach ($stmt_fornecedores->fetchAll(PDO::FETCH_OBJ) as $item) {
+        $fornecedores_associados[$item->tipo_fornecedor_id] = $item->fornecedor_id;
+    }
+
+    $stmt_garantia = $ligacao->prepare("
+        SELECT *
+        FROM garantias_contratos
+        WHERE equipamento_id = :id
+        LIMIT 1
+    ");
+
+    $stmt_garantia->execute(['id' => $id]);
+
+    $garantia = $stmt_garantia->fetch(PDO::FETCH_OBJ);
+
+    $stmt_documentos = $ligacao->prepare("
+        SELECT
+            d.id,
+            d.nome,
+            d.data_validade,
+            td.nome AS tipo_documento
+        FROM documentos d
+        INNER JOIN tipos_documento td
+            ON d.tipo_documento_id = td.id
+        WHERE d.equipamento_id = :id
+        AND d.ativo = 1
+        ORDER BY d.nome ASC
+    ");
+
+    $stmt_documentos->execute(['id' => $id]);
+
+    $documentos = $stmt_documentos->fetchAll(PDO::FETCH_OBJ);
+
 } catch (PDOException $e) {
     die('Erro ao carregar equipamento.');
 }
-
 
 
 include __DIR__ . '/../../includes/header.php';
@@ -251,24 +343,17 @@ include __DIR__ . '/../../includes/navbar.php';
                         <hr>
 
                         <div class="row">
-                            <div class="col-12 col-md-3 mb-3">
-                                <label class="form-label">Edifício</label>
-                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->edificio); ?>">
-                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Localização</label>
 
-                            <div class="col-12 col-md-3 mb-3">
-                                <label class="form-label">Piso</label>
-                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->piso); ?>">
-                            </div>
-
-                            <div class="col-12 col-md-3 mb-3">
-                                <label class="form-label">Departamento</label>
-                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->servico); ?>">
-                            </div>
-
-                            <div class="col-12 col-md-3 mb-3">
-                                <label class="form-label">Sala</label>
-                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($equipamento->sala); ?>">
+                                <select name="localizacao_id" class="form-select" required>
+                                    <?php foreach ($localizacoes as $localizacao) : ?>
+                                        <option value="<?php echo $localizacao->id; ?>"
+                                            <?php echo $localizacao->id == $equipamento->localizacao_id ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($localizacao->edificio . ' - ' . $localizacao->piso . ' - ' . $localizacao->servico . ' - ' . $localizacao->sala); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -282,32 +367,26 @@ include __DIR__ . '/../../includes/navbar.php';
                         <hr>
 
                         <div class="row">
-                            <div class="col-12 col-md-4 mb-3">
-                                <label class="form-label">Fabricante</label>
-                                <select class="form-select">
-                                    <option>Siemens Healthineers</option>
-                                    <option selected>Philips Healthcare</option>
-                                    <option>Dräger Portugal</option>
-                                </select>
-                            </div>
+                            <?php foreach ($tipos_fornecedor as $tipo) : ?>
+                                <div class="col-12 col-md-4 mb-3">
+                                    <label class="form-label">
+                                        <?php echo htmlspecialchars($tipo->nome); ?>
+                                    </label>
 
-                            <div class="col-12 col-md-4 mb-3">
-                                <label class="form-label">Distribuidor</label>
-                                <select class="form-select">
-                                    <option selected>MedTech Solutions</option>
-                                    <option>Medical Partners</option>
-                                    <option>BioMedical Portugal</option>
-                                </select>
-                            </div>
+                                    <select name="fornecedores[<?php echo $tipo->id; ?>]" class="form-select">
+                                        <option value="">Nenhum</option>
 
-                            <div class="col-12 col-md-4 mb-3">
-                                <label class="form-label">Assistência Técnica</label>
-                                <select class="form-select">
-                                    <option selected>TechRepair Medical</option>
-                                    <option>BioServiços</option>
-                                    <option>MedSupport</option>
-                                </select>
-                            </div>
+                                        <?php foreach ($fornecedores as $fornecedor) : ?>
+                                            <?php if ($fornecedor->tipo_fornecedor_id == $tipo->id) : ?>
+                                                <option value="<?php echo $fornecedor->id; ?>"
+                                                    <?php echo (($fornecedores_associados[$tipo->id] ?? '') == $fornecedor->id) ? 'selected' : ''; ?>>
+                                                    <?php echo htmlspecialchars($fornecedor->nome_empresa); ?>
+                                                </option>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
 
@@ -356,6 +435,60 @@ include __DIR__ . '/../../includes/navbar.php';
                     </div>
 
 
+                    <!--Documentação do equipamento-->
+                    <div class="mt-4 mb-4">
+                        <h5 class="mb-3">
+                            <i class="fa-solid fa-file-medical me-2"></i>Documentação Associada
+                        </h5>
+                        <hr>
+
+                        <?php if (count($documentos) === 0) : ?>
+
+                            <p class="text-muted">
+                                Não existem documentos associados a este equipamento.
+                            </p>
+
+                        <?php else : ?>
+
+                            <?php foreach ($documentos as $documento) : ?>
+                                <div class="documento-card mb-3">
+                                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
+                                        <div>
+                                            <h5 class="mb-1">
+                                                <?php echo htmlspecialchars($documento->nome); ?>
+                                            </h5>
+
+                                            <span class="text-muted">
+                                                <?php echo htmlspecialchars($documento->tipo_documento); ?>
+                                                |
+                                                Validade:
+                                                <?php echo htmlspecialchars($documento->data_validade ?? '—'); ?>
+                                            </span>
+                                        </div>
+
+                                        <div class="d-flex gap-2">
+                                            <a href="../documentacao/detalhes.php?id=<?php echo $documento->id; ?>" class="btn btn-save btn-sm">
+                                                <i class="fa-solid fa-eye me-1"></i>Ver
+                                            </a>
+
+                                            <a href="../documentacao/apagar.php?id=<?php echo $documento->id; ?>" class="btn btn-save btn-sm">
+                                                <i class="fa-solid fa-trash me-1"></i>Eliminar
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+
+                        <?php endif; ?>
+
+                        <div class="mt-3">
+                            <a href="../documentacao/novo.php?equipamento_id=<?php echo $equipamento->id; ?>" class="btn btn-primary-custom btn-sm">
+                                <i class="fa-solid fa-plus me-1"></i>Novo documento
+                            </a>
+                        </div>
+                    </div>
+
+
                     <!-- Observações -->
                     <div class="mt-3">
                         <label class="form-label">Observações</label>
@@ -366,7 +499,7 @@ include __DIR__ . '/../../includes/navbar.php';
                     <div class="d-flex justify-content-end gap-2 mt-4">
                         <a href="lista.php" class="btn btn-cancel btn-sm">Cancelar</a>
 
-                        <button type="submit" class="btn btn-save btn-sm">
+                        <button type="submit" class="btn btn-edit btn-sm">
                             <i class="fa-regular fa-floppy-disk me-1"></i>Guardar alterações
                         </button>
                     </div>
