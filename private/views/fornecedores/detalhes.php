@@ -97,15 +97,15 @@ include __DIR__ . '/../../includes/navbar.php';
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <p><strong>NIF:</strong> <?php echo htmlspecialchars($fornecedor->nif); ?></p>
-                        <p><strong>Telefone:</strong> <?php echo htmlspecialchars($fornecedor->telefone ?? '—'); ?></p>
-                        <p><strong>Email:</strong> <?php echo htmlspecialchars($fornecedor->email ?? '—'); ?></p>
-                        <p><strong>Website:</strong> <?php echo htmlspecialchars($fornecedor->website ?? '—'); ?></p>
+                        <p><strong>Telefone:</strong> <?php echo !empty($fornecedor->telefone) ? htmlspecialchars($fornecedor->telefone) : '—'; ?></p>
+                        <p><strong>Email:</strong> <?php echo !empty($fornecedor->email) ? htmlspecialchars($fornecedor->email) : '—'; ?></p>
+                        <p><strong>Website:</strong> <?php echo !empty($fornecedor->website) ? htmlspecialchars($fornecedor->website) : '—'; ?></p>
                     </div>
 
                     <div class="col-12 col-md-6">
-                        <p><strong>Morada:</strong> <?php echo htmlspecialchars($fornecedor->morada ?? '—'); ?></p>
-                        <p><strong>Pessoa de contacto:</strong> <?php echo htmlspecialchars($fornecedor->pessoa_contacto ?? '—'); ?></p>
-                        <p><strong>Telefone contacto:</strong> <?php echo htmlspecialchars($fornecedor->telefone_contacto ?? '—'); ?></p>
+                        <p><strong>Morada:</strong> <?php echo !empty($fornecedor->morada) ? htmlspecialchars($fornecedor->morada) : '—'; ?></p>
+                        <p><strong>Pessoa de contacto:</strong> <?php echo !empty($fornecedor->pessoa_contacto) ? htmlspecialchars($fornecedor->pessoa_contacto) : '—'; ?></p>
+                        <p><strong>Telefone contacto:</strong> <?php echo !empty($fornecedor->telefone_contacto) ? htmlspecialchars($fornecedor->telefone_contacto) : '—'; ?></p>
                     </div>
                 </div>
 
