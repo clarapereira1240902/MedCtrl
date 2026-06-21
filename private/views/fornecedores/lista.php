@@ -17,6 +17,7 @@ try {
             f.telefone,
             f.email,
             f.pessoa_contacto,
+            f.ativo,
             tf.nome AS tipo_fornecedor,
             COUNT(ef.id) AS total_equipamentos
         FROM fornecedores f
@@ -24,8 +25,7 @@ try {
             ON f.tipo_fornecedor_id = tf.id
         LEFT JOIN equipamento_fornecedor ef
             ON ef.fornecedor_id = f.id
-        WHERE f.ativo = 1
-        AND LOWER(CONCAT(
+        WHERE LOWER(CONCAT(
             f.nome_empresa, ' ',
             f.nif, ' ',
             IFNULL(f.email, ''), ' ',
@@ -40,6 +40,7 @@ try {
             f.telefone,
             f.email,
             f.pessoa_contacto,
+            f.ativo,
             tf.nome
         ORDER BY f.nome_empresa ASC
     ";
@@ -133,6 +134,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                 <th>Telefone</th>
                                 <th>Email</th>
                                 <th class="text-center">Equipamentos</th>
+                                <th class="text-center">Situação</th>
                                 <th class="text-center">Ações</th>
                             </tr>
                         </thead>
@@ -140,7 +142,7 @@ include __DIR__ . '/../../includes/navbar.php';
                         <tbody>
                             <?php foreach ($fornecedores as $fornecedor) : ?>
 
-                                <tr>
+                                <tr class="<?php echo ((int) $fornecedor->ativo === 0) ? 'table-secondary' : ''; ?>">
                                     <td>
                                         <strong>
                                             <?php echo htmlspecialchars($fornecedor->nome_empresa); ?>
@@ -199,17 +201,35 @@ include __DIR__ . '/../../includes/navbar.php';
                                     </td>
 
                                     <td class="text-center">
-                                        <a href="detalhes.php?id=<?php echo $fornecedor->id; ?>" class="btn btn-view-list btn-sm me-1">
+                                        <?php if ((int) $fornecedor->ativo === 1) : ?>
+                                            <span class="badge bg-success">Ativo</span>
+                                        <?php else : ?>
+                                            <span class="badge bg-danger">Inativo</span>
+                                        <?php endif; ?>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <a href="detalhes.php?id=<?php echo $fornecedor->id; ?>" class="btn btn-view-list btn-sm me-1" title="Ver detalhes">
                                             <i class="fa-solid fa-eye"></i>
                                         </a>
 
-                                        <a href="editar.php?id=<?php echo $fornecedor->id; ?>" class="btn btn-edit-list btn-sm me-1">
-                                            <i class="fa-solid fa-pen"></i>
-                                        </a>
+                                        <?php if ((int) $fornecedor->ativo === 1) : ?>
 
-                                        <a href="apagar.php?id=<?php echo $fornecedor->id; ?>" class="btn btn-delete-list btn-sm">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </a>
+                                            <a href="editar.php?id=<?php echo $fornecedor->id; ?>" class="btn btn-edit-list btn-sm me-1" title="Editar">
+                                                <i class="fa-solid fa-pen"></i>
+                                            </a>
+
+                                            <a href="apagar.php?id=<?php echo $fornecedor->id; ?>" class="btn btn-delete-list btn-sm" title="Inativar">
+                                                <i class="fa-solid fa-ban"></i>
+                                            </a>
+
+                                        <?php else : ?>
+
+                                            <a href="apagar.php?id=<?php echo $fornecedor->id; ?>" class="btn btn-success btn-sm" title="Reativar">
+                                                <i class="fa-solid fa-rotate-left"></i>
+                                            </a>
+
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
 

@@ -30,7 +30,6 @@ try {
         LEFT JOIN fornecedores f
             ON d.fornecedor_id = f.id
         WHERE d.id = :id
-        AND d.ativo = 1
         LIMIT 1
     ";
 
@@ -70,6 +69,13 @@ include __DIR__ . '/../../includes/navbar.php';
                 </a>
             </div>
 
+            <?php if ((int) $documento->ativo === 0) : ?>
+                <div class="alert alert-warning">
+                    <i class="fa-solid fa-circle-exclamation me-1"></i>
+                    Este documento encontra-se inativo.
+                </div>
+            <?php endif; ?>
+
             <div class="card-medctrl p-4">
 
                 <div class="row">
@@ -77,8 +83,8 @@ include __DIR__ . '/../../includes/navbar.php';
                     <div class="col-12 col-md-6">
                         <p><strong>Tipo de Documento:</strong> <?php echo htmlspecialchars($documento->tipo_documento); ?></p>
                         <p><strong>Nome:</strong> <?php echo htmlspecialchars($documento->nome); ?></p>
-                        <p><strong>Data do Documento:</strong> <?php echo htmlspecialchars($documento->data_documento ?? '—'); ?></p>
-                        <p><strong>Validade:</strong> <?php echo htmlspecialchars($documento->data_validade ?? '—'); ?></p>
+                        <p><strong>Data do Documento:</strong> <?php echo !empty($documento->data_documento) ? htmlspecialchars($documento->data_documento) : '—'; ?></p>
+                        <p><strong>Validade:</strong> <?php echo !empty($documento->data_validade) ? htmlspecialchars($documento->data_validade) : '—'; ?></p>
                     </div>
 
                     <div class="col-12 col-md-6">
@@ -91,8 +97,19 @@ include __DIR__ . '/../../includes/navbar.php';
                             <i class="fa-solid fa-eye me-1"></i>Ver equipamento
                         </a>
 
-                        <p><strong>Fornecedor:</strong> <?php echo htmlspecialchars($documento->fornecedor ?? '—'); ?></p>
-                        <p><strong>Localização ficheiro:</strong> <?php echo htmlspecialchars($documento->ficheiro_link); ?></p>
+                        <p>
+                            <strong>Fornecedor:</strong>
+                            <?php echo !empty($documento->fornecedor) ? htmlspecialchars($documento->fornecedor) : '—'; ?>
+                        </p>
+
+                        <p>
+                            <strong>Situação:</strong>
+                            <?php if ((int) $documento->ativo === 1) : ?>
+                                <span class="badge bg-success">Ativo</span>
+                            <?php else : ?>
+                                <span class="badge bg-danger">Inativo</span>
+                            <?php endif; ?>
+                        </p>
                     </div>
 
                 </div>
@@ -136,6 +153,20 @@ include __DIR__ . '/../../includes/navbar.php';
                     <a href="editar.php?id=<?php echo $documento->id; ?>" class="btn btn-edit btn-sm">
                         <i class="fa-solid fa-pen me-1"></i>Editar
                     </a>
+
+                    <?php if ((int) $documento->ativo === 1) : ?>
+
+                        <a href="apagar.php?id=<?php echo $documento->id; ?>" class="btn btn-delete btn-sm">
+                            <i class="fa-solid fa-ban me-1"></i>Inativar
+                        </a>
+
+                    <?php else : ?>
+
+                        <a href="apagar.php?id=<?php echo $documento->id; ?>" class="btn btn-success btn-sm">
+                            <i class="fa-solid fa-rotate-left me-1"></i>Reativar
+                        </a>
+
+                    <?php endif; ?>
 
                     <a href="lista.php" class="btn btn-cancel btn-sm">Cancelar</a>
                 </div>

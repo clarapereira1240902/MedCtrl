@@ -13,26 +13,6 @@ if ($id <= 0) {
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    try {
-        $sql = "
-            UPDATE fornecedores
-            SET ativo = 0
-            WHERE id = :id
-            AND ativo = 1
-        ";
-
-        $stmt = $ligacao->prepare($sql);
-        $stmt->execute(['id' => $id]);
-
-        header('Location: lista.php');
-        exit;
-
-    } catch (PDOException $e) {
-        die('Erro ao eliminar fornecedor.');
-    }
-}
-
 try {
     $sql = "
         SELECT
@@ -40,6 +20,7 @@ try {
             f.nome_empresa,
             f.email,
             f.telefone,
+            f.ativo,
             tf.nome AS tipo_fornecedor,
             COUNT(ef.id) AS total_equipamentos
         FROM fornecedores f
@@ -48,12 +29,12 @@ try {
         LEFT JOIN equipamento_fornecedor ef
             ON ef.fornecedor_id = f.id
         WHERE f.id = :id
-        AND f.ativo = 1
         GROUP BY
             f.id,
             f.nome_empresa,
             f.email,
             f.telefone,
+            f.ativo,
             tf.nome
         LIMIT 1
     ";
@@ -72,6 +53,36 @@ try {
     die('Erro ao carregar fornecedor.');
 }
 
+$fornecedor_ativo = ((int) $fornecedor->ativo === 1);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        if ($fornecedor_ativo) {
+            $novo_estado = 0;
+        } else {
+            $novo_estado = 1;
+        }
+
+        $sql = "
+            UPDATE fornecedores
+            SET ativo = :ativo
+            WHERE id = :id
+        ";
+
+        $stmt = $ligacao->prepare($sql);
+        $stmt->execute([
+            'ativo' => $novo_estado,
+            'id' => $id
+        ]);
+
+        header('Location: lista.php');
+        exit;
+
+    } catch (PDOException $e) {
+        die('Erro ao alterar o estado do fornecedor.');
+    }
+}
+
 include __DIR__ . '/../../includes/header.php';
 include __DIR__ . '/../../includes/navbar.php';
 ?>
@@ -85,15 +96,31 @@ include __DIR__ . '/../../includes/navbar.php';
             <div class="d-flex justify-content-center mt-5">
                 <div class="card shadow rounded text-center p-4" style="max-width:650px; width:100%;">
 
-                    <div class="text-warning display-4 mb-3">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    <div class="<?php echo $fornecedor_ativo ? 'text-warning' : 'text-success'; ?> display-4 mb-3">
+                        <?php if ($fornecedor_ativo) : ?>
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        <?php else : ?>
+                            <i class="fa-solid fa-circle-check"></i>
+                        <?php endif; ?>
                     </div>
 
-                    <h3 class="mb-2">Eliminar Fornecedor</h3>
+                    <?php if ($fornecedor_ativo) : ?>
 
-                    <p class="text-muted mb-3">
-                        Tens a certeza que pretendes eliminar este fornecedor?
-                    </p>
+                        <h3 class="mb-2">Inativar Fornecedor</h3>
+
+                        <p class="text-muted mb-3">
+                            Tens a certeza que pretendes inativar este fornecedor?
+                        </p>
+
+                    <?php else : ?>
+
+                        <h3 class="mb-2">Reativar Fornecedor</h3>
+
+                        <p class="text-muted mb-3">
+                            Tens a certeza que pretendes reativar este fornecedor?
+                        </p>
+
+                    <?php endif; ?>
 
                     <div class="bg-light p-3 rounded mb-3">
                         <h4 class="mb-1">
@@ -109,18 +136,27 @@ include __DIR__ . '/../../includes/navbar.php';
                             <?php echo htmlspecialchars($fornecedor->email ?? 'Sem email'); ?>
                         </p>
 
-                        <p class="mb-0">
+                        <p class="mb-1">
                             <i class="fa-solid fa-phone me-1"></i>
                             <?php echo htmlspecialchars($fornecedor->telefone ?? 'Sem telefone'); ?>
                         </p>
+
+                        <p class="mb-0">
+                            Situação:
+                            <?php if ($fornecedor_ativo) : ?>
+                                <span class="badge bg-success">Ativo</span>
+                            <?php else : ?>
+                                <span class="badge bg-danger">Inativo</span>
+                            <?php endif; ?>
+                        </p>
                     </div>
 
-                    <?php if ($fornecedor->total_equipamentos > 0) : ?>
+                    <?php if ($fornecedor_ativo && $fornecedor->total_equipamentos > 0) : ?>
                         <div class="alert alert-danger">
                             <i class="fa-solid fa-triangle-exclamation me-1"></i>
                             Este fornecedor está associado a
                             <strong><?php echo $fornecedor->total_equipamentos; ?> equipamentos</strong>.
-                            O fornecedor será ocultado da listagem, mas os registos associados serão preservados.
+                            O fornecedor ficará inativo, mas os registos associados serão preservados.
                         </div>
                     <?php endif; ?>
 
@@ -130,9 +166,19 @@ include __DIR__ . '/../../includes/navbar.php';
                             <i class="fa-solid fa-xmark me-1"></i>Cancelar
                         </a>
 
-                        <button type="submit" class="btn btn-danger btn-sm px-4">
-                            <i class="fa-solid fa-trash me-1"></i>Eliminar
-                        </button>
+                        <?php if ($fornecedor_ativo) : ?>
+
+                            <button type="submit" class="btn btn-danger btn-sm px-4">
+                                <i class="fa-solid fa-ban me-1"></i>Inativar
+                            </button>
+
+                        <?php else : ?>
+
+                            <button type="submit" class="btn btn-success btn-sm px-4">
+                                <i class="fa-solid fa-rotate-left me-1"></i>Reativar
+                            </button>
+
+                        <?php endif; ?>
 
                     </form>
 

@@ -1,20 +1,35 @@
 <?php
 require_once __DIR__ . '/../../includes/funcoes.php';
 require_once __DIR__ . '/../../../config/ligacao.php';
+
 redirect_if_not_logged();
 
 $menu_ativo = 'localizacoes';
 
 $pesquisa = trim($_GET['pesquisa'] ?? '');
 
-
 try {
     $sql = "
-        SELECT id, edificio, piso, servico, sala
-        FROM localizacoes
-        WHERE ativo = 1
-        AND LOWER(CONCAT(edificio, ' ', piso, ' ', servico, ' ', sala)) LIKE LOWER(:pesquisa)
-        ORDER BY edificio ASC, piso ASC, servico ASC, sala ASC
+        SELECT 
+            l.id, 
+            l.edificio, 
+            l.piso, 
+            l.servico, 
+            l.sala,
+            l.ativo,
+            COUNT(e.id) AS total_equipamentos
+        FROM localizacoes l
+        LEFT JOIN equipamentos e
+            ON e.localizacao_id = l.id
+        WHERE LOWER(CONCAT(l.edificio, ' ', l.piso, ' ', l.servico, ' ', l.sala)) LIKE LOWER(:pesquisa)
+        GROUP BY
+            l.id,
+            l.edificio,
+            l.piso,
+            l.servico,
+            l.sala,
+            l.ativo
+        ORDER BY l.edificio ASC, l.piso ASC, l.servico ASC, l.sala ASC
     ";
 
     $stmt = $ligacao->prepare($sql);
@@ -35,112 +50,137 @@ include __DIR__ . '/../../includes/header.php';
 include __DIR__ . '/../../includes/navbar.php';
 ?>
 
-    <div class="container-fluid">
-        <div class="row">
+<div class="container-fluid">
+    <div class="row">
 
-            <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
+        <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
 
-            <!-- Conteúdo Principal -->
-            <main class="col-lg-10 p-4">
+        <!-- Conteúdo Principal -->
+        <main class="col-lg-10 p-4">
 
-                <div class="page-header">
-                    <h2>
-                        <i class="fa-solid fa-location-dot me-2"></i> Localizações
-                    </h2>
-                    <a href="novo.php" class="btn btn-primary-custom btn-sm">
-                        <i class="fa-solid fa-plus me-1"></i> Nova Localização
+            <div class="page-header">
+                <h2>
+                    <i class="fa-solid fa-location-dot me-2"></i> Localizações
+                </h2>
+                <a href="novo.php" class="btn btn-primary-custom btn-sm">
+                    <i class="fa-solid fa-plus me-1"></i> Nova Localização
+                </a>
+            </div>
+
+            <hr>
+
+            <!-- Pesquisa de localizações -->
+            <div class="search-card mb-4">
+                <h5>
+                    <i class="fa-solid fa-magnifying-glass me-2"></i>Pesquisa
+                </h5>
+
+                <form method="get" class="search-row">
+                    <input 
+                        type="text" 
+                        name="pesquisa"
+                        class="form-control search-input" 
+                        placeholder="Edifício, serviço, piso ou sala"
+                        value="<?php echo htmlspecialchars($pesquisa); ?>"
+                    >
+
+                    <button class="btn btn-save search-btn" type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+
+                    <a href="lista.php" class="btn btn-outline-secondary search-btn">
+                        <i class="fa-solid fa-rotate-left"></i>
                     </a>
-                </div>
+                </form>
+            </div>
 
-                <hr>
+            <?php if (!empty($erro)) : ?>
+                <p class="text-center text-danger">
+                    <?php echo htmlspecialchars($erro); ?>
+                </p>
 
-                <!-- Pesquisa de localizações -->
-                <div class="search-card mb-4">
-                    <h5>
-                        <i class="fa-solid fa-magnifying-glass me-2"></i>Pesquisa
-                    </h5>
+            <?php elseif (count($localizacoes) === 0) : ?>
+                <p class="text-muted">
+                    Não existem localizações registadas.
+                </p>
 
-                    <form method="get" class="search-row">
-                        <input 
-                            type="text" 
-                            name="pesquisa"
-                            class="form-control search-input" 
-                            placeholder="Edifício, serviço, piso ou sala"
-                            value="<?php echo htmlspecialchars($pesquisa); ?>"
-                        >
+            <?php else : ?>
+                <p class="text-muted">
+                    Existem <?php echo count($localizacoes); ?> localizações registadas.
+                </p>
 
-                        <button class="btn btn-save search-btn" type="submit">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
+                <div class="table-responsive">
+                    <table class="table table-medctrl table-hover align-middle">
 
-                        <a href="lista.php" class="btn btn-outline-secondary search-btn">
-                            <i class="fa-solid fa-rotate-left"></i>
-                        </a>
-                    </form>
-                </div>
+                        <thead>
+                            <tr>
+                                <th>Edifício</th>
+                                <th>Piso</th>
+                                <th>Serviço</th>
+                                <th>Sala</th>
+                                <th class="text-center">Equipamentos</th>
+                                <th class="text-center">Situação</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
 
-                <?php if (!empty($erro)) : ?>
-                    <p class="text-center text-danger">
-                        <?php echo htmlspecialchars($erro); ?>
-                    </p>
+                        <tbody>
 
-                <?php elseif (count($localizacoes) === 0) : ?>
-                    <p class="text-muted">
-                        Não existem localizações registadas.
-                    </p>
+                            <?php foreach ($localizacoes as $localizacao) : ?>
 
-                <?php else : ?>
-                    <p class="text-muted">
-                        Existem <?php echo count($localizacoes); ?> localizações registadas.
-                    </p>
+                                <tr class="<?php echo ((int) $localizacao->ativo === 0) ? 'table-secondary' : ''; ?>">
+                                    <td><?php echo htmlspecialchars($localizacao->edificio); ?></td>
+                                    <td><?php echo htmlspecialchars($localizacao->piso); ?></td>
+                                    <td><?php echo htmlspecialchars($localizacao->servico); ?></td>
+                                    <td><?php echo htmlspecialchars($localizacao->sala); ?></td>
 
-                    <div class="table-responsive">
-                        <table class="table table-medctrl table-striped align-middle">
+                                    <td class="text-center">
+                                        <?php echo (int) $localizacao->total_equipamentos; ?>
+                                    </td>
 
-                            <thead>
-                                <tr>
-                                    <th>Edifício</th>
-                                    <th>Piso</th>
-                                    <th>Serviço</th>
-                                    <th>Sala</th>
-                                    <th class="text-center">Ações</th>
-                                </tr>
-                            </thead>
+                                    <td class="text-center">
+                                        <?php if ((int) $localizacao->ativo === 1) : ?>
+                                            <span class="badge bg-success">Ativa</span>
+                                        <?php else : ?>
+                                            <span class="badge bg-danger">Inativa</span>
+                                        <?php endif; ?>
+                                    </td>
 
-                            <tbody>
+                                    <td class="text-center">
+                                        <?php if ((int) $localizacao->ativo === 1) : ?>
 
-                                <?php foreach ($localizacoes as $localizacao) : ?>
-
-                                    <tr>
-                                        <td><?php echo htmlspecialchars($localizacao->edificio); ?></td>
-                                        <td><?php echo htmlspecialchars($localizacao->piso); ?></td>
-                                        <td><?php echo htmlspecialchars($localizacao->servico); ?></td>
-                                        <td><?php echo htmlspecialchars($localizacao->sala); ?></td>
-
-                                        <td class="text-center">
-                                            <a href="editar.php?id=<?php echo $localizacao->id; ?>" class="btn btn-edit-list btn-sm">
+                                            <a href="editar.php?id=<?php echo $localizacao->id; ?>" class="btn btn-edit-list btn-sm" title="Editar">
                                                 <i class="fa-solid fa-pen"></i>
                                             </a>
-                                            <a href="apagar.php?id=<?php echo $localizacao->id; ?>" class="btn btn-delete-list btn-sm">
-                                                <i class="fa-solid fa-trash"></i>
+
+                                            <a href="apagar.php?id=<?php echo $localizacao->id; ?>" class="btn btn-delete-list btn-sm" title="Inativar">
+                                                <i class="fa-solid fa-ban"></i>
                                             </a>
-                                        </td>
-                                    </tr>
 
-                                <?php endforeach; ?>
+                                        <?php else : ?>
 
-                            </tbody>
+                                            <a href="apagar.php?id=<?php echo $localizacao->id; ?>" class="btn btn-success btn-sm" title="Reativar">
+                                                <i class="fa-solid fa-rotate-left"></i>
+                                            </a>
 
-                        </table>
-                    </div>
-                <?php endif; ?>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
 
-            </main>
-        
-        </div>
-    </div>
+                            <?php endforeach; ?>
 
+                        </tbody>
+
+                    </table>
+                </div>
+            <?php endif; ?>
+
+        </main>
     
+    </div>
+</div>
+
+
 <!-- Bootstrap JS and custom JS --> 
 <script src="<?php echo BASE_URL; ?>/assets/bootstrap/bootstrap.bundle.min.js"></script> 
 

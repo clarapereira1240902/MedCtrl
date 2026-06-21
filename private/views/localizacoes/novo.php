@@ -6,37 +6,74 @@ redirect_if_not_logged();
 
 $menu_ativo = 'localizacoes';
 
+$erro_formulario = '';
+$form = $_POST;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    try {
-        $sql = "
-            INSERT INTO localizacoes (
-                edificio,
-                piso,
-                servico,
-                sala
-            ) VALUES (
-                :edificio,
-                :piso,
-                :servico,
-                :sala
-            )
-        ";
+    $edificio = trim($_POST['edificio'] ?? '');
+    $piso = trim($_POST['piso'] ?? '');
+    $servico = trim($_POST['servico'] ?? '');
+    $sala = trim($_POST['sala'] ?? '');
 
-        $stmt = $ligacao->prepare($sql);
+    if ($edificio === '' || $piso === '' || $servico === '' || $sala === '') {
+        $erro_formulario = 'Todos os campos são obrigatórios.';
+    }
 
-        $stmt->execute([
-            'edificio' => trim($_POST['edificio']),
-            'piso' => trim($_POST['piso']),
-            'servico' => trim($_POST['servico']),
-            'sala' => trim($_POST['sala'])
-        ]);
+    if (empty($erro_formulario)) {
+        try {
+            $stmt_check = $ligacao->prepare("
+                SELECT id
+                FROM localizacoes
+                WHERE LOWER(edificio) = LOWER(:edificio)
+                AND LOWER(piso) = LOWER(:piso)
+                AND LOWER(servico) = LOWER(:servico)
+                AND LOWER(sala) = LOWER(:sala)
+                LIMIT 1
+            ");
 
-        header('Location: lista.php');
-        exit;
+            $stmt_check->execute([
+                'edificio' => $edificio,
+                'piso' => $piso,
+                'servico' => $servico,
+                'sala' => $sala
+            ]);
 
-    } catch (PDOException $e) {
-        die('Erro ao criar localização.');
+            if ($stmt_check->fetch()) {
+                $erro_formulario = 'Já existe uma localização com estes dados.';
+            }
+
+            if (empty($erro_formulario)) {
+                $sql = "
+                    INSERT INTO localizacoes (
+                        edificio,
+                        piso,
+                        servico,
+                        sala
+                    ) VALUES (
+                        :edificio,
+                        :piso,
+                        :servico,
+                        :sala
+                    )
+                ";
+
+                $stmt = $ligacao->prepare($sql);
+
+                $stmt->execute([
+                    'edificio' => $edificio,
+                    'piso' => $piso,
+                    'servico' => $servico,
+                    'sala' => $sala
+                ]);
+
+                header('Location: lista.php');
+                exit;
+            }
+
+        } catch (PDOException $e) {
+            $erro_formulario = 'Erro ao criar localização. Verifica se os dados preenchidos são válidos.';
+        }
     }
 }
 
@@ -59,6 +96,13 @@ include __DIR__ . '/../../includes/navbar.php';
 
             <hr>
 
+            <?php if (!empty($erro_formulario)) : ?>
+                <div class="alert alert-danger">
+                    <i class="fa-solid fa-circle-exclamation me-1"></i>
+                    <?php echo htmlspecialchars($erro_formulario); ?>
+                </div>
+            <?php endif; ?>
+
             <form class="form-medctrl" method="post">
 
                 <div class="row">
@@ -66,24 +110,48 @@ include __DIR__ . '/../../includes/navbar.php';
                     <div class="col-12 col-md-6">
                         <div class="mb-3">
                             <label class="form-label">Edifício</label>
-                            <input type="text" name="edificio" class="form-control" required>
+                            <input 
+                                type="text" 
+                                name="edificio" 
+                                class="form-control" 
+                                value="<?php echo htmlspecialchars($form['edificio'] ?? ''); ?>" 
+                                required
+                            >
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Piso</label>
-                            <input type="text" name="piso" class="form-control" required>
+                            <input 
+                                type="text" 
+                                name="piso" 
+                                class="form-control" 
+                                value="<?php echo htmlspecialchars($form['piso'] ?? ''); ?>" 
+                                required
+                            >
                         </div>
                     </div>
 
                     <div class="col-12 col-md-6">
                         <div class="mb-3">
                             <label class="form-label">Serviço / Departamento</label>
-                            <input type="text" name="servico" class="form-control" required>
+                            <input 
+                                type="text" 
+                                name="servico" 
+                                class="form-control" 
+                                value="<?php echo htmlspecialchars($form['servico'] ?? ''); ?>" 
+                                required
+                            >
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Sala / Gabinete</label>
-                            <input type="text" name="sala" class="form-control" required>
+                            <input 
+                                type="text" 
+                                name="sala" 
+                                class="form-control" 
+                                value="<?php echo htmlspecialchars($form['sala'] ?? ''); ?>" 
+                                required
+                            >
                         </div>
                     </div>
 

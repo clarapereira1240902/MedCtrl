@@ -13,26 +13,6 @@ if ($id <= 0) {
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    try {
-        $sql = "
-            UPDATE localizacoes
-            SET ativo = 0
-            WHERE id = :id
-            AND ativo = 1
-        ";
-
-        $stmt = $ligacao->prepare($sql);
-        $stmt->execute(['id' => $id]);
-
-        header('Location: lista.php');
-        exit;
-
-    } catch (PDOException $e) {
-        die('Erro ao eliminar localização.');
-    }
-}
-
 try {
     $sql = "
         SELECT 
@@ -41,14 +21,19 @@ try {
             l.piso,
             l.servico,
             l.sala,
+            l.ativo,
             COUNT(e.id) AS total_equipamentos
         FROM localizacoes l
         LEFT JOIN equipamentos e
             ON e.localizacao_id = l.id
-            AND e.ativo = 1
         WHERE l.id = :id
-        AND l.ativo = 1
-        GROUP BY l.id, l.edificio, l.piso, l.servico, l.sala
+        GROUP BY 
+            l.id, 
+            l.edificio, 
+            l.piso, 
+            l.servico, 
+            l.sala,
+            l.ativo
         LIMIT 1
     ";
 
@@ -66,6 +51,36 @@ try {
     die('Erro ao carregar localização.');
 }
 
+$localizacao_ativa = ((int) $localizacao->ativo === 1);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        if ($localizacao_ativa) {
+            $novo_estado = 0;
+        } else {
+            $novo_estado = 1;
+        }
+
+        $sql = "
+            UPDATE localizacoes
+            SET ativo = :ativo
+            WHERE id = :id
+        ";
+
+        $stmt = $ligacao->prepare($sql);
+        $stmt->execute([
+            'ativo' => $novo_estado,
+            'id' => $id
+        ]);
+
+        header('Location: lista.php');
+        exit;
+
+    } catch (PDOException $e) {
+        die('Erro ao alterar o estado da localização.');
+    }
+}
+
 include __DIR__ . '/../../includes/header.php';
 include __DIR__ . '/../../includes/navbar.php';
 ?>
@@ -79,15 +94,31 @@ include __DIR__ . '/../../includes/navbar.php';
             <div class="d-flex justify-content-center mt-5">
                 <div class="card shadow rounded text-center p-4" style="max-width:650px; width:100%;">
 
-                    <div class="text-warning display-4 mb-3">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    <div class="<?php echo $localizacao_ativa ? 'text-warning' : 'text-success'; ?> display-4 mb-3">
+                        <?php if ($localizacao_ativa) : ?>
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        <?php else : ?>
+                            <i class="fa-solid fa-circle-check"></i>
+                        <?php endif; ?>
                     </div>
 
-                    <h3 class="mb-2">Eliminar Localização</h3>
+                    <?php if ($localizacao_ativa) : ?>
 
-                    <p class="text-muted mb-3">
-                        Tens a certeza que pretendes eliminar esta localização?
-                    </p>
+                        <h3 class="mb-2">Inativar Localização</h3>
+
+                        <p class="text-muted mb-3">
+                            Tens a certeza que pretendes inativar esta localização?
+                        </p>
+
+                    <?php else : ?>
+
+                        <h3 class="mb-2">Reativar Localização</h3>
+
+                        <p class="text-muted mb-3">
+                            Tens a certeza que pretendes reativar esta localização?
+                        </p>
+
+                    <?php endif; ?>
 
                     <div class="bg-light p-3 rounded mb-3">
                         <h5><?php echo htmlspecialchars($localizacao->edificio); ?></h5>
@@ -98,17 +129,26 @@ include __DIR__ . '/../../includes/navbar.php';
                             <?php echo htmlspecialchars($localizacao->servico); ?>
                         </p>
 
-                        <p class="mb-0">
+                        <p class="mb-1">
                             <?php echo htmlspecialchars($localizacao->sala); ?>
+                        </p>
+
+                        <p class="mb-0">
+                            Situação:
+                            <?php if ($localizacao_ativa) : ?>
+                                <span class="badge bg-success">Ativa</span>
+                            <?php else : ?>
+                                <span class="badge bg-danger">Inativa</span>
+                            <?php endif; ?>
                         </p>
                     </div>
 
-                    <?php if ($localizacao->total_equipamentos > 0) : ?>
+                    <?php if ($localizacao_ativa && $localizacao->total_equipamentos > 0) : ?>
                         <div class="alert alert-danger">
                             <i class="fa-solid fa-circle-exclamation me-1"></i>
                             Existem <strong><?php echo $localizacao->total_equipamentos; ?> equipamentos</strong>
                             associados a esta localização.
-                            A localização será ocultada da listagem, mas os registos associados serão preservados.
+                            A localização ficará inativa, mas os registos associados serão preservados.
                         </div>
                     <?php endif; ?>
 
@@ -118,9 +158,19 @@ include __DIR__ . '/../../includes/navbar.php';
                             <i class="fa-solid fa-xmark me-1"></i>Cancelar
                         </a>
 
-                        <button type="submit" class="btn btn-danger btn-sm px-4">
-                            <i class="fa-solid fa-trash me-1"></i>Eliminar
-                        </button>
+                        <?php if ($localizacao_ativa) : ?>
+
+                            <button type="submit" class="btn btn-danger btn-sm px-4">
+                                <i class="fa-solid fa-ban me-1"></i>Inativar
+                            </button>
+
+                        <?php else : ?>
+
+                            <button type="submit" class="btn btn-success btn-sm px-4">
+                                <i class="fa-solid fa-rotate-left me-1"></i>Reativar
+                            </button>
+
+                        <?php endif; ?>
 
                     </form>
 

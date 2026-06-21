@@ -29,7 +29,6 @@ try {
         SELECT *
         FROM fornecedores
         WHERE id = :id
-        AND ativo = 1
         LIMIT 1
     ";
 
@@ -135,7 +134,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     telefone_contacto = :telefone_contacto,
                     observacoes = :observacoes
                 WHERE id = :id
-                AND ativo = 1
             ";
 
             $stmt_update = $ligacao->prepare($sql_update);
@@ -210,6 +208,13 @@ include __DIR__ . '/../../includes/navbar.php';
                     <i class="fa-solid fa-arrow-left me-1"></i> Voltar
                 </a>
             </div>
+
+            <?php if ((int) $fornecedor->ativo === 0) : ?>
+                <div class="alert alert-warning">
+                    <i class="fa-solid fa-circle-exclamation me-1"></i>
+                    Este fornecedor encontra-se inativo. Podes editar os dados, mas a situação só é alterada no botão de reativação da lista/detalhes.
+                </div>
+            <?php endif; ?>
 
             <?php if (!empty($erro_formulario)) : ?>
                 <div class="alert alert-danger">

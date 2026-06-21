@@ -9,6 +9,7 @@ $menu_ativo = 'documentacao';
 $pesquisa = trim($_GET['pesquisa'] ?? '');
 $tipo_documento_id = $_GET['tipo_documento_id'] ?? '';
 $validade = $_GET['validade'] ?? '';
+$situacao = $_GET['situacao'] ?? '';
 
 $tipos_documento = $ligacao->query("SELECT id, nome FROM tipos_documento ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
 
@@ -18,6 +19,7 @@ try {
             d.id,
             d.nome,
             d.data_validade,
+            d.ativo,
             td.nome AS tipo_documento,
             e.codigo_inventario,
             e.designacao AS equipamento,
@@ -29,8 +31,7 @@ try {
             ON d.equipamento_id = e.id
         LEFT JOIN fornecedores f
             ON d.fornecedor_id = f.id
-        WHERE d.ativo = 1
-        AND LOWER(CONCAT(
+        WHERE LOWER(CONCAT(
             d.nome, ' ',
             td.nome, ' ',
             e.codigo_inventario, ' ',
@@ -38,6 +39,7 @@ try {
             IFNULL(f.nome_empresa, '')
         )) LIKE LOWER(:pesquisa)
         AND (:tipo_documento_id = '' OR d.tipo_documento_id = :tipo_documento_id)
+        AND (:situacao = '' OR d.ativo = :situacao)
         AND (
             :validade = ''
             OR (:validade = 'valido' AND (d.data_validade IS NULL OR d.data_validade >= CURDATE()))
@@ -51,7 +53,8 @@ try {
     $stmt->execute([
         'pesquisa' => '%' . $pesquisa . '%',
         'tipo_documento_id' => $tipo_documento_id,
-        'validade' => $validade
+        'validade' => $validade,
+        'situacao' => $situacao
     ]);
 
     $documentos = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -113,7 +116,7 @@ include __DIR__ . '/../../includes/navbar.php';
                     <div class="collapse mt-3" id="filtrosDocumentacao">
                         <div class="row g-3 pt-3 border-top">
 
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-4">
                                 <label class="form-label">Tipo de Documento</label>
 
                                 <select name="tipo_documento_id" class="form-select">
@@ -128,7 +131,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                 </select>
                             </div>
 
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-4">
                                 <label class="form-label">Validade</label>
 
                                 <select name="validade" class="form-select">
@@ -136,6 +139,16 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <option value="valido" <?php echo $validade === 'valido' ? 'selected' : ''; ?>>Válido</option>
                                     <option value="expirar" <?php echo $validade === 'expirar' ? 'selected' : ''; ?>>A expirar</option>
                                     <option value="expirado" <?php echo $validade === 'expirado' ? 'selected' : ''; ?>>Expirado</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label">Situação</label>
+
+                                <select name="situacao" class="form-select">
+                                    <option value="" <?php echo $situacao === '' ? 'selected' : ''; ?>>Todos</option>
+                                    <option value="1" <?php echo $situacao === '1' ? 'selected' : ''; ?>>Ativos</option>
+                                    <option value="0" <?php echo $situacao === '0' ? 'selected' : ''; ?>>Inativos</option>
                                 </select>
                             </div>
 
@@ -183,14 +196,15 @@ include __DIR__ . '/../../includes/navbar.php';
                                 <th>Equipamento</th>
                                 <th>Fornecedor</th>
                                 <th>Validade</th>
-                                <th class="text-center">Ações</th>
+                                <th class="text-center">Situação</th>
+                                <th class="text-center" style="width: 130px;">Ações</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             <?php foreach ($documentos as $documento) : ?>
 
-                                <tr>
+                                <tr class="<?php echo ((int) $documento->ativo === 0) ? 'table-secondary' : ''; ?>">
                                     <td><?php echo htmlspecialchars($documento->nome); ?></td>
 
                                     <td>
@@ -243,17 +257,37 @@ include __DIR__ . '/../../includes/navbar.php';
                                     </td>
 
                                     <td class="text-center">
-                                        <a href="detalhes.php?id=<?php echo $documento->id; ?>" class="btn btn-sm btn-view-list">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </a>
+                                        <?php if ((int) $documento->ativo === 1) : ?>
+                                            <span class="badge bg-success">Ativo</span>
+                                        <?php else : ?>
+                                            <span class="badge bg-danger">Inativo</span>
+                                        <?php endif; ?>
+                                    </td>
 
-                                        <a href="editar.php?id=<?php echo $documento->id; ?>" class="btn btn-sm btn-edit-list">
-                                            <i class="fa-solid fa-pen"></i>
-                                        </a>
+                                    <td class="text-center text-nowrap">
+                                        <div class="d-inline-flex gap-1 flex-nowrap">
+                                            <a href="detalhes.php?id=<?php echo $documento->id; ?>" class="btn btn-sm btn-view-list" title="Ver detalhes">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
 
-                                        <a href="apagar.php?id=<?php echo $documento->id; ?>" class="btn btn-sm btn-delete-list">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </a>
+                                            <?php if ((int) $documento->ativo === 1) : ?>
+
+                                                <a href="editar.php?id=<?php echo $documento->id; ?>" class="btn btn-sm btn-edit-list" title="Editar">
+                                                    <i class="fa-solid fa-pen"></i>
+                                                </a>
+
+                                                <a href="apagar.php?id=<?php echo $documento->id; ?>" class="btn btn-sm btn-delete-list" title="Inativar">
+                                                    <i class="fa-solid fa-ban"></i>
+                                                </a>
+
+                                            <?php else : ?>
+
+                                                <a href="apagar.php?id=<?php echo $documento->id; ?>" class="btn btn-success btn-sm" title="Reativar">
+                                                    <i class="fa-solid fa-rotate-left"></i>
+                                                </a>
+
+                                            <?php endif; ?>
+                                        </div>
                                     </td>
                                 </tr>
 

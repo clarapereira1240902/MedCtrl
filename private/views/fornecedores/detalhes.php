@@ -22,7 +22,6 @@ try {
         INNER JOIN tipos_fornecedor tf
             ON f.tipo_fornecedor_id = tf.id
         WHERE f.id = :id
-        AND f.ativo = 1
         LIMIT 1
     ";
 
@@ -80,6 +79,13 @@ include __DIR__ . '/../../includes/navbar.php';
                 </a>
             </div>
 
+            <?php if ((int) $fornecedor->ativo === 0) : ?>
+                <div class="alert alert-warning">
+                    <i class="fa-solid fa-circle-exclamation me-1"></i>
+                    Este fornecedor encontra-se inativo.
+                </div>
+            <?php endif; ?>
+
             <div class="form-medctrl">
 
                 <div class="mb-4">
@@ -90,6 +96,12 @@ include __DIR__ . '/../../includes/navbar.php';
                     <span class="badge bg-primary">
                         <?php echo htmlspecialchars($fornecedor->tipo_fornecedor); ?>
                     </span>
+
+                    <?php if ((int) $fornecedor->ativo === 1) : ?>
+                        <span class="badge bg-success ms-1">Ativo</span>
+                    <?php else : ?>
+                        <span class="badge bg-danger ms-1">Inativo</span>
+                    <?php endif; ?>
                 </div>
 
                 <hr>
@@ -106,6 +118,14 @@ include __DIR__ . '/../../includes/navbar.php';
                         <p><strong>Morada:</strong> <?php echo !empty($fornecedor->morada) ? htmlspecialchars($fornecedor->morada) : '—'; ?></p>
                         <p><strong>Pessoa de contacto:</strong> <?php echo !empty($fornecedor->pessoa_contacto) ? htmlspecialchars($fornecedor->pessoa_contacto) : '—'; ?></p>
                         <p><strong>Telefone contacto:</strong> <?php echo !empty($fornecedor->telefone_contacto) ? htmlspecialchars($fornecedor->telefone_contacto) : '—'; ?></p>
+                        <p>
+                            <strong>Situação:</strong>
+                            <?php if ((int) $fornecedor->ativo === 1) : ?>
+                                <span class="badge bg-success">Ativo</span>
+                            <?php else : ?>
+                                <span class="badge bg-danger">Inativo</span>
+                            <?php endif; ?>
+                        </p>
                     </div>
                 </div>
 
@@ -160,6 +180,20 @@ include __DIR__ . '/../../includes/navbar.php';
                     <a href="editar.php?id=<?php echo $fornecedor->id; ?>" class="btn btn-edit btn-sm">
                         <i class="fa-solid fa-pen me-1"></i> Editar
                     </a>
+
+                    <?php if ((int) $fornecedor->ativo === 1) : ?>
+
+                        <a href="apagar.php?id=<?php echo $fornecedor->id; ?>" class="btn btn-delete btn-sm">
+                            <i class="fa-solid fa-ban me-1"></i> Inativar
+                        </a>
+
+                    <?php else : ?>
+
+                        <a href="apagar.php?id=<?php echo $fornecedor->id; ?>" class="btn btn-success btn-sm">
+                            <i class="fa-solid fa-rotate-left me-1"></i> Reativar
+                        </a>
+
+                    <?php endif; ?>
 
                     <a href="lista.php" class="btn btn-cancel btn-sm">Cancelar</a>
                 </div>
