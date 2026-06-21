@@ -10,14 +10,42 @@ $pesquisa = trim($_GET['pesquisa'] ?? '');
 $categoria_id = $_GET['categoria_id'] ?? '';
 $estado_id = $_GET['estado_id'] ?? '';
 $criticidade_id = $_GET['criticidade_id'] ?? '';
+$servico = $_GET['servico'] ?? '';
+$fornecedor_id = $_GET['fornecedor_id'] ?? '';
+$ordenar = $_GET['ordenar'] ?? 'codigo';
+
 
 $categorias = $ligacao->query("SELECT id, nome FROM categorias ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
 $estados = $ligacao->query("SELECT id, nome FROM estados_equipamento ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
 $criticidades = $ligacao->query("SELECT id, nome FROM criticidades ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
+$servicos = $ligacao->query("
+    SELECT DISTINCT servico
+    FROM localizacoes
+    WHERE ativo = 1
+    ORDER BY servico
+")->fetchAll(PDO::FETCH_OBJ);
+$fornecedores = $ligacao->query("
+    SELECT id, nome_empresa
+    FROM fornecedores
+    WHERE ativo = 1
+    ORDER BY nome_empresa
+")->fetchAll(PDO::FETCH_OBJ);
+
+
+$ordenacoes_validas = [
+    'codigo' => 'equipamentos.codigo_inventario ASC',
+    'designacao' => 'equipamentos.designacao ASC',
+    'marca' => 'equipamentos.marca ASC',
+    'estado' => 'estados_equipamento.nome ASC',
+    'criticidade' => 'criticidades.nome ASC'
+];
+
+$order_by = $ordenacoes_validas[$ordenar] ?? $ordenacoes_validas['codigo'];
+
 
 try {
     $sql = "
-        SELECT 
+        SELECT DISTINCT
             equipamentos.id,
             equipamentos.codigo_inventario,
             equipamentos.designacao,
@@ -34,6 +62,10 @@ try {
             ON equipamentos.estado_id = estados_equipamento.id
         INNER JOIN criticidades 
             ON equipamentos.criticidade_id = criticidades.id
+        INNER JOIN localizacoes
+            ON equipamentos.localizacao_id = localizacoes.id
+        LEFT JOIN equipamento_fornecedor
+            ON equipamento_fornecedor.equipamento_id = equipamentos.id
         WHERE equipamentos.ativo = 1
         AND (
             equipamentos.codigo_inventario LIKE :pesquisa
@@ -45,7 +77,9 @@ try {
         AND (:categoria_id = '' OR equipamentos.categoria_id = :categoria_id)
         AND (:estado_id = '' OR equipamentos.estado_id = :estado_id)
         AND (:criticidade_id = '' OR equipamentos.criticidade_id = :criticidade_id)
-        ORDER BY equipamentos.codigo_inventario ASC
+        AND (:servico = '' OR localizacoes.servico = :servico)
+        AND (:fornecedor_id = '' OR equipamento_fornecedor.fornecedor_id = :fornecedor_id)
+        ORDER BY $order_by
     ";
 
     $stmt = $ligacao->prepare($sql);
@@ -53,7 +87,9 @@ try {
         'pesquisa' => '%' . $pesquisa . '%',
         'categoria_id' => $categoria_id,
         'estado_id' => $estado_id,
-        'criticidade_id' => $criticidade_id
+        'criticidade_id' => $criticidade_id,
+        'servico' => $servico,
+        'fornecedor_id' => $fornecedor_id
     ]);
     $equipamentos = $stmt->fetchAll(PDO::FETCH_OBJ);
     $erro = '';
@@ -163,7 +199,7 @@ include __DIR__ . '/../../includes/navbar.php';
 
                         <div class="collapse mt-3" id="filtrosAvancados">
                             <div class="row g-3 pt-3 border-top">
-                                <div class="col-12 col-md-6 col-lg-3">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label class="form-label">Estado</label>
                                     <select name="estado_id" class="form-select">
                                         <option value="">Todos</option>
@@ -177,7 +213,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                     </select>
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-3">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label class="form-label">Categoria</label>
                                     <select name="categoria_id" class="form-select">
                                         <option value="">Todas</option>
@@ -192,7 +228,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                     </select>
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-3">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label class="form-label">Criticidade</label>
                                     <select name="criticidade_id" class="form-select">
                                         <option value="">Todas</option>
@@ -207,35 +243,62 @@ include __DIR__ . '/../../includes/navbar.php';
                                     </select>
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-3">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label class="form-label">Serviço</label>
-                                    <select class="form-select">
-                                        <option selected>Todos</option>
-                                        <option>Cardiologia</option>
-                                        <option>Urgência</option>
-                                        <option>UCI</option>
-                                        <option>Radiologia</option>
+                                    <select name="servico" class="form-select">
+                                        <option value="">Todos</option>
+
+                                        <?php foreach ($servicos as $item) : ?>
+                                            <option
+                                                value="<?php echo htmlspecialchars($item->servico); ?>"
+                                                <?php echo $servico === $item->servico ? 'selected' : ''; ?>
+                                            >
+                                                <?php echo htmlspecialchars($item->servico); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+
                                     </select>
                                 </div>
 
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label class="form-label">Fornecedor</label>
-                                    <select class="form-select">
-                                        <option selected>Todos</option>
-                                        <option>Philips Healthcare</option>
-                                        <option>Dräger</option>
-                                        <option>Siemens</option>
+                                    <select name="fornecedor_id" class="form-select">
+                                        <option value="">Todos</option>
+
+                                        <?php foreach ($fornecedores as $fornecedor) : ?>
+                                            <option
+                                                value="<?php echo $fornecedor->id; ?>"
+                                                <?php echo $fornecedor_id == $fornecedor->id ? 'selected' : ''; ?>
+                                            >
+                                                <?php echo htmlspecialchars($fornecedor->nome_empresa); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+
                                     </select>
                                 </div>
 
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label class="form-label">Ordenar por</label>
-                                    <select class="form-select">
-                                        <option selected>Código</option>
-                                        <option>Designação</option>
-                                        <option>Marca</option>
-                                        <option>Estado</option>
-                                        <option>Criticidade</option>
+                                    <select name="ordenar" class="form-select">
+                                        <option value="codigo" <?php echo $ordenar === 'codigo' ? 'selected' : ''; ?>>
+                                            Código
+                                        </option>
+
+                                        <option value="designacao" <?php echo $ordenar === 'designacao' ? 'selected' : ''; ?>>
+                                            Designação
+                                        </option>
+
+                                        <option value="marca" <?php echo $ordenar === 'marca' ? 'selected' : ''; ?>>
+                                            Marca
+                                        </option>
+
+                                        <option value="estado" <?php echo $ordenar === 'estado' ? 'selected' : ''; ?>>
+                                            Estado
+                                        </option>
+
+                                        <option value="criticidade" <?php echo $ordenar === 'criticidade' ? 'selected' : ''; ?>>
+                                            Criticidade
+                                        </option>
                                     </select>
                                 </div>
 
