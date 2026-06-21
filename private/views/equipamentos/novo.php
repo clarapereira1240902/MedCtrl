@@ -10,6 +10,18 @@ $estados = $ligacao->query("SELECT id, nome FROM estados_equipamento ORDER BY no
 $criticidades = $ligacao->query("SELECT id, nome FROM criticidades ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
 $tipos_entrada = $ligacao->query("SELECT id, nome FROM tipos_entrada ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
 $localizacoes = $ligacao->query("SELECT id, edificio, piso, servico, sala FROM localizacoes ORDER BY edificio, piso, servico, sala")->fetchAll(PDO::FETCH_OBJ);
+$tipos_fornecedor = $ligacao->query("
+    SELECT id, nome
+    FROM tipos_fornecedor
+    ORDER BY nome
+")->fetchAll(PDO::FETCH_OBJ);
+
+$fornecedores = $ligacao->query("
+    SELECT id, nome_empresa, tipo_fornecedor_id
+    FROM fornecedores
+    WHERE ativo = 1
+    ORDER BY nome_empresa
+")->fetchAll(PDO::FETCH_OBJ);
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -74,6 +86,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
 
         $novo_id = $ligacao->lastInsertId();
+
+        if (!empty($_POST['fornecedores'])) {
+            $stmt_insert_fornecedor = $ligacao->prepare("
+                INSERT INTO equipamento_fornecedor (
+                    equipamento_id,
+                    fornecedor_id,
+                    tipo_fornecedor_id
+                ) VALUES (
+                    :equipamento_id,
+                    :fornecedor_id,
+                    :tipo_fornecedor_id
+                )
+            ");
+
+            foreach ($_POST['fornecedores'] as $tipo_fornecedor_id => $fornecedor_id) {
+                if (!empty($fornecedor_id)) {
+                    $stmt_insert_fornecedor->execute([
+                        'equipamento_id' => $novo_id,
+                        'fornecedor_id' => (int) $fornecedor_id,
+                        'tipo_fornecedor_id' => (int) $tipo_fornecedor_id
+                    ]);
+                }
+            }
+        }
+
+        $stmt_garantia = $ligacao->prepare("
+            INSERT INTO garantias_contratos (
+                equipamento_id,
+                inicio_garantia,
+                fim_garantia,
+                tem_contrato_manutencao,
+                tipo_contrato,
+                entidade_responsavel,
+                periodicidade,
+                observacoes
+            ) VALUES (
+                :equipamento_id,
+                :inicio_garantia,
+                :fim_garantia,
+                :tem_contrato_manutencao,
+                :tipo_contrato,
+                :entidade_responsavel,
+                :periodicidade,
+                :observacoes
+            )
+        ");
+
+        $stmt_garantia->execute([
+            'equipamento_id' => $novo_id,
+            'inicio_garantia' => $_POST['inicio_garantia'] ?: null,
+            'fim_garantia' => $_POST['fim_garantia'] ?: null,
+            'tem_contrato_manutencao' => (int) $_POST['tem_contrato_manutencao'],
+            'tipo_contrato' => trim($_POST['tipo_contrato']),
+            'entidade_responsavel' => trim($_POST['entidade_responsavel']),
+            'periodicidade' => trim($_POST['periodicidade']),
+            'observacoes' => trim($_POST['observacoes_garantia'])
+        ]);
 
         header('Location: detalhes.php?id=' . $novo_id);
         exit;
@@ -251,35 +320,25 @@ include __DIR__ . '/../../includes/navbar.php';
                             <hr>
                         </div>
 
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Fabricante</label>
-                            <select class="form-select">
-                                <option selected>Selecionar fornecedor</option>
-                                <option>Philips Healthcare</option>
-                                <option>Siemens Healthineers</option>
-                                <option>Dräger Portugal</option>
-                            </select>
-                        </div>
+                        <?php foreach ($tipos_fornecedor as $tipo) : ?>
+                            <div class="col-12 col-md-3 mb-3">
+                                <label class="form-label">
+                                    <?php echo htmlspecialchars($tipo->nome); ?>
+                                </label>
 
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Distribuidor</label>
-                            <select class="form-select">
-                                <option selected>Selecionar fornecedor</option>
-                                <option>MedTech Solutions</option>
-                                <option>Medical Partners</option>
-                                <option>BioMedical Portugal</option>
-                            </select>
-                        </div>
+                                <select name="fornecedores[<?php echo $tipo->id; ?>]" class="form-select">
+                                    <option value="">Nenhum</option>
 
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Assistência Técnica</label>
-                            <select class="form-select">
-                                <option selected>Selecionar fornecedor</option>
-                                <option>TechRepair Medical</option>
-                                <option>BioServiços</option>
-                                <option>MedSupport</option>
-                            </select>
-                        </div>
+                                    <?php foreach ($fornecedores as $fornecedor) : ?>
+                                        <?php if ($fornecedor->tipo_fornecedor_id == $tipo->id) : ?>
+                                            <option value="<?php echo $fornecedor->id; ?>">
+                                                <?php echo htmlspecialchars($fornecedor->nome_empresa); ?>
+                                            </option>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        <?php endforeach; ?>
 
 
                         <!--Garantias do equipamento-->
@@ -290,52 +349,51 @@ include __DIR__ . '/../../includes/navbar.php';
 
                         <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Data início garantia</label>
-                            <input type="date"class="form-control">
+                            <input type="date" name="inicio_garantia" class="form-control">
                         </div>
 
                         <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Data fim garantia</label>
-                            <input type="date"class="form-control">
+                            <input type="date" name="fim_garantia" class="form-control">
                         </div>
 
                         <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Contrato de manutenção</label>
-                            <select class="form-select">
-                                <option selected>Escolher</option>
-                                <option>Sim</option>
-                                <option>Não</option>
+                            <select name="tem_contrato_manutencao" class="form-select">
+                                <option value="0">Não</option>
+                                <option value="1">Sim</option>
                             </select>
                         </div>
 
                         <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Tipo contrato</label>
-                            <select class="form-select">
-                                <option selected>Escolher</option>
-                                <option>Preventivo</option>
-                                <option>Corretivo</option>
-                                <option>Preventivo + Corretivo</option>
+                            <select name="tipo_contrato" class="form-select">
+                                <option value="">Nenhum</option>
+                                <option value="Preventivo">Preventivo</option>
+                                <option value="Corretivo">Corretivo</option>
+                                <option value="Preventivo + Corretivo">Preventivo + Corretivo</option>
                             </select>
                         </div>
 
                         <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Periodicidade</label>
-                            <select class="form-select">
-                                <option selected>Escolher</option>
-                                <option>Mensal</option>
-                                <option>Trimestral</option>
-                                <option>Semestral</option>
-                                <option>Anual</option>
+                            <select name="periodicidade" class="form-select">
+                                <option value="">Nenhuma</option>
+                                <option value="Mensal">Mensal</option>
+                                <option value="Trimestral">Trimestral</option>
+                                <option value="Semestral">Semestral</option>
+                                <option value="Anual">Anual</option>
                             </select>
                         </div>
 
                         <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Entidade responsável</label>
-                            <input type="text" class="form-control">
+                            <input type="text" name="entidade_responsavel" class="form-control">
                         </div>
 
                         <div class="col-12 mb-3">
                             <label class="form-label">Observações da garantia</label>
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea name="observacoes_garantia" class="form-control" rows="3"></textarea>
                         </div>
 
 
