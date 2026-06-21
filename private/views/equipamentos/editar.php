@@ -89,6 +89,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
+        $sql_check_garantia = "
+            SELECT id
+            FROM garantias_contratos
+            WHERE equipamento_id = :equipamento_id
+            LIMIT 1
+        ";
+
+        $stmt_check_garantia = $ligacao->prepare($sql_check_garantia);
+
+        $stmt_check_garantia->execute([
+            'equipamento_id' => $id
+        ]);
+
+        $garantia_existente = $stmt_check_garantia->fetch(PDO::FETCH_OBJ);
+
+        if ($garantia_existente) {
+
+            $sql_garantia = "
+                UPDATE garantias_contratos
+                SET
+                    inicio_garantia = :inicio_garantia,
+                    fim_garantia = :fim_garantia,
+                    tem_contrato_manutencao = :tem_contrato_manutencao,
+                    tipo_contrato = :tipo_contrato,
+                    entidade_responsavel = :entidade_responsavel,
+                    periodicidade = :periodicidade
+                WHERE equipamento_id = :equipamento_id
+            ";
+
+        } else {
+
+            $sql_garantia = "
+                INSERT INTO garantias_contratos (
+                    equipamento_id,
+                    inicio_garantia,
+                    fim_garantia,
+                    tem_contrato_manutencao,
+                    tipo_contrato,
+                    entidade_responsavel,
+                    periodicidade
+                ) VALUES (
+                    :equipamento_id,
+                    :inicio_garantia,
+                    :fim_garantia,
+                    :tem_contrato_manutencao,
+                    :tipo_contrato,
+                    :entidade_responsavel,
+                    :periodicidade
+                )
+            ";
+        }
+
+        $stmt_garantia_save = $ligacao->prepare($sql_garantia);
+
+        $stmt_garantia_save->execute([
+            'equipamento_id' => $id,
+            'inicio_garantia' => $_POST['inicio_garantia'] ?: null,
+            'fim_garantia' => $_POST['fim_garantia'] ?: null,
+            'tem_contrato_manutencao' => (int) $_POST['tem_contrato_manutencao'],
+            'tipo_contrato' => trim($_POST['tipo_contrato']),
+            'entidade_responsavel' => trim($_POST['entidade_responsavel']),
+            'periodicidade' => trim($_POST['periodicidade'])
+        ]);
+
         header('Location: detalhes.php?id=' . $id);
         exit;
 
@@ -394,42 +458,101 @@ include __DIR__ . '/../../includes/navbar.php';
                     <!-- Garantia do equipamento  -->
                     <div class="mt-4 mb-4">
                         <h5 class="mb-3">
-                            <i class="fa-solid fa-shield-halved me-2"></i>
-                            Garantias e Contratos
+                            <i class="fa-solid fa-shield-halved me-2"></i>Garantias e Contratos
                         </h5>
                         <hr>
 
                         <div class="row">
                             <div class="col-12 col-md-4 mb-3">
                                 <label class="form-label">Início Garantia</label>
-                                <input type="date" class="form-control">
+                                <input
+                                    type="date"
+                                    name="inicio_garantia"
+                                    class="form-control"
+                                    value="<?php echo htmlspecialchars($garantia->inicio_garantia ?? ''); ?>"
+                                >
                             </div>
 
                             <div class="col-12 col-md-4 mb-3">
                                 <label class="form-label">Fim Garantia</label>
-                                <input type="date" class="form-control">
+                                <input
+                                    type="date"
+                                    name="fim_garantia"
+                                    class="form-control"
+                                    value="<?php echo htmlspecialchars($garantia->fim_garantia ?? ''); ?>"
+                                >
                             </div>
 
                             <div class="col-12 col-md-4 mb-3">
                                 <label class="form-label">Contrato de Manutenção</label>
-                                <select class="form-select">
-                                    <option>Sim</option>
-                                    <option>Não</option>
+
+                                <select name="tem_contrato_manutencao" class="form-select">
+                                    <option value="1" <?php echo (!empty($garantia) && $garantia->tem_contrato_manutencao == 1) ? 'selected' : ''; ?>>
+                                        Sim
+                                    </option>
+
+                                    <option value="0" <?php echo (empty($garantia) || $garantia->tem_contrato_manutencao == 0) ? 'selected' : ''; ?>>
+                                        Não
+                                    </option>
                                 </select>
                             </div>
 
-                            <div class="col-12 col-md-6 mb-3">
+                            <div class="col-12 col-md-4 mb-3">
                                 <label class="form-label">Tipo de Contrato</label>
-                                <select class="form-select">
-                                    <option>Preventivo</option>
-                                    <option>Corretivo</option>
-                                    <option>Full Service</option>
+
+                                <select name="tipo_contrato" class="form-select">
+                                    <option value="">Nenhum</option>
+
+                                    <option value="Preventivo" <?php echo (($garantia->tipo_contrato ?? '') === 'Preventivo') ? 'selected' : ''; ?>>
+                                        Preventivo
+                                    </option>
+
+                                    <option value="Corretivo" <?php echo (($garantia->tipo_contrato ?? '') === 'Corretivo') ? 'selected' : ''; ?>>
+                                        Corretivo
+                                    </option>
+
+                                    <option value="Preventivo + Corretivo" <?php echo (($garantia->tipo_contrato ?? '') === 'Preventivo + Corretivo') ? 'selected' : ''; ?>>
+                                        Preventivo + Corretivo
+                                    </option>
+
+                                    <option value="Full Service" <?php echo (($garantia->tipo_contrato ?? '') === 'Full Service') ? 'selected' : ''; ?>>
+                                        Full Service
+                                    </option>
                                 </select>
                             </div>
 
-                            <div class="col-12 col-md-6 mb-3">
+                            <div class="col-12 col-md-4 mb-3">
+                                <label class="form-label">Periodicidade</label>
+
+                                <select name="periodicidade" class="form-select">
+                                    <option value="">Nenhuma</option>
+
+                                    <option value="Mensal" <?php echo (($garantia->periodicidade ?? '') === 'Mensal') ? 'selected' : ''; ?>>
+                                        Mensal
+                                    </option>
+
+                                    <option value="Trimestral" <?php echo (($garantia->periodicidade ?? '') === 'Trimestral') ? 'selected' : ''; ?>>
+                                        Trimestral
+                                    </option>
+
+                                    <option value="Semestral" <?php echo (($garantia->periodicidade ?? '') === 'Semestral') ? 'selected' : ''; ?>>
+                                        Semestral
+                                    </option>
+
+                                    <option value="Anual" <?php echo (($garantia->periodicidade ?? '') === 'Anual') ? 'selected' : ''; ?>>
+                                        Anual
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-4 mb-3">
                                 <label class="form-label">Entidade Responsável</label>
-                                <input type="text" class="form-control">
+                                <input
+                                    type="text"
+                                    name="entidade_responsavel"
+                                    class="form-control"
+                                    value="<?php echo htmlspecialchars($garantia->entidade_responsavel ?? ''); ?>"
+                                >
                             </div>
                         </div>
                     </div>
