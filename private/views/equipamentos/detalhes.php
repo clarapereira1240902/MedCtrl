@@ -212,7 +212,7 @@ include __DIR__ . '/../../includes/navbar.php';
 
                             <div class="info-group">
                                 <label>Fabricante</label>
-                                <p><?php echo htmlspecialchars($equipamento->fabricante); ?></p>
+                                <p><?php echo htmlspecialchars($equipamento->fabricante ?? '—'); ?></p>
                             </div>
                         </div>
 
@@ -220,17 +220,21 @@ include __DIR__ . '/../../includes/navbar.php';
                         <div class="col-12 col-md-6">
                             <div class="info-group">
                                 <label>Data de Aquisição</label>
-                                <p><?php echo htmlspecialchars($equipamento->data_aquisicao); ?></p>
+                                <p><?php echo htmlspecialchars($equipamento->data_aquisicao ?? '—'); ?></p>
                             </div>
 
                             <div class="info-group">
                                 <label>Ano de Fabrico</label>
-                                <p><?php echo htmlspecialchars($equipamento->ano_fabrico); ?></p>
+                                <p><?php echo htmlspecialchars($equipamento->ano_fabrico ?? '—'); ?></p>
                             </div>
 
                             <div class="info-group">
                                 <label>Custo de Aquisição</label>
-                                <p><?php echo htmlspecialchars($equipamento->custo_aquisicao); ?> €</p>
+                                <p>
+                                    <?php echo $equipamento->custo_aquisicao !== null
+                                        ? htmlspecialchars($equipamento->custo_aquisicao) . ' €'
+                                        : '—'; ?>
+                                </p>
                             </div>
 
                             <div class="info-group">
@@ -356,17 +360,17 @@ include __DIR__ . '/../../includes/navbar.php';
                             <div class="col-12 col-md-6">
                                 <div class="info-group">
                                     <label>Tipo de contrato</label>
-                                    <p><?php echo htmlspecialchars($garantia->tipo_contrato ?? '—'); ?></p>
+                                    <p><?php echo !empty($garantia->tipo_contrato)? htmlspecialchars($garantia->tipo_contrato): '—'; ?></p>
                                 </div>
 
                                 <div class="info-group">
                                     <label>Periodicidade</label>
-                                    <p><?php echo htmlspecialchars($garantia->periodicidade ?? '—'); ?></p>
+                                    <p><?php echo !empty($garantia->periodicidade)? htmlspecialchars($garantia->periodicidade): '—'; ?></p>
                                 </div>
 
                                 <div class="info-group">
                                     <label>Entidade responsável</label>
-                                    <p><?php echo htmlspecialchars($garantia->entidade_responsavel ?? '—'); ?></p>
+                                    <p><?php echo !empty($garantia->entidade_responsavel)? htmlspecialchars($garantia->entidade_responsavel): '—'; ?></p>
                                 </div>
                             </div>
 

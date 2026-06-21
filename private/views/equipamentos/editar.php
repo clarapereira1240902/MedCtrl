@@ -13,6 +13,8 @@ if ($id <= 0) {
     exit;
 }
 
+$erro_formulario = '';
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -157,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
 
     } catch (PDOException $e) {
-        die('Erro ao atualizar equipamento.');
+        $erro_formulario = 'Erro ao atualizar equipamento. Verifica se os dados preenchidos são válidos.';
     }
 }
 
@@ -291,6 +293,13 @@ include __DIR__ . '/../../includes/navbar.php';
                     </a>
                 </div>
 
+                <?php if (!empty($erro_formulario)) : ?>
+                    <div class="alert alert-danger">
+                        <i class="fa-solid fa-circle-exclamation me-1"></i>
+                        <?php echo htmlspecialchars($erro_formulario); ?>
+                    </div>
+                <?php endif; ?>
+
                 <form class="form-medctrl" method="post">
                     <div class="row">
 
@@ -341,7 +350,7 @@ include __DIR__ . '/../../includes/navbar.php';
 
                             <div class="mb-3">
                                 <label class="form-label">Fabricante</label>
-                                <input type="text" name="fabricante" class="form-control" value="<?php echo htmlspecialchars($equipamento->fabricante); ?>">
+                                <input type="text" name="fabricante" class="form-control" value="<?php echo htmlspecialchars($equipamento->fabricante ?? ''); ?>">
                             </div>
                         </div>
 
@@ -349,17 +358,17 @@ include __DIR__ . '/../../includes/navbar.php';
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Data de Aquisição</label>
-                                <input type="date" name="data_aquisicao" class="form-control" value="<?php echo htmlspecialchars($equipamento->data_aquisicao); ?>">
+                                <input type="date" name="data_aquisicao" class="form-control" value="<?php echo htmlspecialchars($equipamento->data_aquisicao ?? ''); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Ano de Fabrico</label>
-                                <input type="number" name="ano_fabrico" class="form-control" value="<?php echo htmlspecialchars($equipamento->ano_fabrico); ?>">
+                                <input type="number" name="ano_fabrico" class="form-control" value="<?php echo htmlspecialchars($equipamento->ano_fabrico ?? ''); ?>">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Custo de Aquisição</label>
-                                <input type="text" name="custo_aquisicao" class="form-control" value="<?php echo htmlspecialchars($equipamento->custo_aquisicao); ?>">
+                                <input type="text" name="custo_aquisicao" class="form-control" value="<?php echo htmlspecialchars($equipamento->custo_aquisicao ?? ''); ?>">
                             </div>
 
                             <div class="mb-3">
@@ -514,10 +523,6 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <option value="Preventivo + Corretivo" <?php echo (($garantia->tipo_contrato ?? '') === 'Preventivo + Corretivo') ? 'selected' : ''; ?>>
                                         Preventivo + Corretivo
                                     </option>
-
-                                    <option value="Full Service" <?php echo (($garantia->tipo_contrato ?? '') === 'Full Service') ? 'selected' : ''; ?>>
-                                        Full Service
-                                    </option>
                                 </select>
                             </div>
 
@@ -615,7 +620,7 @@ include __DIR__ . '/../../includes/navbar.php';
                     <!-- Observações -->
                     <div class="mt-3">
                         <label class="form-label">Observações</label>
-                        <textarea name="observacoes" class="form-control" rows="3"><?php echo htmlspecialchars($equipamento->observacoes); ?></textarea>
+                        <textarea name="observacoes" class="form-control" rows="3"><?php echo htmlspecialchars($equipamento->observacoes ?? ''); ?></textarea>
                     </div>
 
                     <!-- Botões -->

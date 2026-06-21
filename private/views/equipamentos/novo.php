@@ -23,134 +23,153 @@ $fornecedores = $ligacao->query("
     ORDER BY nome_empresa
 ")->fetchAll(PDO::FETCH_OBJ);
 
+$erro_formulario = '';
+$form = $_POST;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
 
-        $sql_insert = "
-            INSERT INTO equipamentos (
-                localizacao_id,
-                categoria_id,
-                estado_id,
-                criticidade_id,
-                tipo_entrada_id,
-                codigo_inventario,
-                designacao,
-                marca,
-                modelo,
-                numero_serie,
-                fabricante,
-                data_aquisicao,
-                ano_fabrico,
-                custo_aquisicao,
-                observacoes
-            )
-            VALUES (
-                :localizacao_id,
-                :categoria_id,
-                :estado_id,
-                :criticidade_id,
-                :tipo_entrada_id,
-                :codigo_inventario,
-                :designacao,
-                :marca,
-                :modelo,
-                :numero_serie,
-                :fabricante,
-                :data_aquisicao,
-                :ano_fabrico,
-                :custo_aquisicao,
-                :observacoes
-            )
-        ";
+        $stmt_check = $ligacao->prepare("
+            SELECT id
+            FROM equipamentos
+            WHERE codigo_inventario = :codigo_inventario
+            LIMIT 1
+        ");
 
-        $stmt = $ligacao->prepare($sql_insert);
-
-        $stmt->execute([
-            'localizacao_id' => (int) $_POST['localizacao_id'],
-            'categoria_id' => (int) $_POST['categoria_id'],
-            'estado_id' => (int) $_POST['estado_id'],
-            'criticidade_id' => (int) $_POST['criticidade_id'],
-            'tipo_entrada_id' => (int) $_POST['tipo_entrada_id'],
-            'codigo_inventario' => trim($_POST['codigo_inventario']),
-            'designacao' => trim($_POST['designacao']),
-            'marca' => trim($_POST['marca']),
-            'modelo' => trim($_POST['modelo']),
-            'numero_serie' => trim($_POST['numero_serie']),
-            'fabricante' => trim($_POST['fabricante']),
-            'data_aquisicao' => $_POST['data_aquisicao'] ?: null,
-            'ano_fabrico' => $_POST['ano_fabrico'] ?: null,
-            'custo_aquisicao' => $_POST['custo_aquisicao'] ?: null,
-            'observacoes' => trim($_POST['observacoes'])
+        $stmt_check->execute([
+            'codigo_inventario' => trim($_POST['codigo_inventario'])
         ]);
 
-        $novo_id = $ligacao->lastInsertId();
+        if ($stmt_check->fetch()) {
+            $erro_formulario = 'Já existe um equipamento com esse código de inventário.';
+        }
 
-        if (!empty($_POST['fornecedores'])) {
-            $stmt_insert_fornecedor = $ligacao->prepare("
-                INSERT INTO equipamento_fornecedor (
+        if (empty($erro_formulario)) {
+
+            $sql_insert = "
+                INSERT INTO equipamentos (
+                    localizacao_id,
+                    categoria_id,
+                    estado_id,
+                    criticidade_id,
+                    tipo_entrada_id,
+                    codigo_inventario,
+                    designacao,
+                    marca,
+                    modelo,
+                    numero_serie,
+                    fabricante,
+                    data_aquisicao,
+                    ano_fabrico,
+                    custo_aquisicao,
+                    observacoes
+                )
+                VALUES (
+                    :localizacao_id,
+                    :categoria_id,
+                    :estado_id,
+                    :criticidade_id,
+                    :tipo_entrada_id,
+                    :codigo_inventario,
+                    :designacao,
+                    :marca,
+                    :modelo,
+                    :numero_serie,
+                    :fabricante,
+                    :data_aquisicao,
+                    :ano_fabrico,
+                    :custo_aquisicao,
+                    :observacoes
+                )
+            ";
+
+            $stmt = $ligacao->prepare($sql_insert);
+
+            $stmt->execute([
+                'localizacao_id' => (int) $_POST['localizacao_id'],
+                'categoria_id' => (int) $_POST['categoria_id'],
+                'estado_id' => (int) $_POST['estado_id'],
+                'criticidade_id' => (int) $_POST['criticidade_id'],
+                'tipo_entrada_id' => (int) $_POST['tipo_entrada_id'],
+                'codigo_inventario' => trim($_POST['codigo_inventario']),
+                'designacao' => trim($_POST['designacao']),
+                'marca' => trim($_POST['marca']),
+                'modelo' => trim($_POST['modelo']),
+                'numero_serie' => trim($_POST['numero_serie']),
+                'fabricante' => trim($_POST['fabricante']),
+                'data_aquisicao' => $_POST['data_aquisicao'] ?: null,
+                'ano_fabrico' => $_POST['ano_fabrico'] ?: null,
+                'custo_aquisicao' => $_POST['custo_aquisicao'] ?: null,
+                'observacoes' => trim($_POST['observacoes'])
+            ]);
+
+            $novo_id = $ligacao->lastInsertId();
+
+            if (!empty($_POST['fornecedores'])) {
+                $stmt_insert_fornecedor = $ligacao->prepare("
+                    INSERT INTO equipamento_fornecedor (
+                        equipamento_id,
+                        fornecedor_id,
+                        tipo_fornecedor_id
+                    ) VALUES (
+                        :equipamento_id,
+                        :fornecedor_id,
+                        :tipo_fornecedor_id
+                    )
+                ");
+
+                foreach ($_POST['fornecedores'] as $tipo_fornecedor_id => $fornecedor_id) {
+                    if (!empty($fornecedor_id)) {
+                        $stmt_insert_fornecedor->execute([
+                            'equipamento_id' => $novo_id,
+                            'fornecedor_id' => (int) $fornecedor_id,
+                            'tipo_fornecedor_id' => (int) $tipo_fornecedor_id
+                        ]);
+                    }
+                }
+            }
+
+            $stmt_garantia = $ligacao->prepare("
+                INSERT INTO garantias_contratos (
                     equipamento_id,
-                    fornecedor_id,
-                    tipo_fornecedor_id
+                    inicio_garantia,
+                    fim_garantia,
+                    tem_contrato_manutencao,
+                    tipo_contrato,
+                    entidade_responsavel,
+                    periodicidade,
+                    observacoes
                 ) VALUES (
                     :equipamento_id,
-                    :fornecedor_id,
-                    :tipo_fornecedor_id
+                    :inicio_garantia,
+                    :fim_garantia,
+                    :tem_contrato_manutencao,
+                    :tipo_contrato,
+                    :entidade_responsavel,
+                    :periodicidade,
+                    :observacoes
                 )
             ");
 
-            foreach ($_POST['fornecedores'] as $tipo_fornecedor_id => $fornecedor_id) {
-                if (!empty($fornecedor_id)) {
-                    $stmt_insert_fornecedor->execute([
-                        'equipamento_id' => $novo_id,
-                        'fornecedor_id' => (int) $fornecedor_id,
-                        'tipo_fornecedor_id' => (int) $tipo_fornecedor_id
-                    ]);
-                }
-            }
+            $stmt_garantia->execute([
+                'equipamento_id' => $novo_id,
+                'inicio_garantia' => $_POST['inicio_garantia'] ?: null,
+                'fim_garantia' => $_POST['fim_garantia'] ?: null,
+                'tem_contrato_manutencao' => (int) $_POST['tem_contrato_manutencao'],
+                'tipo_contrato' => trim($_POST['tipo_contrato']),
+                'entidade_responsavel' => trim($_POST['entidade_responsavel']),
+                'periodicidade' => trim($_POST['periodicidade']),
+                'observacoes' => trim($_POST['observacoes_garantia'])
+            ]);
+
+            header('Location: detalhes.php?id=' . $novo_id);
+            exit;
         }
-
-        $stmt_garantia = $ligacao->prepare("
-            INSERT INTO garantias_contratos (
-                equipamento_id,
-                inicio_garantia,
-                fim_garantia,
-                tem_contrato_manutencao,
-                tipo_contrato,
-                entidade_responsavel,
-                periodicidade,
-                observacoes
-            ) VALUES (
-                :equipamento_id,
-                :inicio_garantia,
-                :fim_garantia,
-                :tem_contrato_manutencao,
-                :tipo_contrato,
-                :entidade_responsavel,
-                :periodicidade,
-                :observacoes
-            )
-        ");
-
-        $stmt_garantia->execute([
-            'equipamento_id' => $novo_id,
-            'inicio_garantia' => $_POST['inicio_garantia'] ?: null,
-            'fim_garantia' => $_POST['fim_garantia'] ?: null,
-            'tem_contrato_manutencao' => (int) $_POST['tem_contrato_manutencao'],
-            'tipo_contrato' => trim($_POST['tipo_contrato']),
-            'entidade_responsavel' => trim($_POST['entidade_responsavel']),
-            'periodicidade' => trim($_POST['periodicidade']),
-            'observacoes' => trim($_POST['observacoes_garantia'])
-        ]);
-
-        header('Location: detalhes.php?id=' . $novo_id);
-        exit;
 
     } catch (PDOException $e) {
 
-        die('Erro ao criar equipamento.');
-
+        $erro_formulario = 'Erro ao criar equipamento. Verifica se os dados preenchidos são válidos.';
     }
 }
 
@@ -178,6 +197,13 @@ include __DIR__ . '/../../includes/navbar.php';
 
                 <hr>
 
+                <?php if (!empty($erro_formulario)) : ?>
+                    <div class="alert alert-danger">
+                        <i class="fa-solid fa-circle-exclamation me-1"></i>
+                        <?php echo htmlspecialchars($erro_formulario); ?>
+                    </div>
+                <?php endif; ?>
+
                 <form class="form-medctrl" method="post">
 
                     <div class="row">
@@ -190,12 +216,12 @@ include __DIR__ . '/../../includes/navbar.php';
 
                         <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Código de Inventário</label>
-                            <input type="text" class="form-control" name="codigo_inventario" placeholder="Ex: EQ001">
+                            <input type="text" class="form-control" name="codigo_inventario" placeholder="Ex: EQ001" value="<?php echo htmlspecialchars($form['codigo_inventario'] ?? ''); ?>">
                         </div>
 
                         <div class="col-12 col-md-8 mb-3">
                             <label class="form-label">Designação</label>
-                            <input type="text" name="designacao" class="form-control" placeholder="Ex: Monitor Multiparamétrico">
+                            <input type="text" name="designacao" class="form-control" placeholder="Ex: Monitor Multiparamétrico" value="<?php echo htmlspecialchars($form['designacao'] ?? ''); ?>">
                         </div>
 
                         <div class="col-12 col-md-4 mb-3">
@@ -203,7 +229,7 @@ include __DIR__ . '/../../includes/navbar.php';
                             <select name="categoria_id" class="form-select" required>
                                 <option value="">Selecione uma categoria</option>
                                 <?php foreach ($categorias as $categoria) : ?>
-                                    <option value="<?php echo $categoria->id; ?>">
+                                    <option value="<?php echo $categoria->id; ?>" <?php echo (($form['categoria_id'] ?? '') == $categoria->id) ? 'selected' : ''; ?>>
                                         <?php echo htmlspecialchars($categoria->nome); ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -212,37 +238,37 @@ include __DIR__ . '/../../includes/navbar.php';
 
                         <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Marca</label>
-                            <input type="text" name="marca" class="form-control">
+                            <input type="text" name="marca" class="form-control" value="<?php echo htmlspecialchars($form['marca'] ?? ''); ?>">
                         </div>
 
                         <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Modelo</label>
-                            <input type="text" name="modelo" class="form-control">
+                            <input type="text" name="modelo" class="form-control" value="<?php echo htmlspecialchars($form['modelo'] ?? ''); ?>">
                         </div>
 
                         <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Número de Série</label>
-                            <input type="text" name="numero_serie" class="form-control">
+                            <input type="text" name="numero_serie" class="form-control" value="<?php echo htmlspecialchars($form['numero_serie'] ?? ''); ?>">
                         </div>
 
                         <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Fabricante</label>
-                            <input type="text" name="fabricante" class="form-control">
+                            <input type="text" name="fabricante" class="form-control" value="<?php echo htmlspecialchars($form['fabricante'] ?? ''); ?>">
                         </div>
 
                         <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Data de Aquisição</label>
-                            <input type="date" name="data_aquisicao" class="form-control">
+                            <input type="date" name="data_aquisicao" class="form-control" value="<?php echo htmlspecialchars($form['data_aquisicao'] ?? ''); ?>">
                         </div>
 
                         <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Ano de Fabrico</label>
-                            <input type="number" name="ano_fabrico" class="form-control">
+                            <input type="number" name="ano_fabrico" class="form-control" value="<?php echo htmlspecialchars($form['ano_fabrico'] ?? ''); ?>">
                         </div>
 
                         <div class="col-12 col-md-4 mb-3">
                             <label class="form-label">Custo (€)</label>
-                            <input type="number" name="custo_aquisicao" class="form-control">
+                            <input type="number" name="custo_aquisicao" class="form-control" value="<?php echo htmlspecialchars($form['custo_aquisicao'] ?? ''); ?>">
                         </div>
 
                         <div class="col-12 col-md-4 mb-3">
@@ -250,7 +276,7 @@ include __DIR__ . '/../../includes/navbar.php';
                             <select name="tipo_entrada_id" class="form-select" required>
                                 <option value="">Selecione um tipo</option>
                                 <?php foreach ($tipos_entrada as $tipo) : ?>
-                                    <option value="<?php echo $tipo->id; ?>">
+                                    <option value="<?php echo $tipo->id; ?>" <?php echo (($form['tipo_entrada_id'] ?? '') == $tipo->id) ? 'selected' : ''; ?>>
                                         <?php echo htmlspecialchars($tipo->nome); ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -262,7 +288,7 @@ include __DIR__ . '/../../includes/navbar.php';
                             <select name="estado_id" class="form-select" required>
                                 <option value="">Selecione um estado</option>
                                 <?php foreach ($estados as $estado) : ?>
-                                    <option value="<?php echo $estado->id; ?>">
+                                    <option value="<?php echo $estado->id; ?>" <?php echo (($form['estado_id'] ?? '') == $estado->id) ? 'selected' : ''; ?>>
                                         <?php echo htmlspecialchars($estado->nome); ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -274,7 +300,7 @@ include __DIR__ . '/../../includes/navbar.php';
                             <select name="criticidade_id" class="form-select" required>
                                 <option value="">Selecione uma criticidade</option>
                                 <?php foreach ($criticidades as $criticidade) : ?>
-                                    <option value="<?php echo $criticidade->id; ?>">
+                                    <option value="<?php echo $criticidade->id; ?>" <?php echo (($form['criticidade_id'] ?? '') == $criticidade->id) ? 'selected' : ''; ?>>
                                         <?php echo htmlspecialchars($criticidade->nome); ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -283,7 +309,7 @@ include __DIR__ . '/../../includes/navbar.php';
 
                         <div class="col-12 mb-3">
                             <label class="form-label">Observações</label>
-                            <textarea class="form-control" name="observacoes" rows="3"></textarea>
+                            <textarea class="form-control" name="observacoes" rows="3"><?php echo htmlspecialchars($form['observacoes'] ?? ''); ?></textarea>
                         </div>
                         
                         <!--Localização do equipamento-->
@@ -297,7 +323,7 @@ include __DIR__ . '/../../includes/navbar.php';
                             <select name="localizacao_id" class="form-select" required>
                                 <option value="">Selecione uma localização</option>
                                 <?php foreach ($localizacoes as $localizacao) : ?>
-                                    <option value="<?php echo $localizacao->id; ?>">
+                                    <option value="<?php echo $localizacao->id; ?>" <?php echo (($form['localizacao_id'] ?? '') == $localizacao->id) ? 'selected' : ''; ?>>
                                         <?php
                                         echo htmlspecialchars(
                                             $localizacao->edificio . ' | ' .
@@ -331,7 +357,7 @@ include __DIR__ . '/../../includes/navbar.php';
 
                                     <?php foreach ($fornecedores as $fornecedor) : ?>
                                         <?php if ($fornecedor->tipo_fornecedor_id == $tipo->id) : ?>
-                                            <option value="<?php echo $fornecedor->id; ?>">
+                                            <option value="<?php echo $fornecedor->id; ?>" <?php echo (($form['fornecedores'][$tipo->id] ?? '') == $fornecedor->id) ? 'selected' : ''; ?>>
                                                 <?php echo htmlspecialchars($fornecedor->nome_empresa); ?>
                                             </option>
                                         <?php endif; ?>
@@ -349,25 +375,25 @@ include __DIR__ . '/../../includes/navbar.php';
 
                         <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Data início garantia</label>
-                            <input type="date" name="inicio_garantia" class="form-control">
+                            <input type="date" name="inicio_garantia" class="form-control" value="<?php echo htmlspecialchars($form['inicio_garantia'] ?? ''); ?>">
                         </div>
 
                         <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Data fim garantia</label>
-                            <input type="date" name="fim_garantia" class="form-control">
+                            <input type="date" name="fim_garantia" class="form-control" value="<?php echo htmlspecialchars($form['fim_garantia'] ?? ''); ?>">
                         </div>
 
                         <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Contrato de manutenção</label>
                             <select name="tem_contrato_manutencao" class="form-select">
-                                <option value="0">Não</option>
-                                <option value="1">Sim</option>
+                                <option value="0" <?php echo (($form['tem_contrato_manutencao'] ?? '') == '0') ? 'selected' : ''; ?>>Não</option>
+                                <option value="1" <?php echo (($form['tem_contrato_manutencao'] ?? '') == '1') ? 'selected' : ''; ?>>Sim</option>
                             </select>
                         </div>
 
                         <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Tipo contrato</label>
-                            <select name="tipo_contrato" class="form-select">
+                            <select name="tipo_contrato" class="form-select" selected>
                                 <option value="">Nenhum</option>
                                 <option value="Preventivo">Preventivo</option>
                                 <option value="Corretivo">Corretivo</option>
@@ -377,7 +403,7 @@ include __DIR__ . '/../../includes/navbar.php';
 
                         <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Periodicidade</label>
-                            <select name="periodicidade" class="form-select">
+                            <select name="periodicidade" class="form-select" selected>
                                 <option value="">Nenhuma</option>
                                 <option value="Mensal">Mensal</option>
                                 <option value="Trimestral">Trimestral</option>
@@ -388,12 +414,12 @@ include __DIR__ . '/../../includes/navbar.php';
 
                         <div class="col-12 col-md-6 mb-3">
                             <label class="form-label">Entidade responsável</label>
-                            <input type="text" name="entidade_responsavel" class="form-control">
+                            <input type="text" name="entidade_responsavel" class="form-control" value="<?php echo htmlspecialchars($form['entidade_responsavel'] ?? ''); ?>">
                         </div>
 
                         <div class="col-12 mb-3">
                             <label class="form-label">Observações da garantia</label>
-                            <textarea name="observacoes_garantia" class="form-control" rows="3"></textarea>
+                            <textarea name="observacoes_garantia" class="form-control" rows="3"><?php echo htmlspecialchars($form['observacoes_garantia'] ?? ''); ?></textarea>
                         </div>
 
 
