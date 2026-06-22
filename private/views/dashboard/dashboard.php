@@ -115,10 +115,10 @@ $dados_criticidade = dashboard_linhas($ligacao, "
     SELECT
         c.nome,
         COUNT(e.id) AS total
-    FROM criticidades c
-    LEFT JOIN equipamentos e
+    FROM equipamentos e
+    INNER JOIN criticidades c
         ON e.criticidade_id = c.id
-        AND e.ativo = 1
+    WHERE e.ativo = 1
     GROUP BY c.id, c.nome
     ORDER BY c.id ASC
 ");
@@ -147,6 +147,7 @@ $dados_suporte_vida = dashboard_linhas($ligacao, "
     WHERE e.ativo = 1
     AND LOWER(c.nome) = 'suporte de vida'
     GROUP BY servico
+    HAVING total > 0
     ORDER BY total DESC
     LIMIT 5
 ");
@@ -172,6 +173,7 @@ $equipamentos_por_servico = dashboard_linhas($ligacao, "
         ON e.localizacao_id = l.id
     WHERE e.ativo = 1
     GROUP BY servico
+    HAVING total > 0
     ORDER BY total DESC
     LIMIT 5
 ");
@@ -185,9 +187,9 @@ $categorias = dashboard_linhas($ligacao, "
         c.nome,
         COUNT(e.id) AS total
     FROM categorias c
-    LEFT JOIN equipamentos e
+    INNER JOIN equipamentos e
         ON e.categoria_id = c.id
-        AND e.ativo = 1
+    WHERE e.ativo = 1
     GROUP BY c.id, c.nome
     HAVING total > 0
     ORDER BY total DESC
@@ -487,7 +489,7 @@ window.dashboardDados = {
 };
 </script>
 
-<script src="<?php echo BASE_URL; ?>/assets/js/1240902.js"></script>
+<script src="<?php echo BASE_URL; ?>/assets/js/1240902.js?v=<?php echo time(); ?>"></script>
 
 </body>
 </html>
