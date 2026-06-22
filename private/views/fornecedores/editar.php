@@ -179,6 +179,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
+            registar_log(
+                $ligacao,
+                'Editou fornecedor',
+                'fornecedores',
+                (int) $id,
+                'Dados do fornecedor atualizados: ' . trim($_POST['nome_empresa'] ?? '') . ' | NIF: ' . trim($_POST['nif'] ?? '')
+            );
+
             header('Location: detalhes.php?id=' . $id);
             exit;
         }

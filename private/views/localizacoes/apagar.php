@@ -73,6 +73,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'id' => $id
         ]);
 
+        $descricao_localizacao = $localizacao->edificio . ' | Piso: ' . $localizacao->piso . ' | Serviço: ' . $localizacao->servico . ' | Sala: ' . $localizacao->sala;
+
+        if ((int) $novo_estado === 1) {
+            registar_log(
+                $ligacao,
+                'Reativou localização',
+                'localizacoes',
+                (int) $id,
+                'Localização reativada: ' . $descricao_localizacao
+            );
+        } else {
+            registar_log(
+                $ligacao,
+                'Inativou localização',
+                'localizacoes',
+                (int) $id,
+                'Localização inativada: ' . $descricao_localizacao
+            );
+        }
+
         header('Location: lista.php');
         exit;
 

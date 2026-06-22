@@ -36,6 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'id' => $id
         ]);
 
+        registar_log(
+            $ligacao,
+            'Editou localização',
+            'localizacoes',
+            (int) $id,
+            'Localização atualizada: ' . trim($_POST['edificio']) . ' | Piso: ' . trim($_POST['piso']) . ' | Serviço: ' . trim($_POST['servico']) . ' | Sala: ' . trim($_POST['sala'])
+        );
+
         header('Location: lista.php');
         exit;
 

@@ -289,6 +289,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'id' => $id
                 ]);
 
+                registar_log(
+                    $ligacao,
+                    'Editou documento',
+                    'documentos',
+                    (int) $id,
+                    'Documento atualizado: ' . $nome
+                );
+
                 header('Location: detalhes.php?id=' . $id);
                 exit;
             }

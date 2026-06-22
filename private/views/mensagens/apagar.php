@@ -64,6 +64,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $stmt->execute(['id' => $id]);
 
+        registar_log(
+            $ligacao,
+            'Eliminou mensagem de contacto',
+            'mensagens_contacto',
+            (int) $id,
+            'Mensagem eliminada. Remetente: ' . $mensagem->nome . ' | Email: ' . $mensagem->email
+        );
+
         $_SESSION['mensagem_sucesso'] = 'Mensagem eliminada com sucesso.';
 
         header('Location: lista.php');

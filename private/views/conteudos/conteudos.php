@@ -231,6 +231,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $ligacao->commit();
 
+            registar_log(
+                $ligacao,
+                'Atualizou conteúdos públicos',
+                'conteudos_publicos',
+                null,
+                'Conteúdos da área pública do website atualizados.'
+            );
+
             $valores = $novos_valores;
             $mensagem_sucesso = 'Conteúdos atualizados com sucesso.';
 

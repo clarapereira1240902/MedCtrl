@@ -75,6 +75,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'id' => $id
         ]);
 
+        if ((int) $novo_estado === 1) {
+            registar_log(
+                $ligacao,
+                'Reativou fornecedor',
+                'fornecedores',
+                (int) $id,
+                'Fornecedor reativado: ' . $fornecedor->nome_empresa
+            );
+        } else {
+            registar_log(
+                $ligacao,
+                'Inativou fornecedor',
+                'fornecedores',
+                (int) $id,
+                'Fornecedor inativado: ' . $fornecedor->nome_empresa
+            );
+        }
+
         header('Location: lista.php');
         exit;
 

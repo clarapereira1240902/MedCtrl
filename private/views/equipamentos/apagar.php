@@ -63,6 +63,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'id' => $id
         ]);
 
+        if ((int) $novo_estado === 1) {
+            registar_log(
+                $ligacao,
+                'Reativou equipamento',
+                'equipamentos',
+                (int) $id,
+                'Equipamento reativado: ' . $equipamento->codigo_inventario . ' - ' . $equipamento->designacao
+            );
+        } else {
+            registar_log(
+                $ligacao,
+                'Inativou equipamento',
+                'equipamentos',
+                (int) $id,
+                'Equipamento inativado: ' . $equipamento->codigo_inventario . ' - ' . $equipamento->designacao
+            );
+        }
+
         header('Location: lista.php');
         exit;
 

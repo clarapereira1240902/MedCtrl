@@ -68,6 +68,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ");
 
             $stmt->execute(['id' => $id]);
+
+            registar_log(
+                $ligacao,
+                'Marcou mensagem como lida',
+                'mensagens_contacto',
+                (int) $id,
+                'Mensagem de contacto marcada como lida. Remetente: ' . $mensagem->nome . ' | Email: ' . $mensagem->email
+            );
         }
 
         if ($acao === 'marcar_nao_lida') {
@@ -78,6 +86,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ");
 
             $stmt->execute(['id' => $id]);
+
+            registar_log(
+                $ligacao,
+                'Marcou mensagem como lida',
+                'mensagens_contacto',
+                (int) $id,
+                'Mensagem de contacto marcada como lida. Remetente: ' . $mensagem->nome . ' | Email: ' . $mensagem->email
+            );
         }
 
         header('Location: detalhes.php?id=' . $id);

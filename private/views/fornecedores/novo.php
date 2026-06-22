@@ -119,6 +119,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
+            registar_log(
+                $ligacao,
+                'Criou fornecedor',
+                'fornecedores',
+                (int) $fornecedor_id,
+                'Novo fornecedor registado: ' . trim($_POST['nome_empresa'] ?? '') . ' | NIF: ' . trim($_POST['nif'] ?? '')
+            );
+
             header('Location: lista.php');
             exit;
         }

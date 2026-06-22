@@ -242,6 +242,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'observacoes' => $observacoes
                 ]);
 
+                $documento_id = $ligacao->lastInsertId();
+
+                registar_log(
+                    $ligacao,
+                    'Criou documento',
+                    'documentos',
+                    (int) $documento_id,
+                    'Novo documento registado: ' . $nome
+                );
+
                 header('Location: lista.php');
                 exit;
             }

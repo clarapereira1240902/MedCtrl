@@ -67,6 +67,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'sala' => $sala
                 ]);
 
+                $localizacao_id = $ligacao->lastInsertId();
+
+                registar_log(
+                    $ligacao,
+                    'Criou localização',
+                    'localizacoes',
+                    (int) $localizacao_id,
+                    'Nova localização registada: ' . $edificio . ' | Piso: ' . $piso . ' | Serviço: ' . $servico . ' | Sala: ' . $sala
+                );
+
                 header('Location: lista.php');
                 exit;
             }

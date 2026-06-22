@@ -202,6 +202,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'observacoes' => trim($_POST['observacoes_garantia'] ?? '')
             ]);
 
+            registar_log(
+                $ligacao,
+                'Editou equipamento',
+                'equipamentos',
+                (int) $id,
+                'Dados do equipamento atualizados: ' . trim($_POST['codigo_inventario'] ?? '') . ' - ' . trim($_POST['designacao'] ?? '')
+            );
+
             $ligacao->commit();
 
             header('Location: detalhes.php?id=' . $id);

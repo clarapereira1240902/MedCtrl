@@ -51,6 +51,8 @@ try {
     $utilizador = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$utilizador || !password_verify($password, $utilizador['password_hash'])) {
+        registar_log($ligacao, 'Tentativa de login falhada', 'utilizadores', null, 'Email utilizado: ' . $email);
+
         $_SESSION['validation_errors'] = ['Email ou palavra-passe inválidos.'];
         $_SESSION['email_antigo'] = $email;
 
@@ -66,6 +68,8 @@ try {
         'nome' => $utilizador['nome'],
         'email' => $utilizador['email']
     ];
+
+    registar_log($ligacao, 'Login efetuado', 'utilizadores', (int) $utilizador['id'], 'Utilizador autenticado com sucesso.');
 
     header('Location: ' . BASE_URL . '/private/index.php');
     exit;

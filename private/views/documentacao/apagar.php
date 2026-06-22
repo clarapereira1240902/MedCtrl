@@ -71,6 +71,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'id' => $id
         ]);
 
+        if ((int) $novo_estado === 1) {
+            registar_log(
+                $ligacao,
+                'Reativou documento',
+                'documentos',
+                (int) $id,
+                'Documento reativado: ' . $documento->nome
+            );
+        } else {
+            registar_log(
+                $ligacao,
+                'Inativou documento',
+                'documentos',
+                (int) $id,
+                'Documento inativado: ' . $documento->nome
+            );
+        }
+
         header('Location: lista.php');
         exit;
 
