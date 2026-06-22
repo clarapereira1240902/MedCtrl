@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../config/ligacao.php';
 
+date_default_timezone_set('Europe/Lisbon');
+
 $campos_conteudo = [
     'objetivo' => [
         'titulo_principal' => 'Gestão Inteligente de Equipamentos Médicos',
@@ -130,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['formulario_contacto'] ?? '
                     :nome,
                     :email,
                     :mensagem,
-                    NOW(),
+                    :data_envio,
                     0
                 )
             ");
@@ -138,7 +140,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['formulario_contacto'] ?? '
             $stmt->execute([
                 'nome' => $nome,
                 'email' => $email,
-                'mensagem' => $mensagem
+                'mensagem' => $mensagem,
+                'data_envio' => date('Y-m-d H:i:s')
             ]);
 
             $sucesso_contacto = 'A sua mensagem foi enviada com sucesso.';
@@ -198,7 +201,7 @@ $funcionalidades = [
         </button>
 
         <div class="nav-cliente">
-            <a href="login.html">Iniciar Sessão</a>
+            <a href="login.php">Iniciar Sessão</a>
         </div>
 
         <div class="scroll-bar"></div>
@@ -215,7 +218,7 @@ $funcionalidades = [
             <a href="#solucao">Solução</a>
             <a href="#vantagens">Vantagens</a>
             <a href="#contacto">Contacto</a>
-            <a href="login.html" class="menu-public-login">Iniciar Sessão</a>
+            <a href="login.php" class="menu-public-login">Iniciar Sessão</a>
         </div>
     </div>
 

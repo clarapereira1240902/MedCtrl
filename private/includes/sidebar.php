@@ -35,6 +35,10 @@ if (!isset($menu_ativo)) {
             <a href="<?php echo BASE_URL; ?>/private/views/conteudos/conteudos.php" class="<?php echo $menu_ativo == 'conteudos' ? 'active' : ''; ?>">
                 <i class="fa-solid fa-pen-to-square"></i> &ensp; Conteúdos
             </a>
+
+            <a href="<?php echo BASE_URL; ?>/private/views/mensagens/lista.php" class="<?php echo $menu_ativo == 'mensagens' ? 'active' : ''; ?>">
+                <i class="fa-solid fa-envelope"></i> &ensp; Mensagens
+            </a>
         </nav>
     </div>
 </div>
@@ -63,6 +67,10 @@ if (!isset($menu_ativo)) {
 
         <a href="<?php echo BASE_URL; ?>/private/views/conteudos/conteudos.php" class="<?php echo $menu_ativo == 'conteudos' ? 'active' : ''; ?>">
             <i class="fa-solid fa-pen-to-square"></i> &ensp; Conteúdos
+        </a>
+
+        <a href="<?php echo BASE_URL; ?>/private/views/mensagens/lista.php" class="<?php echo $menu_ativo == 'mensagens' ? 'active' : ''; ?>">
+            <i class="fa-solid fa-envelope"></i> &ensp; Mensagens
         </a>
     </nav>
 </aside>

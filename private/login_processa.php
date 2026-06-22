@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/ligacao.php';
 require_once __DIR__ . '/includes/funcoes.php';
@@ -12,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $email = trim($_POST['email'] ?? '');
-$password = trim($_POST['password'] ?? '');
+$password = $_POST['password'] ?? '';
 
 $validation_errors = [];
 
@@ -28,28 +27,42 @@ if (empty($password)) {
 
 if (!empty($validation_errors)) {
     $_SESSION['validation_errors'] = $validation_errors;
+    $_SESSION['email_antigo'] = $email;
+
     header('Location: ' . BASE_URL . '/public/login.php');
     exit;
 }
 
 try {
 
-    $sql = "SELECT * FROM utilizadores WHERE email = :email AND ativo = 1 LIMIT 1";
+    $sql = "
+        SELECT *
+        FROM utilizadores
+        WHERE email = :email
+        AND ativo = 1
+        LIMIT 1
+    ";
 
     $stmt = $ligacao->prepare($sql);
-    $stmt->bindParam(':email', $email);
-    $stmt->execute();
+    $stmt->execute([
+        'email' => $email
+    ]);
 
     $utilizador = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$utilizador || !password_verify($password, $utilizador['password_hash'])) {
         $_SESSION['validation_errors'] = ['Email ou palavra-passe inválidos.'];
+        $_SESSION['email_antigo'] = $email;
+
         header('Location: ' . BASE_URL . '/public/login.php');
         exit;
     }
 
+    session_regenerate_id(true);
+
     $_SESSION['utilizador'] = [
         'id' => $utilizador['id'],
+        'perfil_id' => $utilizador['perfil_id'],
         'nome' => $utilizador['nome'],
         'email' => $utilizador['email']
     ];
@@ -60,7 +73,8 @@ try {
 } catch (PDOException $e) {
 
     $_SESSION['server_error'] = 'Erro ao validar o utilizador. Tente novamente mais tarde.';
+    $_SESSION['email_antigo'] = $email;
+
     header('Location: ' . BASE_URL . '/public/login.php');
     exit;
-
 }

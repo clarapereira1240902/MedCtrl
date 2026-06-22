@@ -69,7 +69,7 @@ $garantias_expiradas = dashboard_valor($ligacao, "
     INNER JOIN garantias_contratos gc
         ON gc.equipamento_id = e.id
     WHERE e.ativo = 1
-    AND gc.data_fim < CURDATE()
+    AND gc.fim_garantia < CURDATE()
 ");
 
 $sem_documentacao = dashboard_valor($ligacao, "
@@ -97,7 +97,7 @@ $garantias_30_dias = dashboard_valor($ligacao, "
     INNER JOIN garantias_contratos gc
         ON gc.equipamento_id = e.id
     WHERE e.ativo = 1
-    AND gc.data_fim BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)
+    AND gc.fim_garantia BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)
 ");
 
 $sem_localizacao = dashboard_valor($ligacao, "
