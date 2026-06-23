@@ -4,6 +4,8 @@ require_once __DIR__ . '/../../../config/ligacao.php';
 
 redirect_if_not_logged();
 
+exigir_admin_ou_tecnico();
+
 $menu_ativo = 'equipamentos';
 
 $id = (int) ($_GET['id'] ?? 0);

@@ -65,3 +65,37 @@ function registar_log($ligacao, $acao, $tabela_afetada = null, $registo_id = nul
         // Se o log falhar, o sistema continua normalmente.
     }
 }
+
+function perfil_utilizador() {
+    return $_SESSION['utilizador']['perfil_nome'] ?? '';
+}
+
+function utilizador_admin() {
+    return perfil_utilizador() === 'Administrador';
+}
+
+function utilizador_tecnico() {
+    return perfil_utilizador() === 'Técnico';
+}
+
+function utilizador_profissional_saude() {
+    return perfil_utilizador() === 'Profissional de saúde';
+}
+
+function pode_gerir_dados() {
+    return utilizador_admin() || utilizador_tecnico();
+}
+
+function exigir_admin() {
+    if (!utilizador_admin()) {
+        header('Location: ' . BASE_URL . '/private/index.php');
+        exit;
+    }
+}
+
+function exigir_admin_ou_tecnico() {
+    if (!pode_gerir_dados()) {
+        header('Location: ' . BASE_URL . '/private/index.php');
+        exit;
+    }
+}

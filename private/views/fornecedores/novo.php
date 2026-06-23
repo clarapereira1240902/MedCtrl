@@ -4,6 +4,8 @@ require_once __DIR__ . '/../../../config/ligacao.php';
 
 redirect_if_not_logged();
 
+exigir_admin_ou_tecnico();
+
 $menu_ativo = 'fornecedores';
 
 $tipos_fornecedor = $ligacao->query("SELECT id, nome FROM tipos_fornecedor ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);

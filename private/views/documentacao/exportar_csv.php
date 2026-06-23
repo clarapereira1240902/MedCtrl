@@ -4,6 +4,8 @@ require_once __DIR__ . '/../../../config/ligacao.php';
 
 redirect_if_not_logged();
 
+exigir_admin_ou_tecnico();
+
 $pesquisa = trim($_GET['pesquisa'] ?? '');
 $tipo_documento_id = $_GET['tipo_documento_id'] ?? '';
 $validade = $_GET['validade'] ?? '';

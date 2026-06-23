@@ -1,6 +1,9 @@
 <?php
 require_once __DIR__ . '/../../includes/funcoes.php';
+
 redirect_if_not_logged();
+
+exigir_admin_ou_tecnico();
 
 $menu_ativo = 'equipamentos';
 

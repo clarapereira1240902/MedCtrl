@@ -4,6 +4,8 @@ require_once __DIR__ . '/../../../config/ligacao.php';
 
 redirect_if_not_logged();
 
+$pode_gerir = pode_gerir_dados();
+
 $menu_ativo = 'equipamentos';
 
 $pesquisa = trim($_GET['pesquisa'] ?? '');
@@ -203,15 +205,21 @@ include __DIR__ . '/../../includes/navbar.php';
                     <i class="fa-solid fa-laptop-medical me-2"></i>Listagem de Equipamentos
                 </h2>
 
-                <div class="d-flex gap-2 flex-wrap">
-                    <a href="exportar_csv.php" class="btn btn-save btn-sm">
-                        <i class="fa-solid fa-file-csv me-1"></i>
-                    </a>
+                <?php if ($pode_gerir) : ?>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <a href="exportar_csv.php?pesquisa=<?php echo urlencode($pesquisa); ?>&categoria_id=<?php echo urlencode($categoria_id); ?>&estado_id=<?php echo urlencode($estado_id); ?>&criticidade_id=<?php echo urlencode($criticidade_id); ?>&servico=<?php echo urlencode($servico); ?>&fornecedor_id=<?php echo urlencode($fornecedor_id); ?>&situacao=<?php echo urlencode($situacao); ?>&ordenar=<?php echo urlencode($ordenar); ?>" class="btn btn-save btn-sm">
+                            <i class="fa-solid fa-file-csv me-1"></i>
+                        </a>
 
-                    <a href="novo.php" class="btn btn-save btn-sm">
-                        <i class="fa-solid fa-plus me-1"></i>Novo Equipamento
-                    </a>
-                </div>
+                        <a href="exportar_json.php?pesquisa=<?php echo urlencode($pesquisa); ?>&categoria_id=<?php echo urlencode($categoria_id); ?>&estado_id=<?php echo urlencode($estado_id); ?>&criticidade_id=<?php echo urlencode($criticidade_id); ?>&servico=<?php echo urlencode($servico); ?>&fornecedor_id=<?php echo urlencode($fornecedor_id); ?>&situacao=<?php echo urlencode($situacao); ?>&ordenar=<?php echo urlencode($ordenar); ?>" class="btn btn-save btn-sm">
+                            <i class="fa-solid fa-file-code me-1"></i>
+                        </a>
+
+                        <a href="novo.php" class="btn btn-save btn-sm">
+                            <i class="fa-solid fa-plus me-1"></i>Novo Equipamento
+                        </a>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <hr>
@@ -457,21 +465,25 @@ include __DIR__ . '/../../includes/navbar.php';
                                                 <i class="fa-solid fa-eye"></i>
                                             </a>
 
-                                            <?php if ((int) $equipamento->ativo === 1) : ?>
+                                            <?php if ($pode_gerir) : ?>
 
-                                                <a href="editar.php?id=<?php echo $equipamento->id; ?>" class="btn btn-sm btn-edit-list" title="Editar">
-                                                    <i class="fa-solid fa-pen"></i>
-                                                </a>
+                                                <?php if ((int) $equipamento->ativo === 1) : ?>
 
-                                                <a href="apagar.php?id=<?php echo $equipamento->id; ?>" class="btn btn-sm btn-delete-list" title="Inativar">
-                                                    <i class="fa-solid fa-ban"></i>
-                                                </a>
+                                                    <a href="editar.php?id=<?php echo $equipamento->id; ?>" class="btn btn-sm btn-edit-list" title="Editar">
+                                                        <i class="fa-solid fa-pen"></i>
+                                                    </a>
 
-                                            <?php else : ?>
+                                                    <a href="apagar.php?id=<?php echo $equipamento->id; ?>" class="btn btn-sm btn-delete-list" title="Inativar">
+                                                        <i class="fa-solid fa-ban"></i>
+                                                    </a>
 
-                                                <a href="apagar.php?id=<?php echo $equipamento->id; ?>" class="btn btn-sm btn-success" title="Reativar">
-                                                    <i class="fa-solid fa-rotate-left"></i>
-                                                </a>
+                                                <?php else : ?>
+
+                                                    <a href="apagar.php?id=<?php echo $equipamento->id; ?>" class="btn btn-sm btn-success" title="Reativar">
+                                                        <i class="fa-solid fa-rotate-left"></i>
+                                                    </a>
+
+                                                <?php endif; ?>
 
                                             <?php endif; ?>
                                         </div>

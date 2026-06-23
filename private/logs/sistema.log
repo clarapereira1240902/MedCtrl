@@ -18,3 +18,20 @@
 [2026-06-23 16:54:06] Utilizador ID: sem sessão | Nome: sem utilizador | Ação: Tentativa de login falhada | Tabela: utilizadores | Registo ID: - | Detalhes: Email utilizado: admin@medctrl.pt
 [2026-06-23 16:54:11] Utilizador ID: sem sessão | Nome: sem utilizador | Ação: Tentativa de login falhada | Tabela: utilizadores | Registo ID: - | Detalhes: Email utilizado: admin@medctrl.pt
 [2026-06-23 16:54:47] Utilizador ID: 3 | Nome: Ana Ribeiro | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 3 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-23 17:35:58] Utilizador ID: 3 | Nome: Ana Ribeiro | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 3 | Detalhes: Utilizador terminou sessão.
+[2026-06-23 17:36:32] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-23 17:36:38] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador terminou sessão.
+[2026-06-23 17:37:39] Utilizador ID: 2 | Nome: Miguel Santos | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 2 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-23 17:37:49] Utilizador ID: 2 | Nome: Miguel Santos | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 2 | Detalhes: Utilizador terminou sessão.
+[2026-06-23 17:38:10] Utilizador ID: 3 | Nome: Ana Ribeiro | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 3 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-23 17:39:57] Utilizador ID: 3 | Nome: Ana Ribeiro | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 3 | Detalhes: Utilizador terminou sessão.
+[2026-06-23 17:40:09] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-23 18:47:34] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador terminou sessão.
+[2026-06-23 18:47:45] Utilizador ID: 3 | Nome: Ana Ribeiro | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 3 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-23 18:52:15] Utilizador ID: 3 | Nome: Ana Ribeiro | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 3 | Detalhes: Utilizador terminou sessão.
+[2026-06-23 18:52:24] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-23 18:56:53] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador terminou sessão.
+[2026-06-23 18:57:17] Utilizador ID: 3 | Nome: Ana Ribeiro | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 3 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-23 18:59:14] Utilizador ID: 3 | Nome: Ana Ribeiro | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 3 | Detalhes: Utilizador terminou sessão.
+[2026-06-23 18:59:30] Utilizador ID: 2 | Nome: Miguel Santos | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 2 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-23 19:04:18] Utilizador ID: 2 | Nome: Miguel Santos | Ação: Exportou equipamentos em JSON | Tabela: equipamentos | Registo ID: - | Detalhes: Lista de equipamentos exportada em formato JSON.
