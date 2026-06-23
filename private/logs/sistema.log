@@ -1,3 +1,10 @@
 [2026-06-22 15:31:52] Utilizador ID: 1 | Nome: Administrador MedCtrl | Ação: Inativou equipamento | Tabela: equipamentos | Registo ID: 10 | Detalhes: Equipamento inativado: EQ006 - Ecógrafo
 [2026-06-22 16:32:40] Utilizador ID: 1 | Nome: Administrador MedCtrl | Ação: Inativou equipamento | Tabela: equipamentos | Registo ID: 9 | Detalhes: Equipamento inativado: EQ005 - Desfibrilhador
 [2026-06-22 16:33:59] Utilizador ID: 1 | Nome: Administrador MedCtrl | Ação: Reativou fornecedor | Tabela: fornecedores | Registo ID: 6 | Detalhes: Fornecedor reativado: Samsung
+[2026-06-22 22:54:20] Utilizador ID: 1 | Nome: Administrador MedCtrl | Ação: Exportou equipamentos em CSV | Tabela: equipamentos | Registo ID: - | Detalhes: Lista de equipamentos exportada em formato CSV.
+[2026-06-22 23:01:47] Utilizador ID: 1 | Nome: Administrador MedCtrl | Ação: Editou documento | Tabela: documentos | Registo ID: 3 | Detalhes: Documento atualizado: Relatório Manutenção ECG TC70
+[2026-06-22 23:11:37] Utilizador ID: 1 | Nome: Administrador MedCtrl | Ação: Exportou fornecedores em CSV | Tabela: fornecedores | Registo ID: - | Detalhes: Lista de fornecedores exportada em formato CSV.
+[2026-06-23 00:44:58] Utilizador ID: 1 | Nome: Administrador MedCtrl | Ação: Exportou documentação em CSV | Tabela: documentos | Registo ID: - | Detalhes: Lista de documentos exportada em formato CSV.
+[2026-06-23 00:53:57] Utilizador ID: 1 | Nome: Administrador MedCtrl | Ação: Eliminou mensagem de contacto | Tabela: mensagens_contacto | Registo ID: 4 | Detalhes: Mensagem eliminada. Remetente: Leonor Alves | Email: leonor.alves@gmail.com
+[2026-06-23 00:54:00] Utilizador ID: 1 | Nome: Administrador MedCtrl | Ação: Eliminou mensagem de contacto | Tabela: mensagens_contacto | Registo ID: 5 | Detalhes: Mensagem eliminada. Remetente: Leonor Alves | Email: leonor.alves@gmail.com
+[2026-06-23 00:54:07] Utilizador ID: 1 | Nome: Administrador MedCtrl | Ação: Eliminou mensagem de contacto | Tabela: mensagens_contacto | Registo ID: 3 | Detalhes: Mensagem eliminada. Remetente: Leonor Alves | Email: leonor.alves@gmail.com

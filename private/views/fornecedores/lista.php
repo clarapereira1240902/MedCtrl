@@ -74,9 +74,15 @@ include __DIR__ . '/../../includes/navbar.php';
                     <i class="fa-solid fa-handshake me-2"></i> Listagem de Fornecedores
                 </h2>
 
-                <a href="novo.php" class="btn btn-primary-custom btn-sm">
-                    <i class="fa-solid fa-plus me-1"></i> Novo Fornecedor
-                </a>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a href="exportar_csv.php" class="btn btn-save btn-sm">
+                        <i class="fa-solid fa-file-csv me-1"></i>
+                    </a>
+
+                    <a href="novo.php" class="btn btn-save btn-sm">
+                        <i class="fa-solid fa-plus me-1"></i>Novo Fornecedor
+                    </a>
+                </div>
             </div>
 
             <hr>

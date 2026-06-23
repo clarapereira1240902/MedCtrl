@@ -3,6 +3,10 @@ require_once __DIR__ . '/../config/ligacao.php';
 
 date_default_timezone_set('Europe/Lisbon');
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $campos_conteudo = [
     'objetivo' => [
         'titulo_principal' => 'Gestão Inteligente de Equipamentos Médicos',
@@ -107,7 +111,8 @@ foreach ($campos_conteudo as $secao => $campos) {
 }
 
 $erro_contacto = '';
-$sucesso_contacto = '';
+$sucesso_contacto = $_SESSION['mensagem_contacto_sucesso'] ?? '';
+unset($_SESSION['mensagem_contacto_sucesso']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['formulario_contacto'] ?? '') === '1') {
 
@@ -144,7 +149,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['formulario_contacto'] ?? '
                 'data_envio' => date('Y-m-d H:i:s')
             ]);
 
-            $sucesso_contacto = 'A sua mensagem foi enviada com sucesso.';
+            $_SESSION['mensagem_contacto_sucesso'] = 'A sua mensagem foi enviada com sucesso.';
+
+            header('Location: index.php#contacto');
+            exit;
 
         } catch (PDOException $e) {
             $erro_contacto = 'Não foi possível enviar a mensagem. Tente novamente mais tarde.';
