@@ -8,3 +8,13 @@
 [2026-06-23 00:53:57] Utilizador ID: 1 | Nome: Administrador MedCtrl | Ação: Eliminou mensagem de contacto | Tabela: mensagens_contacto | Registo ID: 4 | Detalhes: Mensagem eliminada. Remetente: Leonor Alves | Email: leonor.alves@gmail.com
 [2026-06-23 00:54:00] Utilizador ID: 1 | Nome: Administrador MedCtrl | Ação: Eliminou mensagem de contacto | Tabela: mensagens_contacto | Registo ID: 5 | Detalhes: Mensagem eliminada. Remetente: Leonor Alves | Email: leonor.alves@gmail.com
 [2026-06-23 00:54:07] Utilizador ID: 1 | Nome: Administrador MedCtrl | Ação: Eliminou mensagem de contacto | Tabela: mensagens_contacto | Registo ID: 3 | Detalhes: Mensagem eliminada. Remetente: Leonor Alves | Email: leonor.alves@gmail.com
+[2026-06-23 01:16:03] Utilizador ID: 1 | Nome: Administrador MedCtrl | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador terminou sessão.
+[2026-06-23 01:16:09] Utilizador ID: 1 | Nome: Administrador MedCtrl | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-23 16:52:21] Utilizador ID: 1 | Nome: Administrador MedCtrl | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador terminou sessão.
+[2026-06-23 16:52:46] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-23 16:52:57] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador terminou sessão.
+[2026-06-23 16:53:38] Utilizador ID: 2 | Nome: Miguel Santos | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 2 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-23 16:53:59] Utilizador ID: 2 | Nome: Miguel Santos | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 2 | Detalhes: Utilizador terminou sessão.
+[2026-06-23 16:54:06] Utilizador ID: sem sessão | Nome: sem utilizador | Ação: Tentativa de login falhada | Tabela: utilizadores | Registo ID: - | Detalhes: Email utilizado: admin@medctrl.pt
+[2026-06-23 16:54:11] Utilizador ID: sem sessão | Nome: sem utilizador | Ação: Tentativa de login falhada | Tabela: utilizadores | Registo ID: - | Detalhes: Email utilizado: admin@medctrl.pt
+[2026-06-23 16:54:47] Utilizador ID: 3 | Nome: Ana Ribeiro | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 3 | Detalhes: Utilizador autenticado com sucesso.

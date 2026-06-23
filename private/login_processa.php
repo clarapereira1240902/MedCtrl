@@ -36,10 +36,14 @@ if (!empty($validation_errors)) {
 try {
 
     $sql = "
-        SELECT *
-        FROM utilizadores
-        WHERE email = :email
-        AND ativo = 1
+        SELECT
+            u.*,
+            p.nome AS perfil_nome
+        FROM utilizadores u
+        INNER JOIN perfis p
+            ON u.perfil_id = p.id
+        WHERE u.email = :email
+        AND u.ativo = 1
         LIMIT 1
     ";
 
@@ -65,6 +69,7 @@ try {
     $_SESSION['utilizador'] = [
         'id' => $utilizador['id'],
         'perfil_id' => $utilizador['perfil_id'],
+        'perfil_nome' => $utilizador['perfil_nome'],
         'nome' => $utilizador['nome'],
         'email' => $utilizador['email']
     ];

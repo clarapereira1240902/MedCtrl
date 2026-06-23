@@ -13,16 +13,22 @@
             <div class="dropdown">
                 <button class="btn btn-user dropdown-toggle" data-bs-toggle="dropdown"> 
                     <i class="fa-regular fa-user me-2"></i>
-                    <?php echo $_SESSION['utilizador']['nome']; ?>
+                    <?php echo htmlspecialchars($_SESSION['utilizador']['nome'] ?? 'Utilizador'); ?>
                 </button>
 
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <i class="fa-solid fa-key me-2"></i>Alterar password
-                        </a>
+                    <li class="px-3 py-2">
+                        <strong>
+                            <?php echo htmlspecialchars($_SESSION['utilizador']['nome'] ?? 'Utilizador'); ?>
+                        </strong>
+                        <br>
+                        <small class="text-muted">
+                            <?php echo htmlspecialchars($_SESSION['utilizador']['perfil_nome'] ?? 'Perfil'); ?>
+                        </small>
                     </li>
-                    <li><hr></li>
+
+                    <li><hr class="dropdown-divider"></li>
+
                     <li>
                         <a class="dropdown-item" href="<?php echo BASE_URL; ?>/private/logout.php">
                             <i class="fa-solid fa-right-from-bracket me-2"></i>Terminar sessão
