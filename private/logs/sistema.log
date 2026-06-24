@@ -62,3 +62,20 @@
 [2026-06-24 00:46:54] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Editou documento | Tabela: documentos | Registo ID: 5 | Detalhes: Documento atualizado: Certificado Ventilador V500
 [2026-06-24 00:59:47] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Editou documento | Tabela: documentos | Registo ID: 5 | Detalhes: Documento atualizado: Certificado Ventilador V500
 [2026-06-24 01:00:00] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Editou documento | Tabela: documentos | Registo ID: 4 | Detalhes: Documento atualizado: Ficha Ventilador
+[2026-06-24 01:40:16] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador terminou sessão.
+[2026-06-24 01:44:43] Utilizador ID: sem sessão | Nome: sem utilizador | Ação: Tentativa de login falhada | Tabela: utilizadores | Registo ID: - | Detalhes: Email utilizado: clara.pereira@medctrl.pt
+[2026-06-24 01:50:24] Utilizador ID: 2 | Nome: Miguel Santos | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 2 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-24 01:50:39] Utilizador ID: 2 | Nome: Miguel Santos | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 2 | Detalhes: Utilizador terminou sessão.
+[2026-06-24 01:50:48] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-24 01:51:01] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador terminou sessão.
+[2026-06-24 01:51:11] Utilizador ID: 3 | Nome: Ana Ribeiro | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 3 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-24 01:56:36] Utilizador ID: 3 | Nome: Ana Ribeiro | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 3 | Detalhes: Utilizador terminou sessão.
+[2026-06-24 01:56:43] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-24 09:16:25] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Inativou equipamento | Tabela: equipamentos | Registo ID: 1 | Detalhes: Equipamento inativado: EQ001 - Monitor de Sinais Vitais
+[2026-06-24 09:22:00] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Reativou equipamento | Tabela: equipamentos | Registo ID: 1 | Detalhes: Equipamento reativado: EQ001 - Monitor de Sinais Vitais
+[2026-06-24 09:31:56] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Inativou localização | Tabela: localizacoes | Registo ID: 6 | Detalhes: Localização inativada: Edifício A | Piso: 0 | Serviço: Urgência | Sala: TR-01
+[2026-06-24 09:54:29] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Inativou fornecedor | Tabela: fornecedores | Registo ID: 2 | Detalhes: Fornecedor inativado: Dräger Portugal
+[2026-06-24 09:54:30] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Reativou fornecedor | Tabela: fornecedores | Registo ID: 2 | Detalhes: Fornecedor reativado: Dräger Portugal
+[2026-06-24 09:54:31] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Inativou fornecedor | Tabela: fornecedores | Registo ID: 2 | Detalhes: Fornecedor inativado: Dräger Portugal
+[2026-06-24 10:24:38] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Inativou documento | Tabela: documentos | Registo ID: 5 | Detalhes: Documento inativado: Certificado Ventilador V500
+[2026-06-24 10:58:01] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador terminou sessão.
