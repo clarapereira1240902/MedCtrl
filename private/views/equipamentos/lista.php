@@ -206,14 +206,32 @@ include __DIR__ . '/../../includes/navbar.php';
                 </h2>
 
                 <?php if ($pode_gerir) : ?>
-                    <div class="d-flex gap-2 flex-wrap">
-                        <a href="exportar_csv.php?pesquisa=<?php echo urlencode($pesquisa); ?>&categoria_id=<?php echo urlencode($categoria_id); ?>&estado_id=<?php echo urlencode($estado_id); ?>&criticidade_id=<?php echo urlencode($criticidade_id); ?>&servico=<?php echo urlencode($servico); ?>&fornecedor_id=<?php echo urlencode($fornecedor_id); ?>&situacao=<?php echo urlencode($situacao); ?>&ordenar=<?php echo urlencode($ordenar); ?>" class="btn btn-save btn-sm">
-                            <i class="fa-solid fa-file-csv me-1"></i>
-                        </a>
+                    <div class="d-flex gap-2 flex-wrap align-items-center">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary btn-sm dropdown-toggle rounded-pill px-2" type="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-download me-1"></i>
+                            </button>
 
-                        <a href="exportar_json.php?pesquisa=<?php echo urlencode($pesquisa); ?>&categoria_id=<?php echo urlencode($categoria_id); ?>&estado_id=<?php echo urlencode($estado_id); ?>&criticidade_id=<?php echo urlencode($criticidade_id); ?>&servico=<?php echo urlencode($servico); ?>&fornecedor_id=<?php echo urlencode($fornecedor_id); ?>&situacao=<?php echo urlencode($situacao); ?>&ordenar=<?php echo urlencode($ordenar); ?>" class="btn btn-save btn-sm">
-                            <i class="fa-solid fa-file-code me-1"></i>
-                        </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="exportar_csv.php?pesquisa=<?php echo urlencode($pesquisa); ?>&categoria_id=<?php echo urlencode($categoria_id); ?>&estado_id=<?php echo urlencode($estado_id); ?>&criticidade_id=<?php echo urlencode($criticidade_id); ?>&servico=<?php echo urlencode($servico); ?>&fornecedor_id=<?php echo urlencode($fornecedor_id); ?>&situacao=<?php echo urlencode($situacao); ?>&ordenar=<?php echo urlencode($ordenar); ?>">
+                                        <i class="fa-solid fa-file-csv me-2"></i>CSV
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="exportar_json.php?pesquisa=<?php echo urlencode($pesquisa); ?>&categoria_id=<?php echo urlencode($categoria_id); ?>&estado_id=<?php echo urlencode($estado_id); ?>&criticidade_id=<?php echo urlencode($criticidade_id); ?>&servico=<?php echo urlencode($servico); ?>&fornecedor_id=<?php echo urlencode($fornecedor_id); ?>&situacao=<?php echo urlencode($situacao); ?>&ordenar=<?php echo urlencode($ordenar); ?>">
+                                        <i class="fa-solid fa-file-code me-2"></i>JSON
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="relatorio.php" target="_blank">
+                                        <i class="fa-solid fa-file-pdf me-2"></i>PDF
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
 
                         <a href="novo.php" class="btn btn-save btn-sm">
                             <i class="fa-solid fa-plus me-1"></i>Novo Equipamento

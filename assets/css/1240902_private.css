@@ -17,6 +17,9 @@ body{
     background:#ffffff;
     padding:15px 30px;
     box-shadow:0 2px 15px rgba(0,0,0,0.08);
+    position:sticky;
+    top:0;
+    z-index:1050;
 }
 
 .navbar-medctrl h3{
@@ -44,6 +47,13 @@ body{
     background:#006390;
     min-height:100vh;
     padding:25px;
+    padding:25px;
+    position:fixed;
+    top:74px;
+    left:0;
+    width:16.66666667%;
+    overflow-y:auto;
+    z-index:1040;
 }
 
 .sidebar a{

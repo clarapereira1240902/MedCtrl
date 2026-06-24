@@ -62,18 +62,36 @@ include __DIR__ . '/../../includes/navbar.php';
 
             <div class="page-header">
                 <h2>
-                    <i class="fa-solid fa-location-dot me-2"></i> Localizações
+                    <i class="fa-solid fa-location-dot me-2"></i> Listagem de Localizações
                 </h2>
 
-                <div class="d-flex gap-2 flex-wrap">
-                    <a href="exportar_csv.php" class="btn btn-save btn-sm">
-                        <i class="fa-solid fa-file-csv me-1"></i>
-                    </a>
+                <?php if ($pode_gerir) : ?>
+                    <div class="d-flex gap-2 flex-wrap align-items-center">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary btn-sm dropdown-toggle rounded-pill px-2" type="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-download me-1"></i>
+                            </button>
 
-                    <a href="novo.php" class="btn btn-save btn-sm">
-                        <i class="fa-solid fa-plus me-1"></i>Nova Localização
-                    </a>
-                </div>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="exportar_csv.php?pesquisa=<?php echo urlencode($pesquisa); ?>">
+                                        <i class="fa-solid fa-file-csv me-2"></i>CSV
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="relatorio.php?pesquisa=<?php echo urlencode($pesquisa); ?>" target="_blank">
+                                        <i class="fa-solid fa-file-pdf me-2"></i>PDF
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <a href="novo.php" class="btn btn-save btn-sm">
+                            <i class="fa-solid fa-plus me-1"></i>Nova Localização
+                        </a>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <hr>

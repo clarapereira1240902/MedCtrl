@@ -35,3 +35,30 @@
 [2026-06-23 18:59:14] Utilizador ID: 3 | Nome: Ana Ribeiro | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 3 | Detalhes: Utilizador terminou sessão.
 [2026-06-23 18:59:30] Utilizador ID: 2 | Nome: Miguel Santos | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 2 | Detalhes: Utilizador autenticado com sucesso.
 [2026-06-23 19:04:18] Utilizador ID: 2 | Nome: Miguel Santos | Ação: Exportou equipamentos em JSON | Tabela: equipamentos | Registo ID: - | Detalhes: Lista de equipamentos exportada em formato JSON.
+[2026-06-23 19:07:59] Utilizador ID: 2 | Nome: Miguel Santos | Ação: Gerou relatório de equipamentos | Tabela: equipamentos | Registo ID: - | Detalhes: Relatório imprimível/exportável para PDF gerado.
+[2026-06-23 19:08:12] Utilizador ID: 2 | Nome: Miguel Santos | Ação: Gerou relatório de equipamentos | Tabela: equipamentos | Registo ID: - | Detalhes: Relatório imprimível/exportável para PDF gerado.
+[2026-06-23 19:21:27] Utilizador ID: 2 | Nome: Miguel Santos | Ação: Gerou relatório de localizações | Tabela: localizacoes | Registo ID: - | Detalhes: Relatório imprimível/exportável para PDF de localizações gerado.
+[2026-06-23 19:28:35] Utilizador ID: 2 | Nome: Miguel Santos | Ação: Gerou relatório de equipamentos | Tabela: equipamentos | Registo ID: - | Detalhes: Relatório imprimível/exportável para PDF gerado.
+[2026-06-23 19:48:15] Utilizador ID: 2 | Nome: Miguel Santos | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 2 | Detalhes: Utilizador terminou sessão.
+[2026-06-23 19:48:25] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-23 20:00:21] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador terminou sessão.
+[2026-06-23 20:00:29] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-23 23:22:10] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Logout efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador terminou sessão.
+[2026-06-23 23:22:19] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Login efetuado | Tabela: utilizadores | Registo ID: 1 | Detalhes: Utilizador autenticado com sucesso.
+[2026-06-23 23:32:27] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Reativou equipamento | Tabela: equipamentos | Registo ID: 9 | Detalhes: Equipamento reativado: EQ005 - Desfibrilhador
+[2026-06-23 23:49:32] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Gerou relatório de documentação | Tabela: documentos | Registo ID: - | Detalhes: Relatório imprimível/exportável para PDF de documentação gerado.
+[2026-06-24 00:04:55] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Inativou localização | Tabela: localizacoes | Registo ID: 3 | Detalhes: Localização inativada: Hospital Central | Piso: 3º Piso | Serviço: UCI | Sala: Sala 8
+[2026-06-24 00:04:59] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Inativou localização | Tabela: localizacoes | Registo ID: 2 | Detalhes: Localização inativada: Hospital Norte | Piso: 1º Piso | Serviço: Urgência | Sala: Sala 3
+[2026-06-24 00:05:03] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Inativou localização | Tabela: localizacoes | Registo ID: 1 | Detalhes: Localização inativada: Hospital Sul | Piso: 1º Piso | Serviço: Urgência | Sala: Sala 12
+[2026-06-24 00:32:14] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Inativou equipamento | Tabela: equipamentos | Registo ID: 13 | Detalhes: Equipamento inativado: EQ009 - Aspirador Cirúrgico
+[2026-06-24 00:34:43] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Reativou equipamento | Tabela: equipamentos | Registo ID: 13 | Detalhes: Equipamento reativado: EQ009 - Aspirador Cirúrgico
+[2026-06-24 00:36:47] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Reativou localização | Tabela: localizacoes | Registo ID: 2 | Detalhes: Localização reativada: Hospital Norte | Piso: 1º Piso | Serviço: Urgência | Sala: Sala 3
+[2026-06-24 00:37:17] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Inativou localização | Tabela: localizacoes | Registo ID: 2 | Detalhes: Localização inativada: Hospital Norte | Piso: 1º Piso | Serviço: Urgência | Sala: Sala 3
+[2026-06-24 00:37:35] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Editou equipamento | Tabela: equipamentos | Registo ID: 1 | Detalhes: Dados do equipamento atualizados: EQ001 - Monitor de Sinais Vitais
+[2026-06-24 00:37:51] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Editou equipamento | Tabela: equipamentos | Registo ID: 2 | Detalhes: Dados do equipamento atualizados: EQ002 - Ventilador Pulmonar
+[2026-06-24 00:38:19] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Editou equipamento | Tabela: equipamentos | Registo ID: 3 | Detalhes: Dados do equipamento atualizados: EQ003 - ECG Philips TC70
+[2026-06-24 00:38:41] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Editou equipamento | Tabela: equipamentos | Registo ID: 4 | Detalhes: Dados do equipamento atualizados: EQ004 - Bomba de Infusão Volumétrica
+[2026-06-24 00:44:46] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Editou documento | Tabela: documentos | Registo ID: 1 | Detalhes: Documento atualizado: Manual Monitor Philips MX450
+[2026-06-24 00:46:54] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Editou documento | Tabela: documentos | Registo ID: 5 | Detalhes: Documento atualizado: Certificado Ventilador V500
+[2026-06-24 00:59:47] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Editou documento | Tabela: documentos | Registo ID: 5 | Detalhes: Documento atualizado: Certificado Ventilador V500
+[2026-06-24 01:00:00] Utilizador ID: 1 | Nome: Clara Pereira | Ação: Editou documento | Tabela: documentos | Registo ID: 4 | Detalhes: Documento atualizado: Ficha Ventilador
